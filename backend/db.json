@@ -1,0 +1,30 @@
+{
+  "unidades": [
+    {
+      "id": 1,
+      "nome": "CASCADURA"
+    },
+    {
+      "id": 2,
+      "nome": "MADUREIRA"
+    },
+    {
+      "id": 3,
+      "nome": "MÉIER"
+    }
+  ],
+  "turmas": [
+    {
+      "id": 1,
+      "nome": "1001"
+    },
+    {
+      "id": 2,
+      "nome": "1002"
+    },
+    {
+      "id": 3,
+      "nome": "1004"
+    }
+  ]
+}
