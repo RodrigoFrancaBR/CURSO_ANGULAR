@@ -1,3 +1,4 @@
+import { ExemploComponent } from './views/exemplo/exemplo.component';
 import { CadastroComponent } from './views/unidades/cadastro/cadastro.component';
 
 import { NgModule } from '@angular/core';
@@ -11,12 +12,18 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent
   },
+
+  {
+    path: 'exemplos', component: ExemploComponent
+  },
+
   {
     path: 'unidades', component: UnidadesComponent
   },
   {
     path: 'unidades/cadastro', component: CadastroComponent
   },
+
 ];
 
 @NgModule({

@@ -1,0 +1,13 @@
+button.a, span.a, .unless.a {
+    color: red;
+    border-color: gold;
+    background-color: yellow;
+    font-size: 100%;
+  }
+  
+  button.b, span.b, .unless.b {
+    color: black;
+    border-color: green;
+    background-color: lightgreen;
+    font-size: 100%;
+  }

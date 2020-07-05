@@ -15,6 +15,10 @@ import { NavComponent } from './components/template/nav/nav.component';
 import { HomeComponent } from './views/home/home.component';
 import { UnidadesComponent } from './views/unidades/unidades.component';
 import { CadastroComponent } from './views/unidades/cadastro/cadastro.component';
+import { RedDirective } from './directives/red.directive';
+import { ForDirective } from './directives/exemplos/for.directive';
+import { ExemploComponent } from './views/exemplo/exemplo.component';
+import { UnlessDirective } from './directives/exemplos/unless.directive';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { CadastroComponent } from './views/unidades/cadastro/cadastro.component'
     NavComponent,
     HomeComponent,
     UnidadesComponent,
-    CadastroComponent
+    CadastroComponent,
+    RedDirective,
+    ForDirective,
+    ExemploComponent,
+    UnlessDirective
   ],
   imports: [
     BrowserModule,
