@@ -1,0 +1,14 @@
+.header{
+    display: flex;
+    align-items: center;
+}
+
+.header a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.header .title {
+    padding-left: 25px;
+}
