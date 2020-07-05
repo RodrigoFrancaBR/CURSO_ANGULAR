@@ -20,6 +20,7 @@ const routes: Routes = [
   {
     path: 'unidades', component: UnidadesComponent
   },
+  
   {
     path: 'unidades/cadastro', component: CadastroComponent
   },

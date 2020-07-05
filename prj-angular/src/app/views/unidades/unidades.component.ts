@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { UnidadeService } from './unidade.service';
 
 @Component({
   selector: 'app-unidades',
   templateUrl: './unidades.component.html',
   styleUrls: ['./unidades.component.css']
 })
-export class UnidadesComponent implements OnInit {
+export class UnidadesComponent {
 
-  constructor() { }
+  constructor(private router: Router, private service: UnidadeService) { }
 
-  ngOnInit() {
+  navegarParaCadastro() {
+    // this.service.showMessage('Direcionando para o cadastro de unidade');
+    this.router.navigate(['unidades/cadastro']);
   }
 
 }

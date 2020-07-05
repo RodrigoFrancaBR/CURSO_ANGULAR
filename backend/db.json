@@ -2,29 +2,38 @@
   "unidades": [
     {
       "id": 1,
-      "nome": "CASCADURA"
+      "nome": "CASCADURA",
+      "endereco": "RUA C1",
+      "situacao": "ATIVO"
     },
     {
       "id": 2,
-      "nome": "MADUREIRA"
+      "nome": "MADUREIRA",
+      "endereco": "RUA M1",
+      "situacao": "ATIVO"
     },
     {
       "id": 3,
-      "nome": "MÉIER"
+      "nome": "MÉIER",
+      "endereco": "RUA M1",
+      "situacao": "ATIVO"
     }
   ],
   "turmas": [
     {
       "id": 1,
-      "nome": "1001"
+      "nome": "1001",
+      "situacao": "ATIVO"
     },
     {
       "id": 2,
-      "nome": "1002"
+      "nome": "1002",
+      "situacao": "ATIVO"
     },
     {
       "id": 3,
-      "nome": "1004"
+      "nome": "1004",
+      "situacao": "ATIVO"
     }
   ]
 }
