@@ -1,0 +1,22 @@
+<h2 id="appUnless">Usando diretiva ForDirective</h2>
+<ul>
+    <li *myFor="let numero numeros [1,2,3] usando 'teste' ">{{numero}}</li>
+</ul>
+
+<h2 id="appUnless">UnlessDirective</h2>
+<p>
+    The condition is currently
+    <span [ngClass]="{ 'a': !condition, 'b': condition, 'unless': true }">{{condition}}</span>.
+    <button (click)="condition = !condition" [ngClass]="{ 'a': condition, 'b': !condition }">
+        Toggle condition to {{condition ? 'false' : 'true'}}
+    </button>
+</p>
+
+<p *appUnless="condition" class="unless a">
+    (A) This paragraph is displayed because the condition is false.
+</p>
+
+<p *appUnless="!condition" class="unless b">
+    (B) Although the condition is true,
+    this paragraph is displayed because appUnless is set to false.
+</p>
