@@ -4,36 +4,60 @@
       "id": 1,
       "nome": "CASCADURA",
       "endereco": "RUA C1",
-      "situacao": "ATIVO"
+      "status": "ATIVO"
     },
     {
       "id": 2,
       "nome": "MADUREIRA",
       "endereco": "RUA M1",
-      "situacao": "ATIVO"
+      "status": "ATIVO"
     },
     {
       "id": 3,
       "nome": "MÉIER",
       "endereco": "RUA M1",
-      "situacao": "ATIVO"
+      "status": "ATIVO"
+    },
+    {
+      "id": 4
+    },
+    {
+      "nome": "ABOLIÇÃO",
+      "endereco": "R A1",
+      "status": "ATIVO",
+      "id": 5
+    },
+    {
+      "nome": "Rodrigo França",
+      "endereco": "123",
+      "status": "ATIVO",
+      "id": 6
+    },
+    {
+      "nome": "novaUnidade",
+      "endereco": "teste",
+      "status": "teste",
+      "id": 7
+    },
+    {
+      "id": 8
     }
   ],
   "turmas": [
     {
       "id": 1,
       "nome": "1001",
-      "situacao": "ATIVO"
+      "status": "ATIVO"
     },
     {
       "id": 2,
       "nome": "1002",
-      "situacao": "ATIVO"
+      "status": "ATIVO"
     },
     {
       "id": 3,
       "nome": "1004",
-      "situacao": "ATIVO"
+      "status": "ATIVO"
     }
   ]
 }

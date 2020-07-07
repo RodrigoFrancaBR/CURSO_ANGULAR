@@ -1,4 +1,6 @@
 export interface Unidade {
     id?: number;
-    nome: string;
+    nome?: string;
+    endereco?: string;
+    status?: string;
 }
