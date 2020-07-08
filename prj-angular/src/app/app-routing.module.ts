@@ -1,3 +1,4 @@
+import { UnidadeEditarComponent } from './views/unidades/unidade-editar/unidade-editar.component';
 import { ExemploComponent } from './views/exemplo/exemplo.component';
 import { CadastroComponent } from './views/unidades/cadastro/cadastro.component';
 
@@ -20,9 +21,13 @@ const routes: Routes = [
   {
     path: 'unidades', component: UnidadesComponent
   },
-  
+
   {
     path: 'unidades/cadastro', component: CadastroComponent
+  },
+
+  {
+    path: 'unidades/editar/:id', component: UnidadeEditarComponent
   },
 
 ];

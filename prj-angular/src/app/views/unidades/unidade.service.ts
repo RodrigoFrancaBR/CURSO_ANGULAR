@@ -21,12 +21,22 @@ export class UnidadeService {
     });
   }
 
-  salvar(unidade: Unidade): Observable<Unidade> {
+  salvarUnidade(unidade: Unidade): Observable<Unidade> {
     return this.http.post<Unidade>(baseUrl, unidade);
   }
 
   obterUnidades(): Observable<Unidade[]> {
     return this.http.get<Unidade[]>(baseUrl);
+  }
+
+  buscarUnidadePorId(id: string): Observable<Unidade> {
+    const url = `${baseUrl}/${id}`;
+    return this.http.get<Unidade>(url);
+  }
+
+  atualizaUnidade(unidade: Unidade): Observable<Unidade> {
+    const url = `${baseUrl}/${unidade.id}`;
+    return this.http.put<Unidade>(url, unidade);
   }
 
 }

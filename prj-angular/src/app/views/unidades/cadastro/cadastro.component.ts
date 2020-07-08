@@ -21,7 +21,7 @@ export class CadastroComponent implements OnInit {
   salvar() {
     // console.log(this.service);
 
-    this.service.salvar(this.unidade).subscribe((res) => {
+    this.service.salvarUnidade(this.unidade).subscribe((res) => {
       return (res.id > 0 ? this.service.showMessage('unidade salva com sucesso ' + res.id) : this.service.showMessage(''));
     },
       (error: any) => {

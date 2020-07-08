@@ -49,6 +49,7 @@ import { TableComponent } from './views/unidades/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { UnidadeEditarComponent } from './views/unidades/unidade-editar/unidade-editar.component';
 
 
 
@@ -66,7 +67,8 @@ import { MatSortModule } from '@angular/material/sort';
     ExemploComponent,
     UnlessDirective,
     GridComponent,
-    TableComponent
+    TableComponent,
+    UnidadeEditarComponent
   ],
   imports: [
     BrowserModule,
