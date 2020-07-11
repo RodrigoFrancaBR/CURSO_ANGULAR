@@ -13,8 +13,8 @@ export class UnidadesComponent {
   constructor(private router: Router, private service: UnidadeService) { }
 
   navegarParaCadastro() {
-    // this.service.showMessage('Direcionando para o cadastro de unidade');
     this.router.navigate(['unidades/cadastro']);
+
   }
 
 }
