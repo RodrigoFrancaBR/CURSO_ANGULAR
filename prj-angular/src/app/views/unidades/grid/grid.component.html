@@ -1,1 +1,49 @@
-<p>grid works!</p>
+<form class="form-inline" [formGroup]="unidadeForm" (ngSubmit)="pesquisar()">
+    <div class="form-group">
+        <label for="inpId">ID</label>
+        <input class="form-control mx-sm-3" id="inpId" type="text" formControlName="id">
+        <button class="btn btn-primary" id="btnPesquisa" type="submit" style="float: right">Pesquisar</button>
+    </div>
+</form>
+
+<br>
+
+<div class="details-table font-small card">
+    <table class="table table-striped table-hover table-bordered table-sm">
+        <thead>
+            <tr>
+                <th class="headers" scope="col">ID</th>
+                <th class="headers" scope="col">NOME</th>
+                <th class="headers" scope="col">ENDEREÇO</th>
+                <th class="headers" scope="col">STATUS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr [class.table-primary]="estaSelecionadoRegistro(unidade)" (click)="selecionarRegistro(unidade)"
+                ngDefaultControl *ngFor="let unidade of listaDeUnidades">
+                <td>{{unidade.id}}</td>
+                <td>{{unidade.nome}}</td>
+                <td>{{unidade.endereco}}</td>
+                <td>{{unidade.status}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<button class="btn btn-secondary btn-table btn-sm" (click)="open(content)">Forçar Cancelamento</button>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Hello, World!</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="c('Save click')">Save</button>
+        <button type="button" class="btn btn-secondary" (click)="d('cancel click')">Cancel</button>
+    </div>
+</ng-template>

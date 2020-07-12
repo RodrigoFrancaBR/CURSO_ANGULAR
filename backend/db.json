@@ -4,7 +4,8 @@
       "id": 1,
       "nome": "CASCADURA12",
       "endereco": "RUA C1",
-      "status": "ATIVO"
+      "status": "ATIVO", 
+      
     },
     {
       "id": 2,

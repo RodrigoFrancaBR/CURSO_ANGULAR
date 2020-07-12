@@ -4,7 +4,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 /**
@@ -85,6 +85,7 @@ import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
     MatSliderModule,
