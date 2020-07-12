@@ -50,6 +50,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { UnidadeEditarComponent } from './views/unidades/unidade-editar/unidade-editar.component';
+import { NgbModalModule, NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalFoculsComponent } from './components/modal/modal-foculs/modal-foculs.component';
+import { MymodalcomponentComponent } from './components/mymodalcomponent/mymodalcomponent.component';
+import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-modal-confirm.component';
+import { EfxModalModule } from './components/modal/efx-modal/efx-modal.module';
 
 
 
@@ -68,9 +73,13 @@ import { UnidadeEditarComponent } from './views/unidades/unidade-editar/unidade-
     UnlessDirective,
     GridComponent,
     TableComponent,
-    UnidadeEditarComponent
+    UnidadeEditarComponent,
+    ModalFoculsComponent,
+    MymodalcomponentComponent, NgbdModalConfirmComponent
   ],
   imports: [
+    NgbModule,
+    //NgbModalModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -89,7 +98,9 @@ import { UnidadeEditarComponent } from './views/unidades/unidade-editar/unidade-
     MatPaginatorModule,
     MatSortModule
   ],
+  // providers: [NgbActiveModal],
   providers: [],
+  entryComponents: [ModalFoculsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
