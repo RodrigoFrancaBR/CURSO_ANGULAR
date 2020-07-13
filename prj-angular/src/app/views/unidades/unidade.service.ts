@@ -30,6 +30,7 @@ export class UnidadeService {
   }
 
   buscarUnidadePorId(id: string): Observable<Unidade> {
+    console.log(id);
     const url = `${baseUrl}/${id}`;
     return this.http.get<Unidade>(url);
   }

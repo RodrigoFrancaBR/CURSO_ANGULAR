@@ -4,8 +4,7 @@
       "id": 1,
       "nome": "CASCADURA12",
       "endereco": "RUA C1",
-      "status": "ATIVO", 
-      
+      "status": "ATIVO"
     },
     {
       "id": 2,
@@ -27,38 +26,6 @@
       "endereco": "R A1",
       "status": "ATIVO",
       "id": 5
-    },
-    {
-      "nome": "Rodrigo França",
-      "endereco": "123",
-      "status": "ATIVO",
-      "id": 6
-    },
-    {
-      "nome": "novaUnidade",
-      "endereco": "teste",
-      "status": "teste",
-      "id": 7
-    },
-    {
-      "id": 8
-    }
-  ],
-  "turmas": [
-    {
-      "id": 1,
-      "nome": "1001",
-      "status": "ATIVO"
-    },
-    {
-      "id": 2,
-      "nome": "1002",
-      "status": "ATIVO"
-    },
-    {
-      "id": 3,
-      "nome": "1004",
-      "status": "ATIVO"
     }
   ]
 }

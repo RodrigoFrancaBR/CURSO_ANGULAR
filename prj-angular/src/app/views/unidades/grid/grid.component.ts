@@ -1,7 +1,7 @@
 import { UnidadeEditarComponent } from './../unidade-editar/unidade-editar.component';
 import { UnidadeService } from './../unidade.service';
 import { Unidade } from './../../../model/unidade';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,7 +10,9 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.css']
 })
-export class GridComponent implements OnInit {
+export class GridComponent implements OnInit, OnChanges {
+  @Input()
+  dadosDaGrid: Array<Unidade>;
 
   unidadeForm: FormGroup;
   listaDeUnidades: Unidade[] = [];
@@ -31,6 +33,12 @@ export class GridComponent implements OnInit {
   ngOnInit() {
     this.iniciarFormulario();
     // this.carregarDadosDaGrid();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.dadosDaGrid && this.dadosDaGrid.length > 0) {
+      console.log(this.dadosDaGrid);
+    }
   }
 
   iniciarFormulario() {

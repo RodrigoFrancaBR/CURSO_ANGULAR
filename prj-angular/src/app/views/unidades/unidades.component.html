@@ -1,3 +1,37 @@
-<!-- <button mat-raised-button (click)="navegarParaCadastro()" color="primary">Nova Unidade</button> -->
-<app-grid></app-grid>
-<!-- <app-table></app-table> -->
+<div class="card border border-secondary">
+
+    <div class="card-header p-1 bg-secondary ">
+        <!-- <strong class="text-secondary text-dark ">Tela Cancelamento Forçado</strong> -->
+        <strong class="text-secondary text-dark ">Tela Pesquisa de Unidade</strong>
+    </div>
+
+    <div class="card-body">
+
+        <form class="" [formGroup]="unidadeForm" (ngSubmit)="pesquisar()">
+
+            <div class="form-group row">
+
+                <div class="col-sm-12">                    
+                    <label for="inpId" class="mr-1 col-form-label"><strong class="text-secondary">ID</strong></label>
+                    <input id="inpId" class=" text-secondary" type="text" formControlName="id">
+                    <div class="float-right">
+                        <button class="btn btn-light rounded border border-secondary" id="btnPesquisa"
+                            type="submit"><strong class="text-secondary">Pesquisar</strong></button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <app-grid [dadosDaGrid]="listaDeUnidades"></app-grid>
+
+        <div class="float-right mt-3">
+            <button class="btn btn-light rounded border border-secondary" id="btnForcar"
+                type="button"><strong class="text-secondary">Forçar Cancelamento</strong></button>
+        </div>
+
+    </div>
+
+
+
+</div>

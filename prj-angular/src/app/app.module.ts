@@ -80,6 +80,7 @@ import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-
     ModalFoculsComponent,
     NgbdModalConfirmComponent
   ],
+  // exports:[GridComponent],
   imports: [
     NgbModule,
     BrowserModule,
