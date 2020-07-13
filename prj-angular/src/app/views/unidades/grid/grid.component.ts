@@ -3,7 +3,7 @@ import { UnidadeService } from './../unidade.service';
 import { Unidade } from './../../../model/unidade';
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-grid',
@@ -11,28 +11,21 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./grid.component.css']
 })
 export class GridComponent implements OnInit, OnChanges {
-  @Input()
-  dadosDaGrid: Array<Unidade>;
 
-  unidadeForm: FormGroup;
-  listaDeUnidades: Unidade[] = [];
-  unidadeSelecionada: number;
-  temSelecionado: boolean;
-  // unidadeSelecionada: number;
+  @Input() dadosDaGrid: Array<Unidade>;
+  unidadeSelecionada: Unidade;
+  ngbModalRef: NgbModalRef;
   constructor(
     private service: UnidadeService,
-    private formBuilder: FormBuilder,
-    private modal: NgbModal,
-    config: NgbModalConfig
+    private ngbModal: NgbModal,
+    ngbModalConfig: NgbModalConfig,
   ) {
     // customize default values of modals used by this component tree
-    config.backdrop = 'static';
-    config.keyboard = false;
+    ngbModalConfig.backdrop = 'static';
+    ngbModalConfig.keyboard = false;
   }
 
   ngOnInit() {
-    this.iniciarFormulario();
-    // this.carregarDadosDaGrid();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -41,54 +34,49 @@ export class GridComponent implements OnInit, OnChanges {
     }
   }
 
-  iniciarFormulario() {
-    this.unidadeForm = this.formBuilder.group({
-      id: [null]
-    });
-  }
-
-  get id(): AbstractControl {
-    return this.unidadeForm.get('id');
-  }
-
-  pesquisar() {
-    console.log(this.id.value);
-    this.service.buscarUnidadePorId(this.id.value).subscribe(resp => {
-      this.listaDeUnidades.push(resp);
-    });
-  }
-
-  // carregarDadosDaGrid() {
-  //   this.service.obterUnidades().subscribe((res) => {
-  //     console.log(res);
-  //     this.listaDeUnidades = res;
-  //   });
+  // selecionarRegistro(unidade: Unidade): void {
+  //   this.unidadeSelecionada = (this.unidadeSelecionada.id === unidade.id) ? null : unidade;
   // }
 
   selecionarRegistro(unidade: Unidade): void {
-    this.unidadeSelecionada = (this.unidadeSelecionada === unidade.id) ? null : unidade.id;
-
-    // if (this.unidadeSelecionada === unidade.id) {
-    //   this.unidadeSelecionada = null;
-    // } else {
-    //   this.unidadeSelecionada = unidade.id;
-    // }
+    if (this.eValidaUnidade(this.unidadeSelecionada)) {
+      this.unidadeSelecionada = (this.unidadeSelecionada.id === unidade.id) ? null : unidade;
+    } else {
+      this.unidadeSelecionada = unidade;
+    }
   }
 
   estaSelecionadoRegistro(unidade: Unidade): boolean {
-    return (this.unidadeSelecionada === unidade.id) ? true : false;
-    // if (this.unidadeSelecionada === unidade.id) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    if (this.eValidaUnidade(this.unidadeSelecionada)) {
+      return (this.unidadeSelecionada.id === unidade.id) ? true : false;
+    } else {
+      return false;
+    }
 
+  }
+
+  eValidaUnidade(unidadeSelecionada: Unidade) {
+    return (unidadeSelecionada) ? true : false;
   }
 
   open(content) {
-    this.modal.open(content, { size: 'sm' });
+    this.ngbModalRef = this.ngbModal.open(content, { size: 'sm' });
   }
 
+  sim() {
+    console.log('clicou no sim');
+    this.ngbModalRef.close();
+    this.unidadeSelecionada.status = 'INATIVO';
+    this.service.atualizaUnidade(this.unidadeSelecionada).subscribe(resp => {
+      console.log(resp);
+    });
+
+  }
+  nao() {
+    console.log('clicou no não');
+    this.ngbModalRef.dismiss();
+    console.log('dismiss acionado');
+  }
 
 
 }

@@ -4,7 +4,7 @@
       "id": 1,
       "nome": "CASCADURA12",
       "endereco": "RUA C1",
-      "status": "ATIVO"
+      "status": "INATIVO"
     },
     {
       "id": 2,
@@ -17,9 +17,6 @@
       "nome": "MÉIER",
       "endereco": "RUA M1",
       "status": "ATIVO"
-    },
-    {
-      "id": 4
     },
     {
       "nome": "ABOLIÇÃO",
