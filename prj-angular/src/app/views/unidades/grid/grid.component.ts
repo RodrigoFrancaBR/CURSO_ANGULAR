@@ -1,9 +1,9 @@
-import { UnidadeEditarComponent } from './../unidade-editar/unidade-editar.component';
 import { UnidadeService } from './../unidade.service';
 import { Unidade } from './../../../model/unidade';
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { viewClassName } from '@angular/compiler';
 
 @Component({
   selector: 'app-grid',
@@ -11,7 +11,6 @@ import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstra
   styleUrls: ['./grid.component.css']
 })
 export class GridComponent implements OnInit, OnChanges {
-
   @Input() dadosDaGrid: Array<Unidade>;
   unidadeSelecionada: Unidade;
   ngbModalRef: NgbModalRef;
@@ -23,10 +22,13 @@ export class GridComponent implements OnInit, OnChanges {
     // customize default values of modals used by this component tree
     ngbModalConfig.backdrop = 'static';
     ngbModalConfig.keyboard = false;
+    // ngbModalConfig.container = 'xuxu';
   }
 
   ngOnInit() {
   }
+
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.dadosDaGrid && this.dadosDaGrid.length > 0) {
@@ -60,7 +62,14 @@ export class GridComponent implements OnInit, OnChanges {
   }
 
   open(content) {
-    this.ngbModalRef = this.ngbModal.open(content, { size: 'sm' });
+    this.ngbModalRef = this.ngbModal.open(content, { size: 'sm', windowClass: 'modal-confirma' });
+
+    // this.modalService.open(content, { container: '#content', ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    //   this.closeResult = `Closed with: ${result}`;
+    // }, (reason) => {
+
+    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    // });
   }
 
   sim() {

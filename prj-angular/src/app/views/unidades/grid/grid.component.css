@@ -19,3 +19,6 @@
     -o-transition: left 0.3s;
     transition: left 0.3s;
 } */
+.modal-confirma{
+    opacity: 0;
+}
