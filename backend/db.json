@@ -2,7 +2,7 @@
   "unidades": [
     {
       "id": 1,
-      "nome": "CASCADURA12",
+      "nome": "CASCADURA",
       "endereco": "RUA C1",
       "status": "INATIVO"
     },
@@ -10,19 +10,13 @@
       "id": 2,
       "nome": "MADUREIRA",
       "endereco": "RUA M1",
-      "status": "ATIVO"
+      "status": "INATIVO"
     },
     {
       "id": 3,
       "nome": "MÉIER",
       "endereco": "RUA M1",
       "status": "ATIVO"
-    },
-    {
-      "nome": "ABOLIÇÃO",
-      "endereco": "R A1",
-      "status": "ATIVO",
-      "id": 5
     }
   ]
 }

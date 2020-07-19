@@ -36,6 +36,7 @@ export class UnidadeService {
   }
 
   atualizaUnidade(unidade: Unidade): Observable<Unidade> {
+    unidade.status = 'INATIVO';
     console.log(unidade);
     const url = `${baseUrl}/${unidade.id}`;
     return this.http.put<Unidade>(url, unidade);

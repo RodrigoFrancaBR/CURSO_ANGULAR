@@ -1,24 +1,3 @@
-/* .main-card {
-    min-height:76.5vh;   
-   
-} */
-/* .content-header {
-    width: 100%;
-    left: 0;
-    top: 60px;
-    z-index: 10;
-    background-color: #fff;
-    padding: 0 15px 0 15px;
-    height: 50px;
-    line-height: 50px;
-    overflow: hidden;
-    border-bottom: 1px solid #eee;
-    -webkit-transition: left 0.3s;
-    -moz-transition: left 0.3s;
-    -ms-transition: left 0.3s;
-    -o-transition: left 0.3s;
-    transition: left 0.3s;
-} */
 .modal-confirma{
-    opacity: 0;
+    opacity: 1!important;
 }

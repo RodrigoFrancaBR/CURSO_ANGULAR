@@ -1,3 +1,4 @@
+import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.component';
 /**
  * Angular
  */
@@ -24,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
  * Ng-Bootstrap
  */
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
 
 /**
  * My-App
@@ -58,11 +60,18 @@ import { UnidadeEditarComponent } from './views/unidades/unidade-editar/unidade-
 
 import { ModalFoculsComponent } from './components/modal/modal-foculs/modal-foculs.component';
 import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-modal-confirm.component';
+import { CommonModule } from '@angular/common';
+import { NgbdModalComponent, NgbdModalContent } from './components/modal/modal-component/modal-component';
+import { NgbdModalConfig } from './components/modal/modal-config/modal-config';
+import { ModalConfirmacaoComponent } from './util/modal-confirmacao';
 
 
 
 @NgModule({
   declarations: [
+    NgbdModalContent,
+    NgbdModalComponent,
+    FormMensagemComponent,
     AppComponent,
     HeaderComponent,
     FooterComponent,
@@ -78,14 +87,21 @@ import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-
     TableComponent,
     UnidadeEditarComponent,
     ModalFoculsComponent,
-    NgbdModalConfirmComponent
+    NgbdModalConfirmComponent,
+    NgbdModalConfig,
+    ModalConfirmacaoComponent
   ],
   // exports:[GridComponent],
   imports: [
+    ToastrModule.forRoot({
+      timeOut: 1000,
+      preventDuplicates: true,
+    }),
+    CommonModule,
+    BrowserAnimationsModule,
     NgbModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
@@ -103,7 +119,8 @@ import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-
     MatSortModule
   ],
   providers: [],
-  entryComponents: [ModalFoculsComponent],
+  exports: [],
+  entryComponents: [NgbdModalContent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
