@@ -21,9 +21,11 @@ export class FormUtil {
 
     // marca todos os campos como dirty desde que este tenha algum error
     static marcaComoDirtySeTemErro(fg: FormGroup) {
+        console.log(`marcaComoDirtySeTemErro ${fg}`);
         Object.keys(fg.controls).forEach(campo => {
             const controle = fg.get(campo);
             if (controle.errors) {
+                console.log(`${controle.errors}`);
                 controle.markAsDirty();
             }
             // if (controle instanceof FormGroup) {
@@ -32,10 +34,7 @@ export class FormUtil {
         });
     }
 
-    /**
-   * Tratamento dos controles
-   * @param fg Formulário que será validado
-   */
+
     // static verificarValidacaoForm(fg: FormGroup) {
     //     Object.keys(fg.controls).forEach(campo => {
     //         const controle = fg.get(campo);
@@ -45,9 +44,6 @@ export class FormUtil {
     //         }
     //     });
     // }
-
-
-
 
 }
 

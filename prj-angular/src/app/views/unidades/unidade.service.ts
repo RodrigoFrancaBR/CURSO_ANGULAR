@@ -30,16 +30,13 @@ export class UnidadeService {
   }
 
   buscarUnidadePorId(id: string): Observable<Unidade> {
-    console.log(id);
     const url = `${baseUrl}/${id}`;
     return this.http.get<Unidade>(url);
   }
 
-  atualizaUnidade(unidade: Unidade): Observable<Unidade> {
-    unidade.status = 'INATIVO';
-    console.log(unidade);
-    const url = `${baseUrl}/${unidade.id}`;
-    return this.http.put<Unidade>(url, unidade);
+  atualizaUnidade(id: number): Observable<Unidade> {
+    const url = `${baseUrl}/${id}`;
+    return this.http.put<Unidade>(url, id);
   }
 
 }

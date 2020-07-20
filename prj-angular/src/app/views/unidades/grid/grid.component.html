@@ -1,10 +1,23 @@
-<!-- <form class="form-inline" [formGroup]="unidadeForm" (ngSubmit)="pesquisar()">
-        <div class="form-group">
-            <label for="inpId">ID</label>
-            <input class="form-control mx-sm-3" id="inpId" type="text" formControlName="id">
-            <button class="btn btn-primary" id="btnPesquisa" type="submit" style="float: right">Pesquisar</button>
+<form class="" [formGroup]="formulario" (ngSubmit)="pesquisar()">
+
+    <div class="form-group row">
+
+        <div class="col-sm-12">
+
+            <label for="inpId" class="mr-1 col-form-label"><strong class="text-secondary">ID</strong></label>
+            <input id="inpId" class=" text-secondary" type="text" formControlName="id">
+            <form-mensagem [errors]="id.errors" [mostraErro]="mostrarErro('id')">
+            </form-mensagem>
+
+            <div class="float-right">
+                <button class="btn btn-light rounded border border-secondary" id="btnPesquisa" type="submit"><strong
+                        class="text-secondary">Pesquisar</strong></button>
+            </div>
+
         </div>
-    </form> -->
+    </div>
+
+</form>
 
 <div class="details-table font-small card">
     <table class="table table-striped table-hover table-bordered table-sm">
@@ -18,7 +31,7 @@
         </thead>
         <tbody>
             <tr [class.table-primary]="estaSelecionadoRegistro(unidade)" (click)="selecionarRegistro(unidade)"
-                ngDefaultControl *ngFor="let unidade of dadosDaGrid">
+                ngDefaultControl *ngFor="let unidade of listaDeUnidades">
                 <td>{{unidade.id}}</td>
                 <td>{{unidade.nome}}</td>
                 <td>{{unidade.endereco}}</td>
@@ -29,7 +42,8 @@
 </div>
 
 <div class="float-right mt-3">
-    <button class="btn btn-light rounded border border-secondary" id="btnForcar" type="button" (click)="forcarCancelamento(content)">
+    <button class="btn btn-light rounded border border-secondary" id="btnForcar" type="button"
+        (click)="forcarCancelamento(content)">
         <strong class="text-secondary">Forçar Cancelamento</strong>
     </button>
 </div>
@@ -47,7 +61,5 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="sim()">Sim</button>
         <button type="button" class="btn btn-secondary" (click)="nao()">Não</button>
-        <!-- <button type="button" class="btn btn-danger" (click)="c('Save click')">Sim</button>
-        <button type="button" class="btn btn-secondary" (click)="d('cancel click')">Não</button> -->
     </div>
 </ng-template>

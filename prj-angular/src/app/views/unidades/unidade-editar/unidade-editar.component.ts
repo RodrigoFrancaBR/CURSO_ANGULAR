@@ -22,15 +22,15 @@ export class UnidadeEditarComponent implements OnInit {
     this.service.showMessage('Bem vindo a tela de edição de unidade');
   }
 
-  atualizar(): void {
+  // atualizar(): void {
 
-    this.service.atualizaUnidade(this.unidade).subscribe((res) => {
-      return (res.id > 0 ? this.service.showMessage('unidade atualizada com sucesso ' + res.id) : this.service.showMessage(''));
-    },
-      (error: any) => {
-        console.log(error);
-      });
-  }
+  //   this.service.atualizaUnidade(this.unidade).subscribe((res) => {
+  //     return (res.id > 0 ? this.service.showMessage('unidade atualizada com sucesso ' + res.id) : this.service.showMessage(''));
+  //   },
+  //     (error: any) => {
+  //       console.log(error);
+  //     });
+  // }
 
   cancelar() {
     this.router.navigate(['unidades']);

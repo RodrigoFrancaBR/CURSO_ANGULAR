@@ -64,11 +64,11 @@ import { CommonModule } from '@angular/common';
 import { NgbdModalComponent, NgbdModalContent } from './components/modal/modal-component/modal-component';
 import { NgbdModalConfig } from './components/modal/modal-config/modal-config';
 import { ModalConfirmacaoComponent } from './util/modal-confirmacao';
-
-
+import { TypeaheadFocusComponent } from './components/typeahead-focus/typeahead-focus.component';
 
 @NgModule({
   declarations: [
+    TypeaheadFocusComponent,
     NgbdModalContent,
     NgbdModalComponent,
     FormMensagemComponent,
@@ -89,7 +89,7 @@ import { ModalConfirmacaoComponent } from './util/modal-confirmacao';
     ModalFoculsComponent,
     NgbdModalConfirmComponent,
     NgbdModalConfig,
-    ModalConfirmacaoComponent
+    ModalConfirmacaoComponent,
   ],
   // exports:[GridComponent],
   imports: [

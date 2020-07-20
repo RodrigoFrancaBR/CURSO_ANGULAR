@@ -1,9 +1,11 @@
 import { NgbModalRef, NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UnidadeService } from './../unidade.service';
 import { Unidade } from './../../../model/unidade';
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToastrMensagemUtil } from 'src/app/util/toastr-mensagem-util';
 import { ToastrService } from 'ngx-toastr';
+import { Validators, AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormUtil } from 'src/app/util/form-util';
 
 
 @Component({
@@ -13,49 +15,76 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class GridComponent implements OnInit {
 
-  @Input() dadosDaGrid: Array<Unidade>;
-  unidadeSelecionada: Unidade;
+  formulario: FormGroup;
+  listaDeUnidades: Unidade[] = [];
+  unidadeSelecionada: number;
   ngbModalRef: NgbModalRef;
 
   constructor(
-    private toastr: ToastrService,
+    private formBuilder: FormBuilder,
     private service: UnidadeService,
+    private toastr: ToastrService,
     private ngbModal: NgbModal,
     ngbModalConfig: NgbModalConfig) {
-    // customize default values of modals used by this component tree
+
     ngbModalConfig.backdrop = 'static';
     ngbModalConfig.keyboard = false;
   }
 
   ngOnInit() {
+    this.iniciarFormulario();
+  }
+
+  iniciarFormulario() {
+    this.formulario = this.formBuilder.group({
+      id: [null, [Validators.required]]
+    });
+  }
+
+  get id(): AbstractControl {
+    return this.formulario.get('id');
+  }
+
+  pesquisar() {
+    if (this.formularioValido()) {
+      this.service.buscarUnidadePorId(this.id.value).subscribe(resp => {
+        this.listaDeUnidades = [];
+        this.listaDeUnidades.push(resp);
+      });
+    }
+  }
+
+  private formularioValido(): boolean {
+    if (this.formulario.invalid) {
+      FormUtil.marcaComoDirtySeTemErro(this.formulario);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  // aplicarCSSErro(controlName: string) {
+  //   return FormUtil.aplicarCSSErro(this.formulario, controlName);
+  // }
+
+  mostrarErro(controlName: string) {
+    return FormUtil.mostrarErro(this.formulario, controlName);
   }
 
   selecionarRegistro(unidade: Unidade): void {
-    if (this.eValidaUnidade(this.unidadeSelecionada)) {
-      this.unidadeSelecionada = (this.unidadeSelecionada.id === unidade.id) ? null : unidade;
-    } else {
-      this.unidadeSelecionada = unidade;
-    }
+    this.unidadeSelecionada = (this.unidadeSelecionada === unidade.id) ? null : unidade.id;
   }
 
   estaSelecionadoRegistro(unidade: Unidade): boolean {
-    if (this.eValidaUnidade(this.unidadeSelecionada)) {
-      return (this.unidadeSelecionada.id === unidade.id) ? true : false;
-    } else {
-      return false;
-    }
-
-  }
-
-  eValidaUnidade(unidadeSelecionada: Unidade) {
-    return (unidadeSelecionada) ? true : false;
+    return (this.unidadeSelecionada === unidade.id) ? true : false;
   }
 
   forcarCancelamento(content) {
     if (this.unidadeSelecionada) {
-      this.abrirModal(content);
+      this.abrirModal(content)
     } else {
       ToastrMensagemUtil.info(this.toastr, 'É preciso selecionar um registro para forçar o cancelamento.');
+
     }
   }
 
@@ -69,12 +98,10 @@ export class GridComponent implements OnInit {
   }
 
   sim() {
-    console.log('clicou no sim');
-    this.ngbModalRef.close();
     this.service.atualizaUnidade(this.unidadeSelecionada).subscribe(resp => {
       if (resp) {
         ToastrMensagemUtil.success(this.toastr, 'Status alterado com sucesso');
-        this.dadosDaGrid = [];
+        this.listaDeUnidades = [];
       }
     });
 

@@ -5,31 +5,8 @@
     </div>
 
     <div class="card-body">
-
-        <form class="" [formGroup]="unidadeForm" (ngSubmit)="pesquisar()">
-
-            <div class="form-group row">
-
-                <div class="col-sm-12">
-                    <label for="inpId" class="mr-1 col-form-label"><strong class="text-secondary">ID</strong></label>
-                    <input id="inpId" class=" text-secondary" type="text" formControlName="id" [ngClass]="aplicarCSSErro('id')">
-                    <form-mensagem [errors]="id.errors" [mostraErro]="mostrarErro('id')">
-                    </form-mensagem>
-                    <div class="float-right">
-                        <button class="btn btn-light rounded border border-secondary" id="btnPesquisa"
-                            type="submit"><strong class="text-secondary">Pesquisar</strong></button>
-                    </div>
-                </div>
-            </div>
-
-        </form>
-
-        <app-grid [dadosDaGrid]="listaDeUnidades"></app-grid>
-
+        <app-grid></app-grid>
     </div>
 
 </div>
-<!-- 
-<ngbd-modal-component></ngbd-modal-component> -->
-<!-- <ngbd-modal-config></ngbd-modal-config> -->
-<modal-confirmacao></modal-confirmacao>
+

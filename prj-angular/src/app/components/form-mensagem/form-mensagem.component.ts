@@ -28,6 +28,7 @@ export class FormMensagemComponent {
 
     _errors: ValidatorFn;
 
+    // tslint:disable-next-line: adjacent-overload-signatures
     set errors(errors: ValidationErrors) {
         if (errors) {
             console.log('tem erro')

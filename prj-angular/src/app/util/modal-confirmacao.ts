@@ -1,32 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
+const CLICK_EVENT = {
+    OPEN: 'Open',
+    YES: 'yes',
+    NO: 'no'
+};
+
 @Component({
-    selector: 'modal-confirmacao',
+    selector: 'confirmation-modal',
     template: `
 
-<div class="float-right mt-3">
-    <button class="btn btn-light rounded border border-secondary" id="btnForcar" type="button" (click)="forcarCancelamento(content)">
-        <strong class="text-secondary">Forçar Cancelamento</strong>
+<!-- <div class="float-right mt-3">
+    <button class="btn btn-light rounded border border-secondary" id="btnForcar" type="button" (click)="oepn(content)">
+    <strong class="text-secondary">{{openButtonName}}</strong>
     </button>
-</div>
+</div> -->
 
 <ng-template #content let-c="close" let-d="dismiss">
 
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Título</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
-      </button>
+      </button> -->
     </div>
 
     <div class="modal-body">
-      <p>Confirma o cancelamento da unidade?</p>
+        {{body}}
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="sim()">Sim</button>
-        <button type="button" class="btn btn-secondary" (click)="nao()">Não</button>
+        <button type="button" class="btn btn-danger" (click)="yes()">{{yesButtonName}}</button>
+        <button type="button" class="btn btn-secondary" (click)="no()">{{noButtonName}}</button>
     </div>
 
 </ng-template>
@@ -36,8 +42,21 @@ import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
     // add NgbModalConfig and NgbModal to the component providers
     // providers: [NgbModalConfig, NgbModal]
 })
-export class ModalConfirmacaoComponent {
+export class ModalConfirmacaoComponent implements OnChanges {
+    @ViewChild('content', { static: false }) c: any;
+    @Input() openButtonName = 'open';
+    @Input() title = 'Title';
+    @Input() body = 'Body';
+    @Input() yesButtonName = 'Yes';
+    @Input() noButtonName = 'No';
+
+    @Output() modalClickEvent = new EventEmitter();
+    @Input() openModal = false;
+    @Output() openClickEvent = new EventEmitter();
+
+
     ngbModalRef: NgbModalRef;
+
 
     constructor(
         ngbModalConfig: NgbModalConfig,
@@ -47,40 +66,33 @@ export class ModalConfirmacaoComponent {
         ngbModalConfig.keyboard = false;
     }
 
-    forcarCancelamento(content) {
-        console.log('forçar cancelamento');
-        this.abrirModal(content);
-        // if (this.unidadeSelecionada) {
-        //     this.abrirModal(content);
-        // } else {
-        //     ToastrMensagemUtil.info(this.toastr, 'É preciso selecionar um registro para forçar o cancelamento.');
-        // }
+    ngOnChanges(changes: SimpleChanges): void {
+
+        if (changes.openModal) {
+            
+            this.open(this.c);
+        }
     }
 
-    abrirModal(content) {
-        console.log('abrir modal');
+    open(content) {
         let modal = null;
-        this.ngbModalRef = this.ngbModal.open(content, { size: 'sm', windowClass: 'forcarCancelamentoModal' });
+        this.ngbModalRef = this.ngbModal.open(
+            content,
+            { size: 'sm', windowClass: 'confirmationModal' });
         setTimeout(() => {
-            modal = document.querySelector('.forcarCancelamentoModal');
+            modal = document.querySelector('.confirmationModal');
             modal.classList.remove('fade');
         }, 100);
     }
 
-    sim() {
-        console.log('clicou no sim');
+    yes() {
         this.ngbModalRef.close();
-        // this.service.atualizaUnidade(this.unidadeSelecionada).subscribe(resp => {
-        //     if (resp) {
-        //         ToastrMensagemUtil.success(this.toastr, 'Status alterado com sucesso');
-        //         this.dadosDaGrid = [];
-        //     }
-        // });
+        this.modalClickEvent.emit(CLICK_EVENT.YES);
     }
 
-    nao() {
-        console.log('clicou no não');
+    no() {
         this.ngbModalRef.dismiss();
+        this.modalClickEvent.emit(CLICK_EVENT.NO);
     }
 
 }
