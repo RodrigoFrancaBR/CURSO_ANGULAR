@@ -1,11 +1,13 @@
+import { Subject } from 'rxjs';
 import { NgbModalRef, NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UnidadeService } from './../unidade.service';
 import { Unidade } from './../../../model/unidade';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrMensagemUtil } from 'src/app/util/toastr-mensagem-util';
 import { ToastrService } from 'ngx-toastr';
 import { Validators, AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 import { FormUtil } from 'src/app/util/form-util';
+import { ModalConfirmacaoComponent } from 'src/app/util/modal-confirmacao';
 
 
 @Component({
@@ -14,11 +16,14 @@ import { FormUtil } from 'src/app/util/form-util';
   styleUrls: ['./grid.component.css']
 })
 export class GridComponent implements OnInit {
-
   formulario: FormGroup;
   listaDeUnidades: Unidade[] = [];
   unidadeSelecionada: number;
   ngbModalRef: NgbModalRef;
+  // @ViewChild('modalConfirmacaoComponent', { static: false }) content: ModalConfirmacaoComponent;
+  @ViewChild(ModalConfirmacaoComponent, { static: false }) private modalConfirmacaoComponent: ModalConfirmacaoComponent;
+
+  // @ViewChild('baseChart')chart: BaseChartDirective;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,6 +35,8 @@ export class GridComponent implements OnInit {
     ngbModalConfig.backdrop = 'static';
     ngbModalConfig.keyboard = false;
   }
+
+
 
   ngOnInit() {
     this.iniciarFormulario();
@@ -47,9 +54,10 @@ export class GridComponent implements OnInit {
 
   pesquisar() {
     if (this.formularioValido()) {
-      this.service.buscarUnidadePorId(this.id.value).subscribe(resp => {
+      this.service.buscarUnidadePorId(this.id.value).subscribe(response => {
         this.listaDeUnidades = [];
-        this.listaDeUnidades.push(resp);
+        this.listaDeUnidades.push(response);
+        this.unidadeSelecionada = null;
       });
     }
   }
@@ -79,9 +87,10 @@ export class GridComponent implements OnInit {
     return (this.unidadeSelecionada === unidade.id) ? true : false;
   }
 
-  forcarCancelamento(content) {
+  forcarCancelamento() {
     if (this.unidadeSelecionada) {
-      this.abrirModal(content)
+      this.modalConfirmacaoComponent.open();
+      // this.abrirModal()
     } else {
       ToastrMensagemUtil.info(this.toastr, 'É preciso selecionar um registro para forçar o cancelamento.');
 
@@ -102,6 +111,7 @@ export class GridComponent implements OnInit {
       if (resp) {
         ToastrMensagemUtil.success(this.toastr, 'Status alterado com sucesso');
         this.listaDeUnidades = [];
+        this.unidadeSelecionada = null;
       }
     });
 

@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
@@ -11,11 +12,11 @@ const CLICK_EVENT = {
     selector: 'confirmation-modal',
     template: `
 
-<!-- <div class="float-right mt-3">
-    <button class="btn btn-light rounded border border-secondary" id="btnForcar" type="button" (click)="oepn(content)">
+ <!-- <div class="float-right mt-3">
+    <button class="btn btn-light rounded border border-secondary" id="btnForcar" type="button" (click)="open(content)">
     <strong class="text-secondary">{{openButtonName}}</strong>
     </button>
-</div> -->
+</div>  -->
 
 <ng-template #content let-c="close" let-d="dismiss">
 
@@ -43,7 +44,8 @@ const CLICK_EVENT = {
     // providers: [NgbModalConfig, NgbModal]
 })
 export class ModalConfirmacaoComponent implements OnChanges {
-    @ViewChild('content', { static: false }) c: any;
+    debounce: Subject<string> = new Subject<string>();
+    @ViewChild('content', { static: false }) content: any;
     @Input() openButtonName = 'open';
     @Input() title = 'Title';
     @Input() body = 'Body';
@@ -68,16 +70,17 @@ export class ModalConfirmacaoComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
 
-        if (changes.openModal) {
-            
-            this.open(this.c);
-        }
+        // if (changes.openModal) {
+
+        //     this.open(this.c);
+        // }
     }
 
-    open(content) {
+    open() {
+        console.log('clicou no open');
         let modal = null;
         this.ngbModalRef = this.ngbModal.open(
-            content,
+            this.content,
             { size: 'sm', windowClass: 'confirmationModal' });
         setTimeout(() => {
             modal = document.querySelector('.confirmationModal');
@@ -86,13 +89,15 @@ export class ModalConfirmacaoComponent implements OnChanges {
     }
 
     yes() {
+        console.log('clicou no yes');
         this.ngbModalRef.close();
-        this.modalClickEvent.emit(CLICK_EVENT.YES);
+        // this.modalClickEvent.emit(CLICK_EVENT.YES);
     }
 
     no() {
+        console.log('clicou no no');
         this.ngbModalRef.dismiss();
-        this.modalClickEvent.emit(CLICK_EVENT.NO);
+        // this.modalClickEvent.emit(CLICK_EVENT.NO);
     }
 
 }

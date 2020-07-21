@@ -3,6 +3,9 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { ToastrMensagemUtil } from 'src/app/util/toastr-mensagem-util';
+import { ToastrService } from 'ngx-toastr';
 
 const baseUrl = 'http://localhost:3001/unidades';
 
@@ -11,15 +14,9 @@ const baseUrl = 'http://localhost:3001/unidades';
 })
 
 export class UnidadeService {
-  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
-
-  showMessage(msg: string): void {
-    this.snackBar.open(msg, 'X', {
-      duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top'
-    });
-  }
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService) { }
 
   salvarUnidade(unidade: Unidade): Observable<Unidade> {
     return this.http.post<Unidade>(baseUrl, unidade);
@@ -29,14 +26,25 @@ export class UnidadeService {
     return this.http.get<Unidade[]>(baseUrl);
   }
 
-  buscarUnidadePorId(id: string): Observable<Unidade> {
-    const url = `${baseUrl}/${id}`;
-    return this.http.get<Unidade>(url);
+  buscarUnidadePorId(id: string): Observable<any> {
+    return this.http
+      .get<any>(`${baseUrl}/${id}`)
+      .pipe(tap(response => {
+        this.log(`GET:${baseUrl}/${id}`, response);
+        ToastrMensagemUtil.success(this.toastr, 'Unidade encontrada com sucesso!')
+      }, error => {
+        console.log('Error');
+        ToastrMensagemUtil.error(this.toastr, `${error.status}`);
+      }));
   }
 
   atualizaUnidade(id: number): Observable<Unidade> {
-    const url = `${baseUrl}/${id}`;
+    const url = `${baseUrl} / ${id}`;
     return this.http.put<Unidade>(url, id);
+  }
+
+  log(operacao: string, resposta) {
+    console.log(`${operacao} Status:${resposta.status} `);
   }
 
 }

@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { ToastrMensagemUtil } from './../../../util/toastr-mensagem-util';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UnidadeService } from '../unidade.service';
@@ -10,7 +12,11 @@ import { Unidade } from 'src/app/model/unidade';
 })
 export class UnidadeEditarComponent implements OnInit {
 
-  constructor(private service: UnidadeService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(
+    private toastr: ToastrService,
+    private service: UnidadeService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   unidade: Unidade = {};
 
@@ -19,7 +25,7 @@ export class UnidadeEditarComponent implements OnInit {
     this.service.buscarUnidadePorId(id).subscribe(unidade => {
       return this.unidade = unidade;
     });
-    this.service.showMessage('Bem vindo a tela de edição de unidade');
+    ToastrMensagemUtil.info(this.toastr, 'Bem vindo a tela de edição de unidade');
   }
 
   // atualizar(): void {

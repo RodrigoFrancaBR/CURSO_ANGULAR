@@ -43,11 +43,11 @@
 
 <div class="float-right mt-3">
     <button class="btn btn-light rounded border border-secondary" id="btnForcar" type="button"
-        (click)="forcarCancelamento(content)">
+        (click)="forcarCancelamento()">
         <strong class="text-secondary">Forçar Cancelamento</strong>
     </button>
 </div>
-
+<!-- 
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Atenção</h4>
@@ -62,4 +62,5 @@
         <button type="button" class="btn btn-danger" (click)="sim()">Sim</button>
         <button type="button" class="btn btn-secondary" (click)="nao()">Não</button>
     </div>
-</ng-template>
+</ng-template> -->
+<confirmation-modal></confirmation-modal>
