@@ -36,25 +36,34 @@ export class GridComponent implements OnInit {
     ngbModalConfig.keyboard = false;
   }
 
-
-
   ngOnInit() {
     this.iniciarFormulario();
   }
 
   iniciarFormulario() {
-    this.formulario = this.formBuilder.group({
-      id: [null, [Validators.required]]
-    });
+    this.formulario = this.formBuilder.group(new Unidade());
+    this.getId().setValidators([Validators.required, FormUtil.valorMinimo()]);
   }
 
-  get id(): AbstractControl {
+  getId(): AbstractControl {
     return this.formulario.get('id');
   }
 
+  get id(): number {
+    return Number(this.getId().value);
+  }
+
   pesquisar() {
+    console.log('Valor da variavel já convertido: ' + this.id);
+    console.log('Devolve o controle do formulário');
+    console.log(this.getId());
+    console.log('Valor da variavel sem conversao: ' + this.id);
+    console.log(this.getId().value);
+    console.log(this.formulario);
+
     if (this.formularioValido()) {
-      this.service.buscarUnidadePorId(this.id.value).subscribe(response => {
+      this.service.buscarUnidadePorId(this.id).subscribe(response => {
+        console.log(response);
         this.listaDeUnidades = [];
         this.listaDeUnidades.push(response);
         this.unidadeSelecionada = null;
@@ -121,6 +130,13 @@ export class GridComponent implements OnInit {
     this.ngbModalRef.dismiss();
   }
 
+  alterar(unidade: Unidade) {
+    console.log(unidade);
+  }
+
+  excluir(unidade: Unidade) {
+    console.log(unidade);
+  }
 
 }
 

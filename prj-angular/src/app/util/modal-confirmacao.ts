@@ -12,19 +12,10 @@ const CLICK_EVENT = {
     selector: 'confirmation-modal',
     template: `
 
- <!-- <div class="float-right mt-3">
-    <button class="btn btn-light rounded border border-secondary" id="btnForcar" type="button" (click)="open(content)">
-    <strong class="text-secondary">{{openButtonName}}</strong>
-    </button>
-</div>  -->
-
 <ng-template #content let-c="close" let-d="dismiss">
 
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
-      <!-- <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button> -->
     </div>
 
     <div class="modal-body">
@@ -39,9 +30,6 @@ const CLICK_EVENT = {
 </ng-template>
 
   `,
-    // templateUrl: './modal-config.html',
-    // add NgbModalConfig and NgbModal to the component providers
-    // providers: [NgbModalConfig, NgbModal]
 })
 export class ModalConfirmacaoComponent implements OnChanges {
     debounce: Subject<string> = new Subject<string>();

@@ -1,3 +1,11 @@
 .modal-confirma{
     opacity: 1!important;
 }
+
+i.edit{
+    color: green;
+}
+
+i.delete{
+    color: red;
+}

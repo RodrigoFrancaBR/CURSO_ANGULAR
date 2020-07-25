@@ -1,6 +1,11 @@
-export interface Unidade {
-    id?: number;
-    nome?: string;
-    endereco?: string;
-    status?: string;
+export class Unidade {
+    constructor(
+        public id?: number,
+        public nome?: string,
+        public endereco?: string,
+        public status?: string,
+    ) {
+
+    }
+
 }

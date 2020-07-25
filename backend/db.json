@@ -17,6 +17,9 @@
       "nome": "MÉIER",
       "endereco": "RUA M1",
       "status": "ATIVO"
+    },
+    {
+      "id": 4
     }
   ]
 }

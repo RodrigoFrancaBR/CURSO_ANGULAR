@@ -26,7 +26,7 @@ export class UnidadeService {
     return this.http.get<Unidade[]>(baseUrl);
   }
 
-  buscarUnidadePorId(id: string): Observable<any> {
+  buscarUnidadePorId(id: number): Observable<any> {
     return this.http
       .get<any>(`${baseUrl}/${id}`)
       .pipe(tap(response => {

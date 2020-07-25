@@ -21,11 +21,11 @@ export class UnidadeEditarComponent implements OnInit {
   unidade: Unidade = {};
 
   ngOnInit() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.service.buscarUnidadePorId(id).subscribe(unidade => {
-      return this.unidade = unidade;
-    });
-    ToastrMensagemUtil.info(this.toastr, 'Bem vindo a tela de edição de unidade');
+    // const id = this.activatedRoute.snapshot.paramMap.get('id');
+    // this.service.buscarUnidadePorId(id).subscribe(unidade => {
+    //   return this.unidade = unidade;
+    // });
+    // ToastrMensagemUtil.info(this.toastr, 'Bem vindo a tela de edição de unidade');
   }
 
   // atualizar(): void {

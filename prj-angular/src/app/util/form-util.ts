@@ -1,6 +1,12 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 export class FormUtil {
+
+    static valorMinimo(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            return control.value && control.value < 1 ? { valorMenorQueUm: true } : null;
+        };
+    }
 
     static mostrarErro(formGroup: FormGroup, controlName: string) {
         return FormUtil.isValid(formGroup, controlName);
