@@ -29,34 +29,34 @@ export class UnidadeService {
     return this.http.get<Array<Unidade>>(baseUrl);
   }
 
-  // buscarUnidadePorId(id: number) {
-  //   return this.http
-  //     .get(`${baseUrl}/${id}`, { observe: 'response' })
-  //     .pipe(tap((response) => {
-  //       this.log(`GET:${baseUrl}/${id}`, response);
-  //       console.log(response);
-  //       ToastrMensagemUtil.success(this.toastr, 'Unidade encontrada com sucesso!');
-  //     }, error => {
-  //       console.log('Error');
-  //       console.log(error);
-  //       ToastrMensagemUtil.error(this.toastr, `${error.mes}`);
-  //     }));
-  // }
-
-  buscarUnidadePorId(id: number): Observable<Unidade> {
+  buscarUnidadePorId(id: number) {
     console.log(`GET:${baseUrl}/${id}`);
     return this.http
-      .get<Unidade>(`${baseUrl}/${id}`)
-      .pipe(tap((unidade: Unidade) => {
-        console.log(unidade);
-        ToastrMensagemUtil.success(this.toastr, 'Unidade encontrada com sucesso!');
+      .get(`${baseUrl}/${id}`, { observe: 'response' })
+      .pipe(tap((response) => {
+        console.log(response);
+        ToastrMensagemUtil.tratarSuccces(this.toastr, response.status);
+        // ToastrMensagemUtil.success(this.toastr, 'Unidade encontrada com sucesso!');
       }, (httpErrorResponse: HttpErrorResponse) => {
         console.log(httpErrorResponse);
-        // msg vindo do back
-        // ToastrMensagemUtil.error(this.toastr, `${httpErrorResponse.error}`);
-        ToastrMensagemUtil.tratarErro(this.toastr, httpErrorResponse.status);
+        ToastrMensagemUtil.tratarError(this.toastr, httpErrorResponse.status);
       }));
   }
+
+  // buscarUnidadePorId(id: number): Observable<Unidade> {
+  //   console.log(`GET:${baseUrl}/${id}`);
+  //   return this.http
+  //     .get<Unidade>(`${baseUrl}/${id}`)
+  //     .pipe(tap((unidade: Unidade) => {
+  //       console.log(unidade);
+  //       ToastrMensagemUtil.success(this.toastr, 'Unidade encontrada com sucesso!');
+  //     }, (httpErrorResponse: HttpErrorResponse) => {
+  //       console.log(httpErrorResponse);
+  //       // msg vindo do back
+  //       ToastrMensagemUtil.error(this.toastr, `${httpErrorResponse.error}`);
+  //       // ToastrMensagemUtil.tratarMensagem(this.toastr, httpErrorResponse.status);
+  //     }));
+  // }
 
   atualizaUnidade(id: number): Observable<Unidade> {
     const url = `${baseUrl} / ${id}`;

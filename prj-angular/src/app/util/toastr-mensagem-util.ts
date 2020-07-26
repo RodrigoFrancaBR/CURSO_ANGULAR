@@ -64,7 +64,7 @@ export class ToastrMensagemUtil {
         });
     }
 
-    public static tratarErro(toastrService: ToastrService, status: number) {
+    public static tratarError(toastrService: ToastrService, status: number) {
         let message: string;
 
         if (status) {
@@ -72,5 +72,15 @@ export class ToastrMensagemUtil {
         }
 
         ToastrMensagemUtil.error(toastrService, message);
+    }
+
+    public static tratarSuccces(toastrService: ToastrService, status: number) {
+        let message: string;
+
+        if (status) {
+            message = MESSAGE[status];
+        }
+
+        ToastrMensagemUtil.success(toastrService, message);
     }
 }
