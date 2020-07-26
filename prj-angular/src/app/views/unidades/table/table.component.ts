@@ -29,7 +29,7 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.dataSource = new TableDataSource();
-    this.service.obterUnidades().subscribe((res) => {
+    this.service.bustarTodasUnidades().subscribe((res) => {
       console.log(res);
       this.dataSource.data = res;
     });

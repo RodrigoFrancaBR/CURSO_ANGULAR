@@ -1,25 +1,16 @@
 {
   "unidades": [
     {
-      "id": 1,
-      "nome": "CASCADURA",
-      "endereco": "RUA C1",
-      "status": "INATIVO"
-    },
-    {
-      "id": 2,
-      "nome": "MADUREIRA",
-      "endereco": "RUA M1",
-      "status": "INATIVO"
-    },
-    {
       "id": 3,
-      "nome": "MÉIER",
-      "endereco": "RUA M1",
-      "status": "ATIVO"
+      "nome": "QUINTINO",
+      "endereco": "RUA Q1",
+      "status": "Ativo"
     },
     {
-      "id": 4
+      "id": 6,
+      "nome": "INHAÚMA",
+      "endereco": "RUA I1",
+      "status": "Ativo"
     }
   ]
 }

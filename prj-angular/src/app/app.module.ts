@@ -1,4 +1,3 @@
-import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.component';
 /**
  * Angular
  */
@@ -63,8 +62,9 @@ import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-
 import { CommonModule } from '@angular/common';
 import { NgbdModalComponent, NgbdModalContent } from './components/modal/modal-component/modal-component';
 import { NgbdModalConfig } from './components/modal/modal-config/modal-config';
-import { ModalConfirmacaoComponent } from './util/modal-confirmacao';
 import { TypeaheadFocusComponent } from './components/typeahead-focus/typeahead-focus.component';
+import { ModalConfirmationComponent } from './util/modal-confirmation';
+import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.component';
 
 @NgModule({
   declarations: [
@@ -89,12 +89,12 @@ import { TypeaheadFocusComponent } from './components/typeahead-focus/typeahead-
     ModalFoculsComponent,
     NgbdModalConfirmComponent,
     NgbdModalConfig,
-    ModalConfirmacaoComponent,
+    ModalConfirmationComponent,
   ],
   // exports:[GridComponent],
   imports: [
     ToastrModule.forRoot({
-      timeOut: 1000,
+      timeOut: 2000,
       preventDuplicates: true,
     }),
     CommonModule,
