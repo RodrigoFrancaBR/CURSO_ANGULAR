@@ -1,6 +1,9 @@
 import { FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 export class FormUtil {
+    static validarNumero(evento: any): void {
+        throw new Error("Method not implemented.");
+    }
 
     static valorMinimo(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {

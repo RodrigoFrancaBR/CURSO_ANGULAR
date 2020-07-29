@@ -72,11 +72,11 @@ export class GridComponent implements OnInit {
   }
 
   buscarPorId() {
+    this.unidadeSelecionada = null;
+    this.listaDeUnidades = [];
     this.service.buscarUnidadePorId(this.id).subscribe(response => {
       console.log(response);
-      this.listaDeUnidades = [];
       this.listaDeUnidades.push(response);
-      this.unidadeSelecionada = null;
     });
   }
 

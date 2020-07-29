@@ -3,13 +3,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 const TITULO = 'Curso Preparatório';
 
-const MESSAGE: { [status: number]: string } = {
-    200: 'Ok F',
+const MESSAGE_SUCCESS: { [status: number]: string } = {
+    200: 'Unidade encontrada com sucesso!',
     201: 'Created F',
+};
+
+const MESSAGE_ERROR: { [status: number]: string } = {
     400: 'Bad Request F',
     401: 'Unauthorized F',
     403: 'Forbidden F',
-    404: 'Not Found F',
+    404: 'Unidade não encontrada',
     405: 'Method Not Allowed F',
     408: 'Request Timeout F',
     500: 'Internal Server Error F'
@@ -68,7 +71,7 @@ export class ToastrMensagemUtil {
         let message: string;
 
         if (status) {
-            message = MESSAGE[status];
+            message = MESSAGE_ERROR[status];
         }
 
         ToastrMensagemUtil.error(toastrService, message);
@@ -78,7 +81,7 @@ export class ToastrMensagemUtil {
         let message: string;
 
         if (status) {
-            message = MESSAGE[status];
+            message = MESSAGE_SUCCESS[status];
         }
 
         ToastrMensagemUtil.success(toastrService, message);
