@@ -21,83 +21,26 @@
     this paragraph is displayed because appUnless is set to false.
 </p>
 
-<!-- <ng-template #mymodal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      Here I am!
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
-    </div>
-  </ng-template> -->
 
-<!-- <button class="btn btn-lg btn-outline-primary" (click)="open()">Launch demo modal</button> -->
-
-<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(mymodal)">Open My Modal</button> -->
-
-<!-- <app-efx-modal></app-efx-modal> -->
-<!-- <efx-modal [(show)]="showBasicModal"
-   title="My Title"
-   titleIcon="fa fa-address-book-o"
-   cancelLabel="Reverse"
-  showSubmit="true"
-   submitLabel="Full Speed Ahead"
-  (onHide)="didHideModal()"
-  (onCancel)="didCancelModal()"
-   (onSubmit)="didSubmitModal()">
-     Content goes here
- </efx-modal> -->
-
-
-<button class="btn btn-outline-primary mr-2" (click)="open()">
-<!-- <button class="btn btn-outline-primary mr-2" (click)="open('focusFirst')"></button> -->
+<!-- <button class="btn btn-outline-primary mr-2" (click)="open()">
     <div>Open confirm modal</div>
-    <div class="text-dark" aria-hidden="true"><small>&times; button will be focused</small></div>
-</button>
+</button> -->
 
-<!-- <ng-template #content let-modal>
+<ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h4 class="modal-title">Modal title</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>        
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <p>One fine body&hellip;</p>
+        <p>Hello, World!</p>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
-        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <div class="modal-footer">        
+        <button type="button" class="btn btn-danger" (click)="c('Save click')">Save</button>
+        <button type="button" class="btn btn-secondary" (click)="d('cancel click')">Cancel</button>
+        
     </div>
-</ng-template> -->
+</ng-template>
 
-<!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openSm(content)">Small modal</button> -->
-
-<!-- <button class="btn btn-outline-primary mr-2" (click)="open('focusFirst')">
-    <div>Open confirm modal</div>
-    <div class="text-dark" aria-hidden="true"><small>&times; button will be focused</small></div>
-</button>
-
-
-<div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Profile deletion</h4>
-    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-<div class="modal-body">
-    <p><strong>Are you sure you want to delete <span class="text-primary">"John Doe"</span> profile?</strong></p>
-    <p>All information associated to this user profile will be permanently deleted.
-        <span class="text-danger">This operation can not be undone.</span>
-    </p>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-    <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
-</div> -->
+<button class="btn btn-sm btn-outline-primary" (click)="open(content)">Launch demo modal</button>

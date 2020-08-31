@@ -1,4 +1,36 @@
-<mat-card>
+<form [formGroup]="formulario" (ngSubmit)="salvar()">
+
+    <div class="form-row">
+
+        <div class="form-group col-md-1">
+            <label for="inpId">Id</label>
+            <input type="text" class="form-control" id="inpId" placeholder="Id" formControlName="id">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="inpNome">Nome</label>
+            <input type="text" class="form-control" id="inpNome" placeholder="Nome" formControlName="nome">
+        </div>
+
+        <div class="form-group col-md-5">
+            <label for="inpEndereco">Endereço</label>
+            <input type="text" class="form-control" id="inpEndereco" placeholder="Rua.." formControlName="endereco">
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="inpStatus">Status</label>
+            <input type="text" class="form-control" id="inpStatus" placeholder="Ativo" formControlName="status">
+        </div>
+
+        <button id="btnSalvar" type="submit" class="btn btn-primary btn-sm btn-block active" role="button"
+            aria-pressed="true">Salvar</button>
+
+    </div>
+
+</form>
+
+
+<!-- <mat-card>
     <mat-card-title>Cadastrar Unidade</mat-card-title>
     <form>
 
@@ -19,4 +51,4 @@
     <button mat-raised-button (click)="salvar()" color="primary">Salvar</button>
     <button mat-raised-button (click)="cancelar()" color="primary">Cancelar</button>
 
-</mat-card>
+</mat-card> -->

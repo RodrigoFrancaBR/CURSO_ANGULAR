@@ -3,8 +3,8 @@
  */
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { NgModule, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 /**
@@ -19,6 +19,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+
+/**
+ * Ng-Bootstrap
+ */
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
 
 /**
  * My-App
@@ -50,16 +56,24 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { UnidadeEditarComponent } from './views/unidades/unidade-editar/unidade-editar.component';
-import { NgbModalModule, NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { ModalFoculsComponent } from './components/modal/modal-foculs/modal-foculs.component';
-import { MymodalcomponentComponent } from './components/mymodalcomponent/mymodalcomponent.component';
 import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-modal-confirm.component';
-import { EfxModalModule } from './components/modal/efx-modal/efx-modal.module';
+import { CommonModule } from '@angular/common';
+import { NgbdModalComponent, NgbdModalContent } from './components/modal/modal-component/modal-component';
+import { NgbdModalConfig } from './components/modal/modal-config/modal-config';
+import { TypeaheadFocusComponent } from './components/typeahead-focus/typeahead-focus.component';
+import { ModalConfirmationComponent } from './util/modal-confirmation';
 
-
+import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.component';
+import { ModalInclusionComponent } from './util/modal-inclusion';
 
 @NgModule({
   declarations: [
+    TypeaheadFocusComponent,
+    NgbdModalContent,
+    NgbdModalComponent,
+    FormMensagemComponent,
     AppComponent,
     HeaderComponent,
     FooterComponent,
@@ -75,14 +89,23 @@ import { EfxModalModule } from './components/modal/efx-modal/efx-modal.module';
     TableComponent,
     UnidadeEditarComponent,
     ModalFoculsComponent,
-    MymodalcomponentComponent, NgbdModalConfirmComponent
+    NgbdModalConfirmComponent,
+    NgbdModalConfig,
+    ModalConfirmationComponent,
+    ModalInclusionComponent
   ],
+  // exports:[GridComponent],
   imports: [
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      preventDuplicates: true,
+    }),
+    CommonModule,
+    BrowserAnimationsModule,
     NgbModule,
-    //NgbModalModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
+    ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
     MatSliderModule,
@@ -98,9 +121,9 @@ import { EfxModalModule } from './components/modal/efx-modal/efx-modal.module';
     MatPaginatorModule,
     MatSortModule
   ],
-  // providers: [NgbActiveModal],
   providers: [],
-  entryComponents: [ModalFoculsComponent],
+  exports: [],
+  entryComponents: [NgbdModalContent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
