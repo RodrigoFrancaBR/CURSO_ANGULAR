@@ -9,6 +9,11 @@
                 <input id="inpId" type="text" formControlName="id">
             </div>
 
+
+            <div class="float-right">
+                <button class="btn btn-success" id="btnIncluir" type="button" (click)="incluir()">Incluir</button>
+            </div>
+
             <div class="float-right">
                 <button class="btn btn-primary" id="btnPesquisa" type="submit">Pesquisar</button>
             </div>
@@ -39,14 +44,12 @@
                 <td>{{unidade.nome}}</td>
                 <td>{{unidade.endereco}}</td>
                 <td>{{unidade.status}}</td>
-                <td>                    
+                <td>
                     <div class="btn-group" role="group" aria-label="Ações">
-                        <button type="button"
-                            (click)="alterar(unidade)">
+                        <button type="button" (click)="alterar(unidade)">
                             <i class="material-icons edit">edit</i>
                         </button>
-                        <button type="button"
-                            (click)="excluir(unidade)">
+                        <button type="button" (click)="excluir(unidade)">
                             <i class="material-icons delete">delete</i>
                         </button>
                     </div>
@@ -56,7 +59,9 @@
     </table>
 </div>
 
-<modal-confirmation (modalEvent)="modalEvent($event)" ></modal-confirmation>
+<modal-confirmation (modalEvent)="modalEvent($event)"></modal-confirmation>
+
+<modal-inclusion></modal-inclusion>
 
 <!-- <div class="float-right mt-3">
     <button class="btn btn-light rounded border border-secondary" id="btnForcar" type="button"
@@ -138,4 +143,3 @@
 </modal-inclusion> -->
 
 <!-- <modal-confirmation></modal-confirmation> -->
-

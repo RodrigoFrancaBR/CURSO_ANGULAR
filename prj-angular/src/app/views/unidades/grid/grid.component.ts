@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Validators, AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 import { FormUtil } from 'src/app/util/form-util';
 import { ModalConfirmationComponent } from 'src/app/util/modal-confirmation';
+import { ModalInclusionComponent } from 'src/app/util/modal-inclusion';
 
 @Component({
   selector: 'app-grid',
@@ -20,6 +21,7 @@ export class GridComponent implements OnInit {
   unidadeSelecionada: number;
   ngbModalRef: NgbModalRef;
   @ViewChild(ModalConfirmationComponent, { static: false }) private modalConfirmationComponent: ModalConfirmationComponent;
+  @ViewChild(ModalInclusionComponent, { static: false }) private modalInclusionComponent: ModalInclusionComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,6 +49,11 @@ export class GridComponent implements OnInit {
 
   get id(): number {
     return Number(this.getId().value);
+  }
+
+  incluir() {
+    console.log('incluir');
+    this.modalInclusionComponent.open();
   }
 
   pesquisar() {

@@ -43,16 +43,42 @@ export class CadastroComponent implements OnInit {
 
   }
 
-  get id(): number {
-    return Number(this.formulario.get('id').value);
-  }
-
   getId(): AbstractControl {
     return this.formulario.get('id');
   }
 
+  get id(): number {
+    return Number(this.getId().value);
+  }
+
+  getNome(): AbstractControl {
+    return this.formulario.get('nome');
+  }
+
+  get nome(): string {
+    return String(this.getNome().value);
+  }
+
+  getEndereco(): AbstractControl {
+    return this.formulario.get('endereco');
+  }
+
+  get endereco(): string {
+    return String(this.getEndereco().value);
+  }
+
+  getStatus(): AbstractControl {
+    return this.formulario.get('status');
+  }
+
+  get status(): string {
+    return String(this.getStatus().value);
+  }
+
   salvar() {
+    let u = new Unidade(this.id, this.nome, this.endereco, this.status);
     console.log(this.formulario);
+    console.log(u);
     console.log(this.getId().valid);
     // console.log(this.formulario.getI);
     console.log(typeof this.id === 'number');

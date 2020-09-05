@@ -64,7 +64,9 @@ import { NgbdModalComponent, NgbdModalContent } from './components/modal/modal-c
 import { NgbdModalConfig } from './components/modal/modal-config/modal-config';
 import { TypeaheadFocusComponent } from './components/typeahead-focus/typeahead-focus.component';
 import { ModalConfirmationComponent } from './util/modal-confirmation';
+
 import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.component';
+import { ModalInclusionComponent } from './util/modal-inclusion';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,7 @@ import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.
     NgbdModalConfirmComponent,
     NgbdModalConfig,
     ModalConfirmationComponent,
+    ModalInclusionComponent
   ],
   // exports:[GridComponent],
   imports: [

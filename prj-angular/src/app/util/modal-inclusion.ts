@@ -1,3 +1,4 @@
+import { Oferta } from './../model/oferta';
 import { UnidadeService } from './../views/unidades/unidade.service';
 import { Component, Output, EventEmitter, Input, ViewChild, OnInit } from '@angular/core';
 import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -29,89 +30,161 @@ const CLICK_EVENT = {
   <div class="modal-body">
 
     <form [formGroup]="formInclusao">
-      <div class="form-group row">
-        <label for="inpIdFila"  class="col-sm-5 col-form-label">
-          <strong class="text-secondary">{{ 'FILA' }}</strong>
+
+        <div class="form-group row">
+        <label for="obid"  class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'OFERTA' }}</strong>
         </label>
         <div class="col-sm-2">
-          <input id="inpIdFila" type="text" readonly class="text-secondary" formControlName="idFila">
+          <input id="obid" type="text" readonly class="text-secondary" formControlName="obid">
         </div>
       </div>
 
       <div class="form-group row">
-        <label for="inpFxInicio" class="col-sm-5 col-form-label">
-          <strong class="text-secondary">{{ 'FAIXA_INICIAL' }}</strong>
+        <label for="obDescricao" class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'DESCRICAO' }}</strong>
         </label>
-        <div class="col-sm-2">
-          <input id="inpFxInicio" type="text" class="text-secondary" formControlName="fxInicio" maxlength="4">
+        <div class="col-sm-7">
+          <input id="obDescricao" type="text" class="text-secondary col-sm-12" formControlName="obDescricao" maxlength="50">
         </div>
       </div>
 
       <div class="form-group row">
-        <label for="inpFxFim" class="col-sm-5 col-form-label">
-        <strong class="text-secondary">{{ 'FAIXA_FINAL' }}</strong>
+        <label for="obIniVig" class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'VIGENCIA_INICIO' }}</strong>
         </label>
         <div class="col-sm-2">
-          <input id="inpFxFim" type="text" class="text-secondary" formControlName="fxFim" maxlength="4" (keypress)="validarNumero($event)">
+          <input id="obIniVig" type="date" class="text-secondary" formControlName="obIniVig" >
         </div>
       </div>
 
       <div class="form-group row">
-        <label for="inpVlPercDesc" class="col-sm-5 col-form-label">
-        <strong class="text-secondary">{{ 'DESCONTO'}}</strong>
+        <label for="obFimVig" class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'VIGENCIA_FIM' }}</strong>
         </label>
         <div class="col-sm-2">
-        
-        <input id="inpVlPercDesc" type="text" class="text-secondary" formControlName="vlPercDesc" maxlength="5" (keypress)="validarNumero($event)">
+          <input id="obFimVig" type="date" class="text-secondary" formControlName="obFimVig">
         </div>
       </div>
-      
+
       <div class="form-group row">
-        <input id="inpIntRent" type="checkbox" formControlName="inRent" class="col-sm-2 col-form-label">
-        <label for="inpIntRent">
-          <strong class="text-secondary">{{ 'INTRENT'}}</strong>
+        <label for="obLimite" class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'LIMITE_OFERTA' }}</strong>
         </label>
+        <div class="col-sm-1">
+          <input id="obLimite" type="text" formControlName="obLimite"
+                class="col-sm-1 col-form-label" maxlength="3"(keypress)="validarNumero($event)">
+        </div>
       </div>
- 
+
+      <div class="form-group row">
+        <label for="oblIntavalo" class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'INTERVALO_OFERTAS' }}</strong>
+        </label>
+        <div class="col-sm-1">
+          <input id="oblIntavalo" type="text" formControlName="oblIntavalo"
+                class="col-sm-1 col-form-label" maxlength="3"(keypress)="validarNumero($event)">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="obQtdDiaBol" class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'QTD_DIAS_VENCIMENTO' }}</strong>
+        </label>
+        <div class="col-sm-1">
+          <input id="obQtdDiaBol" type="text" formControlName="obQtdDiaBol" 
+                class="col-sm-1 col-form-label"maxlength="3"(keypress)="validarNumero($event)">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="obQtdDiaGraca" class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'QTD_DIAS_GRACA'  }}</strong>
+        </label>
+        <div class="col-sm-1">
+          <input id="obQtdDiaGraca" type="text" formControlName="obQtdDiaGraca"
+          class="col-sm-1 col-form-label" maxlength="2" (keypress)="validarNumero($event)">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="obTipo" class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'TIPO_OFERTA'  }}</strong>
+        </label>
+        <div class="col-sm-7">
+          <select id="obTipo" type="text" formControlName="obTipo" title="Selecione uma oferta">
+            <option *ngFor="let obTipo of comboDeOferta" [ngValue]="obTipo">{{obTipo}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="obTipoAcordo" class="col-sm-5 col-form-label text-right">
+          <strong class="text-secondary">{{ 'TIPO_ACORDO'  }}</strong>
+        </label>
+        <div class="col-sm-7">
+          <select id="obTipoAcordo" type="text" formControlName="obTipoAcordo" title="Selecione uma oferta">
+            <option *ngFor="let obTipoAcordo of comboDeAcordo" [ngValue]="obTipoAcordo">{{obTipoAcordo}}</option>
+          </select>
+        </div>
+      </div>
+
     </form>
- 
+
   </div>
- 
-    <div class="modal-footer">
-      <div class="col-sm-12">
-        <button type="button" class="btn btn-danger" (click)="yes()">Salvar</button>
-        <button type="button" class="btn btn-secondary" (click)="no()">Sair</button>
+
+     
+  <div class="modal-footer">
+    <div class="col-sm-12 ">
+      <div class="col-sm-5 text-right">
+        <button type="button" class="btn-sm btn-danger" (click)="yes()">Salvar</button>
+      </div>
+      <div class="col-sm-5 text-left">
+        <button class="btn-sm btn-secondary" type="button" (click)="no()">Sair</button>
       </div>
     </div>
+  </div>
   </ng-template>
- 
+
   `,
 })
 
 
-export class ModalInclusionComponent implements OnInit {
+export class ModalInclusionComponent {
     // obrigatórios para o modal
 
     @ViewChild('content', { static: false }) content: any;
     @Output() modalEvent = new EventEmitter();
     ngbModalRef: NgbModalRef;
 
-    // minha regra de negócio  
+    // minha regra de negócio
     formInclusao: FormGroup;
-    @Input() contratoSelecionado: string;
-    @Output() listContratoAcordoCancelamento = new EventEmitter();
-    @Input() listaAlcadaDesconto: Array<AlcadaDesconto>;
-    @Input() filaSelecionada: string
     acaoDeAbrir: string;
     alcadaDescontoDTO: AlcadaDesconto = new AlcadaDesconto();
-    responseSuccess: boolean = false;
+    filaSelecionado: string;
+    comboDeOferta: Array<string> = ['Oferta1', 'oferta2', 'oferta3'];
+    comboDeAcordo: Array<string> = ['acordo1', 'acordo2', 'acordo3'];
+    listaDeFilas: Array<any> = [
+        {
+            'id': 1,
+            'nome': 'fila1'
+        },
+        {
+            'id': 2,
+            'nome': 'fila1'
+        },
+        {
+            'id': 3,
+            'nome': 'fila1'
+        }
+    ];
 
     constructor(
-        // obrigatórios para o modal        
+        // obrigatórios para o modal
         ngbModalConfig: NgbModalConfig,
         private ngbModal: NgbModal,
 
-        // minha regra de negócio    
+        // minha regra de negócio
         private toastr: ToastrService,
         private service: UnidadeService,
         private formBuilder: FormBuilder,
@@ -121,284 +194,128 @@ export class ModalInclusionComponent implements OnInit {
         ngbModalConfig.backdrop = 'static';
         ngbModalConfig.keyboard = false;
     }
-    ngOnInit(): void {
-        // this.iniciarformInclusao();
-    }
-
-    incluir(filaSelecionada: string) {
-        console.log('incluir(filaSelecionada: string)');
-        this.acaoDeAbrir = 'incluir';
-        if (!this.formInclusao) {
-            this.iniciarformInclusao();
-        }
-        this.idFila.setValue(filaSelecionada);
-        this.open();
-    }
-
-    alterar(alcadaDesconto: AlcadaDesconto) {
-        console.log('alterar');
-        console.log(alcadaDesconto);
-        this.acaoDeAbrir = 'alterar';
-        if (!this.formInclusao) {
-            this.iniciarformInclusao();
-        }
-        this.formInclusao.setValue(alcadaDesconto);
-        console.log(this.formInclusao.value);
-        this.open();
-    }
 
     open() {
-        // regra de negócio
-        // obrigatórios para o modal
         console.log('clicou no open');
+        this.iniciarformInclusao();
         let modal = null;
         this.ngbModalRef = this.ngbModal.open(
             this.content,
-            { size: 'sm', windowClass: 'inclusionModal' });
+            { size: 'lg', windowClass: 'inclusionModal' });
         setTimeout(() => {
             modal = document.querySelector('.inclusionModal');
             modal.classList.remove('fade');
         }, 100);
-
-        // avisa ao componente pai que clicou no open.
-        // this.modalEvent.emit(CLICK_EVENT.OPEN);
     }
-
-
-    //     this.atualizaDTO();
-    //     if (this.acaoDeAbrir === 'incluir') {
-    //       this.incluirAlcadaDescontoService();
-    //     } else {
-    //       this.atualizarAlcadaDescontoService();
-    //     }
-    //   }
-    // }
 
     yes() {
         console.log('clicou no yes');
-        // minha regra de negócio        
-        if (this.descontoValido() && this.intervaloValido() && this.faixaComValoresValido()) {
-            console.log('valido');
-            console.log(this.formInclusao.value);
-
-            this.atualizaDTO();
-
-            (this.acaoDeAbrir === 'incluir') ? this.incluirAlcadaDescontoService() : this.atualizarAlcadaDescontoService();
-
-            // if (this.responseSuccess) {
-            //   this.formInclusao.reset();
-            //   // obrigatórios para o modal
-            //   this.ngbModalRef.close();
-            //   this.modalEvent.emit(CLICK_EVENT.SUCCESS);
-            // }
-            // this.formInclusao.reset();
-
-            // obrigatórios para o modal
-            // this.ngbModalRef.close();
-            // this.modalEvent.emit(CLICK_EVENT.SUCCESS);
-        }
-    }
-
-    incluirAlcadaDescontoService() {
-        this.service.salvarUnidade(this.alcadaDescontoDTO)
-            .subscribe(response => {
-                console.log(response);
-                this.formInclusao.reset();
-                this.ngbModalRef.close();
-                this.modalEvent.emit(CLICK_EVENT.SUCCESS);
-            })
-    }
-
-    atualizarAlcadaDescontoService() {
-        this.service.atualizaUnidade(this.alcadaDescontoDTO)
-            .subscribe(response => {
-                console.log(response);
-                this.responseSuccess = true;
-                this.formInclusao.reset();
-                this.ngbModalRef.close();
-                this.modalEvent.emit(CLICK_EVENT.SUCCESS);
-            })
+        this.ngbModalRef.close();
     }
 
     no() {
         console.log('clicou no no');
-        // obrigatórios para o modal
         this.ngbModalRef.dismiss();
-
-        // minha regra de negócio
         this.formInclusao.reset();
-
-        // avisa ao componente pai que clicou no no.
-        this.modalEvent.emit(CLICK_EVENT.NO);
-    }
-
-    // open() {
-    //   // regra de negócio    
-    //   // this.idFila.setValue(this.filaSelecionada);
-    //   // obrigatórios para o modal
-    //   console.log('clicou no open');
-    //   let modal = null;
-    //   this.ngbModalRef = this.ngbModal.open(
-    //     this.content,
-    //     { size: 'sm', windowClass: 'inclusionModal' });
-    //   setTimeout(() => {
-    //     modal = document.querySelector('.inclusionModal');
-    //     modal.classList.remove('fade');
-    //   }, 100);
-    //   // avisa ao componente pai que clicou no open.
-    //   // this.modalEvent.emit(CLICK_EVENT.OPEN);
-    // }
-
-    // yes() {
-    //   console.log('clicou no yes');
-    //   // minha regra de negócio    
-    //   if (this.descontoValido() && this.intervaloValido() && this.faixaComValoresValido()) {
-    //     // obrigatórios para o modal
-    //     this.ngbModalRef.close();
-    //     this.atualizaDTO();
-    //     if (this.acaoDeAbrir === 'incluir') {
-    //       this.incluirAlcadaDescontoService();
-    //     } else {
-    //       this.atualizarAlcadaDescontoService();
-    //     }
-    //   }
-    // }
-
-    // incluirAlcadaDescontoService() {
-    //   this.service.incluirAlcadaDesconto(this.alcadaDesconto)
-    //     .subscribe(response => {
-    //       console.log(response);
-    //       this.formInclusao.reset();
-    //       this.modalEvent.emit(CLICK_EVENT.SUCCESS);
-    //     })
-    // }
-
-    // atualizarAlcadaDescontoService() {
-    //   this.service.atualizarAlcadaDesconto(this.alcadaDesconto)
-    //     .subscribe(response => {
-    //       console.log(response);
-    //       this.formInclusao.reset();
-    //       this.modalEvent.emit(CLICK_EVENT.SUCCESS);
-    //     })
-    // }
-
-    atualizaDTO(): void {
-        this.alcadaDescontoDTO.fxInicio = (this.fxInicio.value) ? this.fxInicio.value : 0;
-        this.alcadaDescontoDTO.fxFim = (this.fxFim.value) ? this.fxFim.value : 0;
-        // this.alcadaDescontoDTO.inRent = (this.inRent.value) ? 'S' : 'N';
-        this.alcadaDescontoDTO.idFila = this.idFila.value;
-        this.alcadaDescontoDTO.vlPercDesc = this.vlPercDesc.value;
-        // if (!this.fxInicio.value) {
-        //   this.alcadaDescontoDTO.fxInicio = 0
-        // }
-
-        // if (!this.fxFim.value) {
-        //   this.alcadaDescontoDTO.fxFim = 0;
-        // }
-
-        // if (this.inRent.value) {
-        //   this.alcadaDescontoDTO.inRent = 'S';
-        // } else {
-        //   this.alcadaDescontoDTO.inRent = 'N';
-        // }
-
-        // if (!this.inRent.value) {
-        //   this.alcadaDescontoDTO.inRent = 'N';
-        // }
-
-        // if (this.inRent.value) {
-        //   this.alcadaDescontoDTO.inRent = 'S';
-        // }
-    }
-
-    // no() {
-    //   console.log('clicou no no');
-    //   // obrigatórios para o modal
-    //   this.ngbModalRef.dismiss();
-
-    //   // minha regra de negócio
-    //   this.formInclusao.reset();
-
-    //   // avisa ao componente pai que clicou no no.
-    //   this.modalEvent.emit(CLICK_EVENT.NO);
-    // }
-
-    descontoValido() {
-        if (this.vlPercDesc.valid) {
-            return true;
-        } else {
-            ToastrMensagemUtil.info(this.toastr, 'Desconto Inválido.');
-            return false;
-        }
-    }
-
-    intervaloValido(): boolean {
-        if (Number(this.fxInicio.value) > Number(this.fxFim.value)) {
-            ToastrMensagemUtil.info(this.toastr, 'Intervalo Inválido.');
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    faixaComValoresValido(): boolean {
-        const listaFiltradaPorIdFila: Array<AlcadaDesconto> = this.listaAlcadaDesconto
-            .filter(e => e.idFila === String(this.idFila.value));
-
-        console.log(listaFiltradaPorIdFila);
-
-        const minValueFxInicio = listaFiltradaPorIdFila
-            .map(e => e.fxInicio).reduce((accumulator, currentValue) => Math.min(accumulator, currentValue));
-
-        const maxValueFxFim = listaFiltradaPorIdFila
-            .map(e => e.fxFim).reduce((accumulator, currentValue) => Math.max(accumulator, currentValue));
-
-        if (this.fxInicio.value >= minValueFxInicio && this.fxInicio.value <= maxValueFxFim) {
-            ToastrMensagemUtil.info(this.toastr, 'A faixa está sobreposta, já existe uma faixa configurada com estes valores.')
-            return false;
-        }
-
-        if (this.fxFim.value >= minValueFxInicio && this.fxFim.value <= maxValueFxFim) {
-            ToastrMensagemUtil.info(this.toastr, 'A faixa está sobreposta, já existe uma faixa configurada com estes valores.')
-            return false;
-        }
-        return true;
-
     }
 
     iniciarformInclusao() {
-        this.formInclusao = this.formBuilder.group({
-            idFila: [null],
-            fxInicio: [null],
-            fxFim: [null],
-            vlPercDesc: [null, [Validators.required]],
-            inRent: [null]
-        });
-    }
-
-    get idFila(): AbstractControl {
-        return this.formInclusao.get('idFila');
-    }
-
-    get fxInicio(): AbstractControl {
-        return this.formInclusao.get('fxInicio');
-    }
-
-    get fxFim(): AbstractControl {
-        return this.formInclusao.get('fxFim');
-    }
-
-    get vlPercDesc(): AbstractControl {
-        return this.formInclusao.get('vlPercDesc');
-    }
-
-    get inRent(): AbstractControl {
-        return this.formInclusao.get('inRent');
+        this.formInclusao = this.formBuilder.group(
+            new Oferta()
+        );
     }
 
     validarNumero(evento: any): void {
         return FormUtil.validarNumero(evento);
     }
+
+    public getObid(): AbstractControl {
+        return this.formInclusao.get('obid');
+    }
+
+    public getObDescricao(): AbstractControl {
+        return this.formInclusao.get('obDescricao');
+    }
+
+    public getObIniVig(): AbstractControl {
+        return this.formInclusao.get('obIniVig');
+    }
+
+    public getObFimVig(): AbstractControl {
+        return this.formInclusao.get('obFimVig');
+    }
+
+    public getObLimite(): AbstractControl {
+        return this.formInclusao.get('obLimite');
+    }
+
+    public getOblIntavalo(): AbstractControl {
+        return this.formInclusao.get('oblIntavalo');
+    }
+
+    public getObQtdDiaBol(): AbstractControl {
+        return this.formInclusao.get('obQtdDiaBol');
+    }
+
+    public getObQtdDiaGraca(): AbstractControl {
+        return this.formInclusao.get('obQtdDiaGraca');
+    }
+
+    public getObTipo(): AbstractControl {
+        return this.formInclusao.get('obTipo');
+    }
+
+    public getObTipoAcordo(): AbstractControl {
+        return this.formInclusao.get('obTipoAcordo');
+    }
+
+    // public getFilas(): AbstractControl {
+    //   return this.formInclusao.get('filas');
+    // }
+
+    public get obid(): number {
+        return this.getObid().value;
+    }
+
+    public get obDescricao(): string {
+        return this.getObDescricao().value;
+    }
+
+    public get obIniVig(): string {
+        return this.getObIniVig().value;
+    }
+
+    public get obFimVig(): string {
+        return this.getObFimVig().value;
+    }
+
+    public get obLimite(): number {
+        return this.getObLimite().value;
+    }
+
+    public get oblIntavalo(): number {
+        return this.getOblIntavalo().value;
+    }
+
+    public get obQtdDiaBol(): number {
+        return this.getObQtdDiaBol().value;
+    }
+
+    public get obQtdDiaGraca(): number {
+        return this.getObQtdDiaGraca().value;
+    }
+
+    public get obTipo(): number {
+        return this.getObTipo().value;
+    }
+
+    public get obTipoAcordo(): string {
+        return this.getObTipoAcordo().value;
+    }
+
+    // public get filas(): Array<string> {
+    //   return this.getFilas().value;
+    // }
 
 }
 
