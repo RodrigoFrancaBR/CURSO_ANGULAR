@@ -1,3 +1,4 @@
+import { UnidadesModule } from './views/unidades/unidades.module';
 /**
  * Angular
  */
@@ -47,15 +48,10 @@ import { UnlessDirective } from './directives/exemplos/unless.directive';
  * My Views
  */
 import { HomeComponent } from './views/home/home.component';
-import { UnidadesComponent } from './views/unidades/unidades.component';
-import { CadastroComponent } from './views/unidades/cadastro/cadastro.component';
 import { ExemploComponent } from './views/exemplo/exemplo.component';
-import { GridComponent } from './views/unidades/grid/grid.component';
-import { TableComponent } from './views/unidades/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { UnidadeEditarComponent } from './views/unidades/unidade-editar/unidade-editar.component';
 
 import { ModalFoculsComponent } from './components/modal/modal-foculs/modal-foculs.component';
 import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-modal-confirm.component';
@@ -73,26 +69,19 @@ import { ModalInclusionComponent } from './util/modal-inclusion';
     TypeaheadFocusComponent,
     NgbdModalContent,
     NgbdModalComponent,
-    FormMensagemComponent,
     AppComponent,
     HeaderComponent,
     FooterComponent,
     NavComponent,
     HomeComponent,
-    UnidadesComponent,
-    CadastroComponent,
     RedDirective,
     ForDirective,
     ExemploComponent,
     UnlessDirective,
-    GridComponent,
-    TableComponent,
-    UnidadeEditarComponent,
     ModalFoculsComponent,
     NgbdModalConfirmComponent,
     NgbdModalConfig,
-    ModalConfirmationComponent,
-    ModalInclusionComponent
+
   ],
   // exports:[GridComponent],
   imports: [
@@ -119,7 +108,8 @@ import { ModalInclusionComponent } from './util/modal-inclusion';
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    UnidadesModule
   ],
   providers: [],
   exports: [],

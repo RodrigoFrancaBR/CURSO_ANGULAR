@@ -9,7 +9,7 @@ import { HomeComponent } from './views/home/home.component';
 import { UnidadesComponent } from './views/unidades/unidades.component';
 
 
-const routes: Routes = [
+const APP_ROUTES: Routes = [
   {
     path: '', component: HomeComponent
   },
@@ -33,7 +33,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(APP_ROUTES)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
