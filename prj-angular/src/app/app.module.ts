@@ -1,16 +1,18 @@
-import { UnidadesModule } from './views/unidades/unidades.module';
 /**
  * Angular
  */
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, ViewChild } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 /**
  * Material
  */
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -30,8 +32,7 @@ import { ToastrModule } from 'ngx-toastr';
 /**
  * My-App
  */
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { UnidadesModule } from './views/unidades/unidades.module';
 /**
  * My Components
  */
@@ -48,40 +49,31 @@ import { UnlessDirective } from './directives/exemplos/unless.directive';
  * My Views
  */
 import { HomeComponent } from './views/home/home.component';
-import { ExemploComponent } from './views/exemplo/exemplo.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 
 import { ModalFoculsComponent } from './components/modal/modal-foculs/modal-foculs.component';
 import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-modal-confirm.component';
-import { CommonModule } from '@angular/common';
 import { NgbdModalComponent, NgbdModalContent } from './components/modal/modal-component/modal-component';
 import { NgbdModalConfig } from './components/modal/modal-config/modal-config';
 import { TypeaheadFocusComponent } from './components/typeahead-focus/typeahead-focus.component';
-import { ModalConfirmationComponent } from './util/modal-confirmation';
-
-import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.component';
-import { ModalInclusionComponent } from './util/modal-inclusion';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
   declarations: [
     TypeaheadFocusComponent,
     NgbdModalContent,
     NgbdModalComponent,
-    AppComponent,
     HeaderComponent,
     FooterComponent,
     NavComponent,
     HomeComponent,
     RedDirective,
     ForDirective,
-    ExemploComponent,
     UnlessDirective,
     ModalFoculsComponent,
     NgbdModalConfirmComponent,
     NgbdModalConfig,
-
+    AppComponent
   ],
   // exports:[GridComponent],
   imports: [
@@ -89,11 +81,10 @@ import { ModalInclusionComponent } from './util/modal-inclusion';
       timeOut: 2000,
       preventDuplicates: true,
     }),
-    CommonModule,
+    // CommonModule,
     BrowserAnimationsModule,
     NgbModule,
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
@@ -109,7 +100,8 @@ import { ModalInclusionComponent } from './util/modal-inclusion';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    UnidadesModule
+    UnidadesModule,
+    AppRoutingModule
   ],
   providers: [],
   exports: [],

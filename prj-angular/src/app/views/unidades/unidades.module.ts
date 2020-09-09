@@ -1,15 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FiltroComponent } from './filtro/filtro.component';
-import { ROUTING } from './unidades.routing';
-import { UnidadesComponent } from './unidades.component';
-import { CadastroComponent } from './cadastro/cadastro.component';
-import { GridComponent } from './grid/grid.component';
-import { UnidadeEditarComponent } from './unidade-editar/unidade-editar.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { FormMensagemComponent } from 'src/app/components/form-mensagem/form-mensagem.component';
-import { ModalConfirmationComponent } from 'src/app/util/modal-confirmation';
-import { ModalInclusionComponent } from 'src/app/util/modal-inclusion';
+
 import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -23,7 +15,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
+import { FormMensagemComponent } from 'src/app/components/form-mensagem/form-mensagem.component';
+import { ModalConfirmationComponent } from 'src/app/util/modal-confirmation';
+import { ModalInclusionComponent } from 'src/app/util/modal-inclusion';
 
+import { FiltroComponent } from './filtro/filtro.component';
+import { UnidadesRoutingModule } from './unidades-routing.module';
+import { UnidadesComponent } from './unidades.component';
+import { CadastroComponent } from './cadastro/cadastro.component';
+import { GridComponent } from './grid/grid.component';
+import { UnidadeEditarComponent } from './unidade-editar/unidade-editar.component';
+import { UnidadesFilterComponent } from './unidades-filter/unidades-filter.component';
 
 @NgModule({
   declarations: [
@@ -34,13 +36,10 @@ import { MatSortModule } from '@angular/material/sort';
     UnidadeEditarComponent,
     FormMensagemComponent,
     ModalConfirmationComponent,
-    ModalInclusionComponent
+    ModalInclusionComponent,
+    UnidadesFilterComponent
   ],
   imports: [
-    CommonModule,
-    ROUTING,
-    ReactiveFormsModule,
-    FormsModule,
     MatSliderModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -53,6 +52,10 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+    UnidadesRoutingModule
   ]
 })
 export class UnidadesModule { }
