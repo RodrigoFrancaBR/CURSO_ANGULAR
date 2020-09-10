@@ -7,7 +7,7 @@ export class FormUtil {
 
     static valorMinimo(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
-            return control.value && control.value < 1 ? { valorMenorQueUm: true } : null;
+            return !control.value || control.value && control.value < 1 ? { valorMenorQueUm: true } : null;
         };
     }
 

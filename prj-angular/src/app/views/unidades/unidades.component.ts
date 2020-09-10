@@ -12,4 +12,7 @@ export class UnidadesComponent implements OnInit {
 
   ngOnInit() { }
 
+  obterEventDePesquisa(event: any) {
+    console.log(event);
+  }
 }

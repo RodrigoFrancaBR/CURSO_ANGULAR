@@ -19,17 +19,17 @@ import { FormMensagemComponent } from 'src/app/components/form-mensagem/form-men
 import { ModalConfirmationComponent } from 'src/app/util/modal-confirmation';
 import { ModalInclusionComponent } from 'src/app/util/modal-inclusion';
 
-import { FiltroComponent } from './filtro/filtro.component';
 import { UnidadesRoutingModule } from './unidades-routing.module';
 import { UnidadesComponent } from './unidades.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { GridComponent } from './grid/grid.component';
 import { UnidadeEditarComponent } from './unidade-editar/unidade-editar.component';
-import { UnidadesFilterComponent } from './unidades-filter/unidades-filter.component';
+import { UnidadesListComponent } from './unidades-list/unidades-list.component';
+import { UnidadesFiltroComponent } from './unidades-filtro/unidades-filtro.component';
+import { UnidadesListaComponent } from './unidades-lista/unidades-lista.component';
 
 @NgModule({
   declarations: [
-    FiltroComponent,
     UnidadesComponent,
     CadastroComponent,
     GridComponent,
@@ -37,7 +37,9 @@ import { UnidadesFilterComponent } from './unidades-filter/unidades-filter.compo
     FormMensagemComponent,
     ModalConfirmationComponent,
     ModalInclusionComponent,
-    UnidadesFilterComponent
+    UnidadesListComponent,
+    UnidadesFiltroComponent,
+    UnidadesListaComponent
   ],
   imports: [
     MatSliderModule,

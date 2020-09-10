@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UnidadesFilterComponent } from './unidades-filter.component';
+import { UnidadesListComponent } from './unidades-list.component';
 
-describe('UnidadesFilterComponent', () => {
-  let component: UnidadesFilterComponent;
-  let fixture: ComponentFixture<UnidadesFilterComponent>;
+describe('UnidadesListComponent', () => {
+  let component: UnidadesListComponent;
+  let fixture: ComponentFixture<UnidadesListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UnidadesFilterComponent ]
+      declarations: [ UnidadesListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UnidadesFilterComponent);
+    fixture = TestBed.createComponent(UnidadesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

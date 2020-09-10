@@ -3,8 +3,8 @@ import { ValidationErrors, ValidatorFn } from '@angular/forms';
 
 
 const MESSAGE: { [name: string]: string } = {
-    valorMenorQueUm: 'Digite um valor acima de 1.',
-    required: 'Digite um id válido.',
+    valorMenorQueUm: 'Digite um valor acima de 0.',
+    // required: 'Digite um id válido.',
 };
 
 

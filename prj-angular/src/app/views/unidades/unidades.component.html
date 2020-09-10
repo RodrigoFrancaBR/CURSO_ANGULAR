@@ -1,13 +1,11 @@
-<div class="card border border-secondary">
-
-    <div class="card-header p-1 bg-secondary ">
-        Tela de gestão de Unidades
+<header class="content-header">
+    <div class="container">
+        <h1 class="section-title">Tela de gestão de Unidades</h1>
     </div>
+</header>
 
-    <div class="card-body">
-        <app-grid></app-grid>
-    </div>
+<app-unidades-filtro (valorDaPesquisaEvent)="this.obterEventDePesquisa()"></app-unidades-filtro>
+<app-unidades-lista></app-unidades-lista>
 
-</div>
 
 <!-- <router-outlet></router-outlet> -->
