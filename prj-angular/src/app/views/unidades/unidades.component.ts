@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UnidadeService } from './unidade.service';
 
 @Component({
   selector: 'app-unidades',
@@ -7,12 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UnidadesComponent implements OnInit {
 
-  constructor() {
+  constructor(private service: UnidadeService) {
   }
 
   ngOnInit() { }
 
-  obterEventDePesquisa(event: any) {
-    console.log(event);
+  obterValorDaPesquisa(id: number) {
+    console.log('obter');
+    if (id) {
+      this.service.buscarUnidadePorId(id).subscribe(resposta => console.log(resposta));
+    } else {
+      this.service.bustarTodasUnidades().subscribe(resposta => console.log(resposta));
+    }
   }
 }

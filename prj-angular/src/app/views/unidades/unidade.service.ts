@@ -34,7 +34,8 @@ export class UnidadeService {
   }
 
   bustarTodasUnidades(): Observable<Array<Unidade>> {
-    return this.http.get<Array<Unidade>>(baseUrl);
+    return this.http.get<Array<Unidade>>(baseUrl)
+      .pipe(tap(() => { console.log('sucesso') }, (httpErrorResponse: HttpErrorResponse) => { ToastrMensagemUtil.error(this.toastr, httpErrorResponse.error); }));
   }
 
   // buscarUnidadePorId(id: number) {
@@ -60,8 +61,8 @@ export class UnidadeService {
         console.log(unidade);
       }, (httpErrorResponse: HttpErrorResponse) => {
         console.log(httpErrorResponse);
-        // ToastrMensagemUtil.error(this.toastr, `${httpErrorResponse.error}`);
-        ToastrMensagemUtil.tratarError(this.toastr, httpErrorResponse.status);
+        ToastrMensagemUtil.error(this.toastr, `${httpErrorResponse.error}`);
+        // ToastrMensagemUtil.tratarError(this.toastr, httpErrorResponse.status);
       }));
   }
 
