@@ -20,6 +20,13 @@ const baseUrl = 'api/unidades';
 })
 
 export class UnidadeService {
+  listaDeUnidades: Unidade[] = [];
+
+  getUnidade(id: number): Unidade {
+    console.log('getUnidade');
+    let posicao = this.listaDeUnidades.findIndex((unidade: Unidade) => { return unidade.id == id });
+    return this.listaDeUnidades[posicao];
+  }
 
   constructor(
     private http: HttpClient,
@@ -35,7 +42,11 @@ export class UnidadeService {
 
   bustarTodasUnidades(): Observable<Array<Unidade>> {
     return this.http.get<Array<Unidade>>(baseUrl)
-      .pipe(tap(() => { console.log('sucesso') }, (httpErrorResponse: HttpErrorResponse) => { ToastrMensagemUtil.error(this.toastr, httpErrorResponse.error); }));
+      .pipe(tap((listaDeUnidaes: Array<Unidade>) => {
+        this.listaDeUnidades = listaDeUnidaes;
+      }, (httpErrorResponse: HttpErrorResponse) => {
+        ToastrMensagemUtil.error(this.toastr, httpErrorResponse.error);
+      }));
   }
 
   // buscarUnidadePorId(id: number) {

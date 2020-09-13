@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { UnidadeService } from './unidade.service';
+import { Unidade } from 'src/app/model/unidade';
 
 @Component({
   selector: 'app-unidades',
@@ -7,18 +8,30 @@ import { UnidadeService } from './unidade.service';
   styleUrls: ['./unidades.component.css']
 })
 export class UnidadesComponent implements OnInit {
+  listaDeUnidades: Array<Unidade> = [];
 
-  constructor(private service: UnidadeService) {
+  constructor(
+    private service: UnidadeService) {
   }
 
   ngOnInit() { }
 
   obterValorDaPesquisa(id: number) {
-    console.log('obter');
     if (id) {
-      this.service.buscarUnidadePorId(id).subscribe(resposta => console.log(resposta));
+      this.service.buscarUnidadePorId(id).subscribe(resposta => {
+        this.limparList();
+        this.listaDeUnidades.push(resposta)
+      });
     } else {
-      this.service.bustarTodasUnidades().subscribe(resposta => console.log(resposta));
+      this.service.bustarTodasUnidades().subscribe(resposta => {
+        this.limparList();
+        this.listaDeUnidades = resposta
+      });
     }
   }
+
+  limparList(): void {
+    this.listaDeUnidades = [];
+  }
+
 }

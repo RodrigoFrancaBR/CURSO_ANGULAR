@@ -15,31 +15,31 @@ export class UnidadesFiltroComponent implements OnInit {
   @Output()
   valorDaPesquisa = new EventEmitter();
 
-  formularioDePesquisa: FormGroup;
+  formularioPesquisa: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
   ) { }
 
 
-  ngOnInit() {
+  ngOnInit() {    
     this.iniciarFormulario();
   }
 
   iniciarFormulario() {
-    this.formularioDePesquisa = this.formBuilder.group(
+    this.formularioPesquisa = this.formBuilder.group(
       new Unidade()
     );
     this.id.setValidators([FormUtil.valorMinimo()]);
   }
 
   get id(): AbstractControl {
-    return this.formularioDePesquisa.get('id');
+    return this.formularioPesquisa.get('id');
   }
 
   limpar(): void {
-    this.formularioDePesquisa.reset();
-    // this.valorDaPesquisa.emit(null);
+    this.formularioPesquisa.reset();
+    this.valorDaPesquisa.emit(null);
   }
 
   pesquisar() {
@@ -49,8 +49,8 @@ export class UnidadesFiltroComponent implements OnInit {
   }
 
   formularioValido() {
-    if (this.formularioDePesquisa.invalid) {
-      FormUtil.marcaComoDirtySeTemErro(this.formularioDePesquisa);
+    if (this.formularioPesquisa.invalid) {
+      FormUtil.marcaComoDirtySeTemErro(this.formularioPesquisa);
       return false;
     } else {
       return true;
@@ -58,7 +58,7 @@ export class UnidadesFiltroComponent implements OnInit {
   }
 
   mostrarErro(controlName: string): boolean {
-    return FormUtil.mostrarErro(this.formularioDePesquisa, controlName);
+    return FormUtil.mostrarErro(this.formularioPesquisa, controlName);
   }
 
 }

@@ -24,22 +24,26 @@ import { UnidadesComponent } from './unidades.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { GridComponent } from './grid/grid.component';
 import { UnidadeEditarComponent } from './unidade-editar/unidade-editar.component';
-import { UnidadesListComponent } from './unidades-list/unidades-list.component';
 import { UnidadesFiltroComponent } from './unidades-filtro/unidades-filtro.component';
 import { UnidadesListaComponent } from './unidades-lista/unidades-lista.component';
+import { UnidadesEditarComponent } from './unidades-editar/unidades-editar.component';
+import { UnidadesDetalheComponent } from './unidades-detalhe/unidades-detalhe.component';
+import { UnidadesNaoEncontradoComponent } from './unidades-nao-encontrado/unidades-nao-encontrado.component';
 
 @NgModule({
   declarations: [
     UnidadesComponent,
+    UnidadesFiltroComponent,
+    UnidadesListaComponent,
+    UnidadesDetalheComponent,
+    UnidadesEditarComponent,
+    UnidadesNaoEncontradoComponent,
     CadastroComponent,
     GridComponent,
     UnidadeEditarComponent,
     FormMensagemComponent,
     ModalConfirmationComponent,
     ModalInclusionComponent,
-    UnidadesListComponent,
-    UnidadesFiltroComponent,
-    UnidadesListaComponent
   ],
   imports: [
     MatSliderModule,
