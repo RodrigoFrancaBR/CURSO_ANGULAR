@@ -54,5 +54,22 @@ export class FormUtil {
     //     });
     // }
 
+    static validaNumero(evt) {
+        const theEvent = evt || window.event;
+        let key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+        const regex = /[0-9]/;
+          /*Para aceitar o backspace */
+          if (key === '\u0008') {
+            return ;
+           }
+        if (!regex.test(key)) {
+          theEvent.returnValue = false;
+          if (theEvent.preventDefault) {
+            theEvent.preventDefault();
+          }
+        }
+      }
+
 }
 

@@ -6,8 +6,6 @@ import { ToastrMensagemUtil } from 'src/app/util/toastr-mensagem-util';
 import { ToastrService } from 'ngx-toastr';
 import { Validators, AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 import { FormUtil } from 'src/app/util/form-util';
-import { ModalConfirmationComponent } from 'src/app/util/modal-confirmation';
-import { ModalInclusionComponent } from 'src/app/util/modal-inclusion';
 
 @Component({
   selector: 'app-grid',
@@ -20,8 +18,6 @@ export class GridComponent implements OnInit {
   listaDeUnidades: Unidade[] = [];
   unidadeSelecionada: number;
   ngbModalRef: NgbModalRef;
-  @ViewChild(ModalConfirmationComponent, { static: false }) private modalConfirmationComponent: ModalConfirmationComponent;
-  @ViewChild(ModalInclusionComponent, { static: false }) private modalInclusionComponent: ModalInclusionComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,8 +48,7 @@ export class GridComponent implements OnInit {
   }
 
   incluir() {
-    console.log('incluir');
-    this.modalInclusionComponent.open();
+    console.log('incluir');  
   }
 
   pesquisar() {
@@ -96,16 +91,11 @@ export class GridComponent implements OnInit {
     }
   }
 
-  // aplicarCSSErro(controlName: string) {
-  //   return FormUtil.aplicarCSSErro(this.formulario, controlName);
-  // }
-
   mostrarErro(controlName: string) {
     return FormUtil.mostrarErro(this.formulario, controlName);
   }
 
   selecionarRegistro(id: number): void {
-    // this.unidadeSelecionada = (this.unidadeSelecionada === unidade.id) ? null : unidade.id;
     this.unidadeSelecionada = this.estaSelecionadoRegistro(id) ? null : id;
   }
 
@@ -113,45 +103,12 @@ export class GridComponent implements OnInit {
     return (this.unidadeSelecionada === id) ? true : false;
   }
 
-  // forcarCancelamento() {
-  //   if (this.unidadeSelecionada) {
-  //     this.modalConfirmationComponent.open();
-  //     // this.abrirModal()
-  //   } else {
-  //     ToastrMensagemUtil.info(this.toastr, 'É preciso selecionar um registro para forçar o cancelamento.');
-
-  //   }
-  // }
-
-  // abrirModal(content) {
-  //   let modal = null;
-  //   this.ngbModalRef = this.ngbModal.open(content, { size: 'sm', windowClass: 'forcarCancelamentoModal' });
-  //   setTimeout(() => {
-  //     modal = document.querySelector('.forcarCancelamentoModal');
-  //     modal.classList.remove('fade');
-  //   }, 100);
-  // }
-
-  // sim() {
-  //   this.service.atualizaUnidade(this.unidadeSelecionada).subscribe(resp => {
-  //     if (resp) {
-  //       ToastrMensagemUtil.success(this.toastr, 'Status alterado com sucesso');
-  //       this.listaDeUnidades = [];
-  //       this.unidadeSelecionada = null;
-  //     }
-  //   });
-  // }
-
-  // nao() {
-  //   this.ngbModalRef.dismiss();
-  // }
 
   alterar(unidade: Unidade) {
     console.log(unidade);
   }
 
-  excluir(unidade: Unidade) {
-    this.modalConfirmationComponent.excluir(unidade.id);
+  excluir(unidade: Unidade) {    
   }
 
   modalEvent(event: string) {

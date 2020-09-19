@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
+import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 
 import { FormUtil } from './../../../util/form-util';
 import { Unidade } from 'src/app/model/unidade';
@@ -13,7 +13,13 @@ import { Unidade } from 'src/app/model/unidade';
 export class UnidadesFiltroComponent implements OnInit {
 
   @Output()
-  valorDaPesquisa = new EventEmitter();
+  idDaPesquisa = new EventEmitter();
+
+  @Output()
+  eventoDeLimpar = new EventEmitter();
+
+  @Input()
+  idSelecionado: number;
 
   formularioPesquisa: FormGroup;
 
@@ -22,15 +28,23 @@ export class UnidadesFiltroComponent implements OnInit {
   ) { }
 
 
-  ngOnInit() {    
-    this.iniciarFormulario();
+  ngOnInit() {
+    this.configurarFormulario(new Unidade());
   }
 
-  iniciarFormulario() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.idSelecionado && this.idSelecionado) {
+      this.id.setValue(this.idSelecionado);
+    }
+  }
+
+  configurarFormulario(unidade: Unidade) {
     this.formularioPesquisa = this.formBuilder.group(
-      new Unidade()
+      unidade
     );
-    this.id.setValidators([FormUtil.valorMinimo()]);
+    this.id.setValidators([
+      FormUtil.valorMinimo(),
+    ]);
   }
 
   get id(): AbstractControl {
@@ -39,12 +53,12 @@ export class UnidadesFiltroComponent implements OnInit {
 
   limpar(): void {
     this.formularioPesquisa.reset();
-    this.valorDaPesquisa.emit(null);
+    this.eventoDeLimpar.emit(null);
   }
 
   pesquisar() {
     if (this.formularioValido()) {
-      this.valorDaPesquisa.emit(this.id.value);
+      this.idDaPesquisa.emit(this.id.value)
     }
   }
 
@@ -59,6 +73,10 @@ export class UnidadesFiltroComponent implements OnInit {
 
   mostrarErro(controlName: string): boolean {
     return FormUtil.mostrarErro(this.formularioPesquisa, controlName);
+  }
+
+  validaNumero(event: any) {
+    FormUtil.validaNumero(event);
   }
 
 }

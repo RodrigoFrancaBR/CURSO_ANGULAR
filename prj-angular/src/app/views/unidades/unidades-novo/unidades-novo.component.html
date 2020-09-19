@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-title>Nova Unidade</mat-card-title>
+    <form>
+
+        <mat-form-field>
+            <input matInput placeholder="Nome" [(ngModel)]="unidade.nome" name="nome">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Endereço" [(ngModel)]="unidade.endereco" name="endereco">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Status" [(ngModel)]="unidade.status" name="status">
+        </mat-form-field>
+
+    </form>
+
+    <!-- <button mat-raised-button (click)="atualizar()" color="primary">Atualizar</button> -->
+    <button mat-raised-button (click)="cancelar()" color="primary">Cancelar</button>
+
+</mat-card>

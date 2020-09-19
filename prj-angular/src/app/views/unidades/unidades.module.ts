@@ -16,34 +16,36 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
 import { FormMensagemComponent } from 'src/app/components/form-mensagem/form-mensagem.component';
-import { ModalConfirmationComponent } from 'src/app/util/modal-confirmation';
-import { ModalInclusionComponent } from 'src/app/util/modal-inclusion';
-
 import { UnidadesRoutingModule } from './unidades-routing.module';
 import { UnidadesComponent } from './unidades.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { GridComponent } from './grid/grid.component';
+
+import { UnidadesPrincipalComponent } from './unidades-principal/unidades-principal.component';
 import { UnidadeEditarComponent } from './unidade-editar/unidade-editar.component';
 import { UnidadesFiltroComponent } from './unidades-filtro/unidades-filtro.component';
 import { UnidadesListaComponent } from './unidades-lista/unidades-lista.component';
 import { UnidadesEditarComponent } from './unidades-editar/unidades-editar.component';
 import { UnidadesDetalheComponent } from './unidades-detalhe/unidades-detalhe.component';
 import { UnidadesNaoEncontradoComponent } from './unidades-nao-encontrado/unidades-nao-encontrado.component';
+import { UnidadesNovoComponent } from './unidades-novo/unidades-novo.component';
+
 
 @NgModule({
   declarations: [
     UnidadesComponent,
+    UnidadesPrincipalComponent,
+    UnidadesNaoEncontradoComponent,
     UnidadesFiltroComponent,
     UnidadesListaComponent,
     UnidadesDetalheComponent,
     UnidadesEditarComponent,
-    UnidadesNaoEncontradoComponent,
+    UnidadesNovoComponent,
+
     CadastroComponent,
     GridComponent,
     UnidadeEditarComponent,
     FormMensagemComponent,
-    ModalConfirmationComponent,
-    ModalInclusionComponent,
   ],
   imports: [
     MatSliderModule,

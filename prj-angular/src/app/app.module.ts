@@ -43,36 +43,20 @@ import { NavComponent } from './components/template/nav/nav.component';
  * My Directives
  */
 import { RedDirective } from './directives/red.directive';
-import { ForDirective } from './directives/exemplos/for.directive';
-import { UnlessDirective } from './directives/exemplos/unless.directive';
 /**
  * My Views
  */
 import { HomeComponent } from './views/home/home.component';
-
-import { ModalFoculsComponent } from './components/modal/modal-foculs/modal-foculs.component';
-import { NgbdModalConfirmComponent } from './components/ngbd-modal-confirm/ngbd-modal-confirm.component';
-import { NgbdModalComponent, NgbdModalContent } from './components/modal/modal-component/modal-component';
-import { NgbdModalConfig } from './components/modal/modal-config/modal-config';
-import { TypeaheadFocusComponent } from './components/typeahead-focus/typeahead-focus.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
   declarations: [
-    TypeaheadFocusComponent,
-    NgbdModalContent,
-    NgbdModalComponent,
     HeaderComponent,
     FooterComponent,
     NavComponent,
     HomeComponent,
     RedDirective,
-    ForDirective,
-    UnlessDirective,
-    ModalFoculsComponent,
-    NgbdModalConfirmComponent,
-    NgbdModalConfig,
     AppComponent
   ],
   // exports:[GridComponent],
@@ -105,7 +89,7 @@ import { AppRoutingModule } from './app.routing.module';
   ],
   providers: [],
   exports: [],
-  entryComponents: [NgbdModalContent],
+  entryComponents: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

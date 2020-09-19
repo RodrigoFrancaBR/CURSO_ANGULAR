@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TypeaheadFocusComponent } from './typeahead-focus.component';
+import { UnidadesNovoComponent } from './unidades-novo.component';
 
-describe('TypeaheadFocusComponent', () => {
-  let component: TypeaheadFocusComponent;
-  let fixture: ComponentFixture<TypeaheadFocusComponent>;
+describe('UnidadesNovoComponent', () => {
+  let component: UnidadesNovoComponent;
+  let fixture: ComponentFixture<UnidadesNovoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TypeaheadFocusComponent ]
+      declarations: [ UnidadesNovoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TypeaheadFocusComponent);
+    fixture = TestBed.createComponent(UnidadesNovoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

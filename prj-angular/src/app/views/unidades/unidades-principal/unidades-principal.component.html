@@ -1,0 +1,16 @@
+<header class="content-header">
+    <div class="container">
+        <h1 class="section-title">Tela de Pesquisa de Unidades</h1>
+    </div>
+</header>
+
+<app-unidades-filtro 
+    (eventoDeLimpar)="obterEventoDeLimpar($event)"
+    (idDaPesquisa)="obterIdDaPesquisa($event)"
+    [idSelecionado]="this.idSelecionado">
+</app-unidades-filtro>
+
+<app-unidades-lista 
+    [listaDeUnidades]="this.listaDeUnidades"
+    [idSelecionado]="this.idSelecionado">
+</app-unidades-lista>

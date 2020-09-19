@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Unidade } from 'src/app/model/unidade';
@@ -14,8 +14,6 @@ import { UnidadeService } from '../unidade.service';
 export class UnidadesDetalheComponent implements OnInit, OnDestroy {
     formularioDetalhe: FormGroup;
     inscricao: Subscription;
-    unidadeSelecionada: number;
-    unidade: Unidade;
 
     constructor(
         private router: Router,
@@ -26,38 +24,40 @@ export class UnidadesDetalheComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-        console.log('oninit')
-        this.obterParametroDaRota();
-        this.buscarUnidade();
-        if (this.unidade) {
-            this.iniciarFormulario(this.unidade);
+        this.configurarFormulario(new Unidade());
+
+        let idSelecionado = this.obterParametroDaRota();
+
+        if (idSelecionado) {
+            this.buscarUnidadePorId(idSelecionado);
+
         } else {
-            this.iniciarFormulario(new Unidade());
-            this.router.navigate(['naoEncontrado']);
+            this.router.navigate(['unidades/naoEncontrado']);
         }
-
     }
 
-    obterParametroDaRota(): void {
-        this.inscricao = this.activatedRoute.params.subscribe(params => this.unidadeSelecionada = params.id);
-    }
-
-    buscarUnidade(): void {
-        this.unidade = this.service.getUnidade(this.unidadeSelecionada);
-        // this.service.buscarUnidadePorId(this.unidadeSelecionada).subscribe((unidade: Unidade) => {
-        //     this.unidade = unidade;
-        // });
-    }
-
-    iniciarFormulario(unidade: Unidade): void {
+    private configurarFormulario(unidade: Unidade): void {
         this.formularioDetalhe = this.formBuilder.group(
             unidade
         );
         this.formularioDetalhe.disable();
     }
 
+    private obterParametroDaRota(): number {
+        let idSelecionado;
+        this.inscricao = this.activatedRoute.params.subscribe(params => idSelecionado = params.id);
+        return idSelecionado;
+    }
+
+    private buscarUnidadePorId(id: number) {
+        this.service.buscarUnidadePorId(id)
+            .subscribe((unidade: Unidade) => {
+                this.configurarFormulario(unidade);
+            })
+    }
+
     editar() {
-        this.router.navigate(['unidades'])
+        this.router.navigate(['unidades', this.formularioDetalhe.get('id').value, 'editar']);
     }
 
     remover() {
@@ -65,7 +65,7 @@ export class UnidadesDetalheComponent implements OnInit, OnDestroy {
     }
 
     voltar() {
-        this.router.navigate(['unidades'])
+        this.router.navigate(['unidades', this.formularioDetalhe.get('id').value]);
     }
 
     ngOnDestroy() {

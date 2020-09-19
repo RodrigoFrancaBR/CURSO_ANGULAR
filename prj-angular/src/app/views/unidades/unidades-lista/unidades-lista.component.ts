@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 
 import { Unidade } from 'src/app/model/unidade';
 import { Router } from '@angular/router';
@@ -9,38 +9,41 @@ import { Router } from '@angular/router';
   styleUrls: ['./unidades-lista.component.css']
 })
 export class UnidadesListaComponent implements OnInit {
-  @Input() listaDeUnidades: Array<Unidade>;
 
-  unidadeSelecionada: number;
+  @Input()
+  listaDeUnidades: Array<Unidade>;
 
+  @Input()
+  idSelecionado: number;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router) { }
 
   ngOnInit() {
   }
 
-  // mostrarErro(controlName: string) {
-  //   return FormUtil.mostrarErro(this.formulario, controlName);
-  // }
-  editar(id: number): void {
-    console.log(id);
-    this.router.navigate(['unidades', `${id}`]);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.idSelecionado && this.idSelecionado) {
+      this.idSelecionado = null;
+      this.selecionarRegistro(changes.idSelecionado.currentValue);
+    }
   }
 
-  remover(id: number): void {
-    console.log(id);
+  detalhes(id: number): void {
+    this.router.navigate(['unidades', `${id}`, 'detalhe']);
+  }
+
+  remover(id: number): void {    
     // this.router.navigate([this.resourceName, 'remove', result.rowId]);
   }
 
 
   estaSelecionadoRegistro(id: number): boolean {
-    return (this.unidadeSelecionada === id) ? true : false;
+    return (this.idSelecionado === id) ? true : false;
   }
 
   selecionarRegistro(id: number): void {
-    console.log(id);
-    // this.unidadeSelecionada = (this.unidadeSelecionada === unidade.id) ? null : unidade.id;
-    this.unidadeSelecionada = this.estaSelecionadoRegistro(id) ? null : id;
+    this.idSelecionado = this.estaSelecionadoRegistro(id) ? null : id;
   }
 
 }

@@ -8,24 +8,16 @@
                     <label for="id" class="col-sm-3 text-center">
                         <strong>
                             ID
-                            <!-- {{ 'PPW.CADASTROPAFIXA.FILTER.ASSESSORIA' | translate }} -->
                         </strong>
                     </label>
-                    <input id="id" type="text" class="" formControlName="id"
-                    title="Digite um id válido">
-                    <!-- <select id="fila" type="text" class="col-sm-6" formControlName="agencia"
-                        title="Selecione uma agencia">
-                        <option *ngFor="let agencia of empresasTercerizadas$| async" [ngValue]="agencia">
-                            {{agencia.id}} - {{agencia.nome}}
-                        </option>
-                    </select> -->
-                    <form-mensagem [errors]="id.errors" [mostraErro]="mostrarErro('id')"></form-mensagem> 
+                    <input id="id" type="text" class="" formControlName="id" (keypress)="validaNumero($event)"
+                        title="Digite um id válido">
+
+                    <form-mensagem [errors]="id.errors" [mostraErro]="mostrarErro('id')"></form-mensagem>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="text-right">
-                        <!-- <button class="btn btn-lg btn-success rounded border border-secondary"
-                            (click)="create()">{{ 'PPW.CADASTROPAFIXA.BUTTON.CREATE' | translate }}</button> -->
                     </div>
                 </div>
             </div>
@@ -41,14 +33,12 @@
                         <button class="btn btn-lg ml-4 btn-primary rounded border border-secondary" id="btnPesquisa"
                             type="submit">
                             Pesquisar
-                            <!-- <strong>{{ 'PPW.CADASTROPAFIXA.BUTTON.SEARCH' | translate }}</strong> -->
                         </button>
                     </div>
                     <div class="float-right">
                         <button class="btn btn-lg btn-primary rounded border border-secondary" id="btnLimpar"
                             type="button" (click)="limpar()">
                             Limpar
-                            <!-- <strong>{{ 'PPW.CADASTROPAFIXA.BUTTON.CLEAR' | translate }}</strong> -->
                         </button>
                     </div>
                 </div>
@@ -57,94 +47,3 @@
         </form>
     </div>
 </div>
-
-
-<!-- <div class="efx-grid-card details-table font-small card">
-    <table class="table table-hover table-bordered efx-grid table-sm">
-        <thead>
-            <tr>
-                <th class="headers" scope="col" sortable="agencia" (sort)="onSort($event)">
-                    {{ 'PPW.CADASTROPAFIXA.LIST.ASSESSORIA' | translate }}
-                    <span class="sort-icon"><button class="btn btn-link grid-sort">
-                            <fa-icon [icon]="faSort"></fa-icon>
-                        </button></span>
-                </th>
-                <th class="headers" scope="col" sortable="fila" (sort)="onSort($event)">
-                    {{ 'PPW.CADASTROPAFIXA.LIST.FILA' | translate }}
-                    <span class="sort-icon"><button class="btn btn-link grid-sort">
-                            <fa-icon [icon]="faSort"></fa-icon>
-                        </button></span></th>
-                <th class="headers" scope="col" sortable="descricao" (sort)="onSort($event)">
-                    {{ 'PPW.CADASTROPAFIXA.LIST.DESCRICAO' | translate }}
-                    <span class="sort-icon"><button class="btn btn-link grid-sort">
-                            <fa-icon [icon]="faSort"></fa-icon>
-                        </button></span></th>
-                <th class="headers" scope="col" sortable="qtdPa" (sort)="onSort($event)">
-                    {{ 'PPW.CADASTROPAFIXA.LIST.QTD_PA' | translate }}
-                    <span class="sort-icon"><button class="btn btn-link grid-sort">
-                            <fa-icon [icon]="faSort"></fa-icon>
-                        </button></span></th>
-                <th class="headers" scope="col" sortable="vlrPa" (sort)="onSort($event)">
-                    {{ 'PPW.CADASTROPAFIXA.LIST.VALOR_PA' | translate }}
-                    <span class="sort-icon"><button class="btn btn-link grid-sort">
-                            <fa-icon [icon]="faSort"></fa-icon>
-                        </button></span>
-                </th>
-                <th>
-                    {{ 'PPW.CADASTROPAFIXA.LIST.ACOES' | translate }}
-                </th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr *ngFor="let result of arrayTbPAFixa$ | async; index as remid"
-                [class.active]="result.rowId === selectedId" (click)="selecionarRegistro(result)"
-                [class.table-primary]="estaSelecionadoRegistro(result)">
-
-                <td class="efx-grid-cell">
-                    <ngb-highlight [result]="result.agencia" [term]="searchTerm"></ngb-highlight>
-                </td>
-                <td class="efx-grid-cell">
-                    <ngb-highlight [result]="result.fila" [term]="searchTerm"></ngb-highlight>
-                </td>
-                <td class="efx-grid-cell">
-                    <ngb-highlight [result]="result.descricao" [term]="searchTerm"></ngb-highlight>
-                </td>
-                <td class="efx-grid-cell">
-                    <ngb-highlight [result]="result.qtdPa" [term]="searchTerm"></ngb-highlight>
-                </td>
-                <td class="efx-grid-cell">
-                    <ngb-highlight [result]="result.vlrPa | currency:'BRL'" [term]="searchTerm">
-                    </ngb-highlight>
-                </td>
-
-
-                <td class="efx-grid-cell">
-                    <div class="btn-group" role="group" aria-label="A��es">
-                        <button type="button" class="btn btn-secondary btn-table btn-sm" (click)="change(result)">
-                            <fa-icon [icon]="faPencilAlt"></fa-icon>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-table btn-sm" (click)="remove(result)">
-                            <fa-icon [icon]="faTrashAlt"></fa-icon>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-</div>
-
-<div class="d-flex justify-content-between p-2">
-    <ngb-pagination [collectionSize]="total$ | async" [(page)]="page" [pageSize]="pageSize" [maxSize]="10"
-        [rotate]="true" [ellipses]="true" [boundaryLinks]="true" size="sm">
-        <ng-template ngbPaginationEllipsis>...</ng-template>
-    </ngb-pagination>
-
-    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
-        <option [ngValue]="10">10 {{ 'PPW.PADRAO.CONTENT_ITEMS_PERPAGE' | translate }}</option>
-        <option [ngValue]="100">100 {{ 'PPW.PADRAO.CONTENT_ITEMS_PERPAGE' | translate }}</option>
-        <option [ngValue]="500">500 {{ 'PPW.PADRAO.CONTENT_ITEMS_PERPAGE' | translate }}</option>
-    </select>
-
-</div> -->

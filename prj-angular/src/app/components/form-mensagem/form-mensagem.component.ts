@@ -2,10 +2,11 @@ import { Input, Component, Type } from '@angular/core';
 import { ValidationErrors, ValidatorFn } from '@angular/forms';
 
 
-const MESSAGE: { [name: string]: string } = {
-    valorMenorQueUm: 'Digite um valor acima de 0.',
-    // required: 'Digite um id válido.',
-};
+// const MESSAGE: { [name: string]: string } = {
+//     valorMenorQueUm: 'Digite um valor acima de 0.',
+//     required: 'Campo de preenchimento obrigatório',
+//     maxlength: 'A quantidade de caracteres deve ser menor ou igual a:' + this.x
+// };
 
 
 @Component({
@@ -15,6 +16,18 @@ const MESSAGE: { [name: string]: string } = {
 })
 
 export class FormMensagemComponent {
+
+
+    readonly getMessage = (errorName: string, error: ValidationErrors) => {
+        const message = {
+            'maxlength': `Quantidade de caracteres deve ser menor ou igual a ${error.requiredLength} e não ${error.actualLength}`,
+            'required': `Campo de preenchimento obrigatório`,
+            'valorMenorQueUm': ' Digite um valor maior que 0.'
+        }
+        return message[errorName];
+
+    }
+
     @Input()
     mostraErro: boolean = false;
 
@@ -28,12 +41,14 @@ export class FormMensagemComponent {
 
     _errors: ValidatorFn;
 
-    // tslint:disable-next-line: adjacent-overload-signatures
     set errors(errors: ValidationErrors) {
         if (errors) {
             console.log('tem erro')
-            Object.keys(errors).map(e => this.msg = MESSAGE[e]);
-            // Object.keys(errors).map(e => this.msg = FormMensagemComponent.getErrorMessage(e, errors[e]));
+            Object.keys(errors)
+                .map((error) => {
+                    // this.msg = MESSAGE[e]
+                    this.msg = this.getMessage(error, errors[error])
+                });
         } else {
             this.msg = null;
         }
