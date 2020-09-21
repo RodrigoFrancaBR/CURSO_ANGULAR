@@ -5,11 +5,12 @@
                 <h1 class="section-title">Tela de Detalhes da Unidade</h1>
                 <div class="pull-right">
 
-                    <a class="btn btn-lg btn-default" tabindex="0" (click)="editar()">Editar</a>
+                    <button type="button" (click)="editar()">Editar</button>
 
-                    <a class="btn btn-lg btn-default" tabindex="0" (click)="remover()">Remover</a>
+                    <button [disabled]="desabilitar()" type="button" tabindex="0"
+                        (click)="desativar()">Desativar</button>
 
-                    <a class="btn btn-lg btn-default" tabindex="0" (click)="voltar()">Voltar</a>
+                    <button type="button" (click)="voltar()">Voltar</button>
 
                 </div>
             </div>
@@ -37,7 +38,7 @@
             </div>
             <div class="form-group row">
                 <label for="nome" class="col-sm-2 col-form-label">Status</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <input type="text" class="form-control" id="status" placeholder="Nome" formControlName="status">
                 </div>
             </div>

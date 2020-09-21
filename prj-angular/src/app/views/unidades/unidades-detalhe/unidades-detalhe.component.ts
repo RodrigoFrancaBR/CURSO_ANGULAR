@@ -1,10 +1,13 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, OnDestroy, } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Unidade } from 'src/app/model/unidade';
 import { Subscription } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { Unidade } from 'src/app/model/unidade';
 import { UnidadeService } from '../unidade.service';
+import { ModalConfirmacaoComponent } from './../../../components/modal-confirmacao/modal-confirmacao.component';
 
 @Component({
     selector: 'app-unidades-detalhe',
@@ -19,7 +22,8 @@ export class UnidadesDetalheComponent implements OnInit, OnDestroy {
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private service: UnidadeService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private modalService: NgbModal
 
     ) { }
 
@@ -60,15 +64,59 @@ export class UnidadesDetalheComponent implements OnInit, OnDestroy {
         this.router.navigate(['unidades', this.formularioDetalhe.get('id').value, 'editar']);
     }
 
-    remover() {
-        console.log('editar')
+    desativar() {
+        this.openModal()
+            .then(() => {
+                //clicou no confirm     
+                this.desativarUnidade();
+            }, () => {
+                // clicou no cancel ou no x 
+            });
     }
 
     voltar() {
         this.router.navigate(['unidades', this.formularioDetalhe.get('id').value]);
     }
 
+    openModal(): Promise<any> {
+        // let modal = null;
+        const ngbModalRef = this.modalService.open(
+            ModalConfirmacaoComponent,
+            {
+                size: 'sm',
+                //  windowClass: 'modalConfirmacao'
+            });
+        // setTimeout(() => {
+        //     modal = document.querySelector('.modalConfirmacao');
+        //     modal.classList.remove('fade');
+        // }, 100);
+
+        ngbModalRef.componentInstance.body = 'Gostaria de desativar a unidade? ';
+        return ngbModalRef
+            .result
+            //.then(() => {
+                //clicou no confirm                   
+                // this.service.excluirUnidade(this.formularioDetalhe.get('id').value)
+                //     .subscribe(() => this.router.navigate(['unidades']));
+            //}, () => {
+                // clicou no cancel ou no x                    
+            //})
+    }
+
+
+    desativarUnidade() {
+        this.service.excluirUnidade(this.formularioDetalhe.get('id').value)
+            .subscribe(() => this.router.navigate(['unidades']));
+    }
+
+
     ngOnDestroy() {
         this.inscricao.unsubscribe();
     }
+
+
+    desabilitar() {
+        return this.formularioDetalhe.get('status').value === 'DESATIVADA' ? false : true
+    }
+
 }

@@ -1,3 +1,4 @@
+import { ModalConfirmacaoComponent } from './components/modal-confirmacao/modal-confirmacao.component';
 /**
  * Angular
  */
@@ -57,7 +58,8 @@ import { AppRoutingModule } from './app.routing.module';
     NavComponent,
     HomeComponent,
     RedDirective,
-    AppComponent
+    AppComponent,
+    ModalConfirmacaoComponent
   ],
   // exports:[GridComponent],
   imports: [
@@ -65,7 +67,7 @@ import { AppRoutingModule } from './app.routing.module';
       timeOut: 2000,
       preventDuplicates: true,
     }),
-    // CommonModule,
+    // CommonModule,    
     BrowserAnimationsModule,
     NgbModule,
     BrowserModule,
@@ -83,13 +85,13 @@ import { AppRoutingModule } from './app.routing.module';
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
+    MatSortModule,    
     UnidadesModule,
-    AppRoutingModule
+    AppRoutingModule    
   ],
   providers: [],
   exports: [],
-  entryComponents: [],
+  entryComponents: [ModalConfirmacaoComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

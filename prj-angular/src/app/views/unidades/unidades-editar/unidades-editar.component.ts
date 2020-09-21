@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { Unidade } from 'src/app/model/unidade';
 import { UnidadeService } from '../unidade.service';
 import { FormUtil } from 'src/app/util/form-util';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
 
 @Component({
     selector: 'app-unidades-editar',
@@ -21,7 +23,8 @@ export class UnidadesEditarComponent {
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private service: UnidadeService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private modalService: NgbModal
 
     ) { }
 
@@ -50,7 +53,7 @@ export class UnidadesEditarComponent {
                 this.configurarFormulario(unidade);
                 this.unidade = unidade;
             })
-    } 
+    }
 
     configurarFormulario(unidade: Unidade): void {
         this.formularioEditar = this.formBuilder.group(
@@ -76,10 +79,54 @@ export class UnidadesEditarComponent {
 
     atualizar() {
         if (this.formularioValido()) {
-            this.service.atualizaUnidade(this.formularioEditar.value, this.unidade.id)
-                .subscribe(() => { this.router.navigate(['unidades']); });
+
+            this.openModal()
+                .then(() => {
+                    //clicou no confirm     
+                    this.atualizarUnidade();
+                }, () => {
+                    // clicou no cancel ou no x 
+                });
+
         }
+
+        // if (this.formularioValido()) {
+        //     this.service.atualizaUnidade(this.formularioEditar.value, this.unidade.id)
+        //         .subscribe(() => { this.router.navigate(['unidades']); });
+        // }
     }
+
+    openModal(): Promise<any> {
+        // let modal = null;
+        const ngbModalRef = this.modalService.open(
+            ModalConfirmacaoComponent,
+            {
+                size: 'sm',
+                //  windowClass: 'modalConfirmacao'
+            });
+        // setTimeout(() => {
+        //     modal = document.querySelector('.modalConfirmacao');
+        //     modal.classList.remove('fade');
+        // }, 100);
+
+        ngbModalRef.componentInstance.body = 'Gostaria de desativar a unidade? ';
+        return ngbModalRef
+            .result
+            // .then(() => {
+                //clicou no confirm                   
+                // this.service.excluirUnidade(this.formularioDetalhe.get('id').value)
+                //     .subscribe(() => this.router.navigate(['unidades']));
+            // }, () => {
+                // clicou no cancel ou no x                    
+            // })
+    }
+
+    atualizarUnidade() {
+        this.service.atualizaUnidade(this.formularioEditar.value, this.unidade.id)
+            .subscribe(() => { this.router.navigate(['unidades']); });
+    }
+
+
 
     private formularioValido(): boolean {
         if (this.formularioEditar.invalid) {
