@@ -1,7 +1,10 @@
+import { UnidadesService } from './../unidades.service';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 
 import { Unidade } from 'src/app/model/unidade';
 import { Router } from '@angular/router';
+import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-unidades-lista',
@@ -15,9 +18,12 @@ export class UnidadesListaComponent implements OnInit {
 
   @Input()
   idSelecionado: number;
+  formularioDetalhe: any;
 
   constructor(
-    private router: Router) { }
+    private router: Router,
+    private modalService: NgbModal,
+    private service: UnidadesService) { }
 
   ngOnInit() {
   }
@@ -33,10 +39,36 @@ export class UnidadesListaComponent implements OnInit {
     this.router.navigate(['unidades', `${id}`, 'detalhe']);
   }
 
-  remover(id: number): void {    
-    // this.router.navigate([this.resourceName, 'remove', result.rowId]);
+  desativar(id: number) {
+    this.openModal()
+      .then(() => {
+        //clicou no confirm     
+        this.desativarUnidade(id);
+      }, () => {
+        // clicou no cancel ou no x 
+      });
   }
 
+  openModal(): Promise<any> {
+    const ngbModalRef = this.modalService.open(
+      ModalConfirmacaoComponent,
+      {
+        size: 'sm',
+      });
+    ngbModalRef.componentInstance.body = 'Gostaria de desativar a unidade? ';
+    return ngbModalRef.result;
+  }
+
+
+  desativarUnidade(id: number) {
+    this.service.excluirUnidade(id)
+      .subscribe(() => {
+        this.service.bustarTodasUnidades()
+          .subscribe((listaDeUnidades: Array<Unidade>) => {
+            this.listaDeUnidades = listaDeUnidades;
+          })
+      });
+  }
 
   estaSelecionadoRegistro(id: number): boolean {
     return (this.idSelecionado === id) ? true : false;

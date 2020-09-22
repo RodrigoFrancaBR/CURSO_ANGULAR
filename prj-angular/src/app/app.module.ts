@@ -11,18 +11,18 @@ import { HttpClientModule } from '@angular/common/http';
 /**
  * Material
  */
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+// import { MatTableModule } from '@angular/material/table';
+// import { MatPaginatorModule } from '@angular/material/paginator';
+// import { MatSortModule } from '@angular/material/sort';
+// import { MatSliderModule } from '@angular/material/slider';
+// import { MatToolbarModule } from '@angular/material/toolbar';
+// import { MatSidenavModule } from '@angular/material/sidenav';
+// import { MatListModule } from '@angular/material/list';
+// import { MatCardModule } from '@angular/material/card';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatSnackBarModule } from '@angular/material/snack-bar';
+// import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatInputModule } from '@angular/material/input';
 
 /**
  * Ng-Bootstrap
@@ -50,6 +50,7 @@ import { RedDirective } from './directives/red.directive';
 import { HomeComponent } from './views/home/home.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
+import { AppMaterialModule } from './app-material/app-material.module';
 
 @NgModule({
   declarations: [
@@ -67,25 +68,26 @@ import { AppRoutingModule } from './app.routing.module';
       timeOut: 2000,
       preventDuplicates: true,
     }),
-    // CommonModule,    
+    // CommonModule,
+    AppMaterialModule,
     BrowserAnimationsModule,
     NgbModule,
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    MatSliderModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,    
+    // MatSliderModule,
+    // MatToolbarModule,
+    // MatSidenavModule,
+    // MatListModule,
+    // MatCardModule,
+    // MatButtonModule,
+    // MatSnackBarModule,
+    // MatFormFieldModule,
+    // MatInputModule,
+    // MatTableModule,
+    // MatPaginatorModule,
+    // MatSortModule,    
     UnidadesModule,
     AppRoutingModule    
   ],

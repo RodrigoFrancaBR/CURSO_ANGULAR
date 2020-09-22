@@ -88,12 +88,10 @@ export class UnidadesDetalheComponent implements OnInit, OnDestroy {
         return ngbModalRef.result;        
     }
 
-
     desativarUnidade() {
         this.service.excluirUnidade(this.formularioDetalhe.get('id').value)
             .subscribe(() => this.router.navigate(['unidades']));
     }
-
 
     ngOnDestroy() {
         this.inscricao.unsubscribe();
