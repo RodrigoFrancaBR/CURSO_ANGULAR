@@ -1,6 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
-import { UnidadeService } from './unidade.service';
-import { Unidade } from 'src/app/model/unidade';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-unidades',

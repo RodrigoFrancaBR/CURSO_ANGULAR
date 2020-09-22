@@ -1,9 +1,14 @@
-import { ToastrService } from 'ngx-toastr';
-import { ToastrMensagemUtil } from '../../../util/toastr-mensagem-util';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UnidadeService } from '../unidade.service';
+import { Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { Unidade } from 'src/app/model/unidade';
+import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
+import { FormUtil } from 'src/app/util/form-util';
+import { UnidadesService } from '../unidades.service';
+
 
 @Component({
   selector: 'app-unidade-novo',
@@ -11,35 +16,83 @@ import { Unidade } from 'src/app/model/unidade';
   styleUrls: ['./unidades-novo.component.css']
 })
 export class UnidadesNovoComponent implements OnInit {
+  formularioNovo: FormGroup;
+  listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
 
   constructor(
-    private toastr: ToastrService,
-    private service: UnidadeService,
-    private activatedRoute: ActivatedRoute,
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder,
+    private service: UnidadesService,
     private router: Router) { }
 
-  unidade: Unidade = {};
-
   ngOnInit() {
-    // const id = this.activatedRoute.snapshot.paramMap.get('id');
-    // this.service.buscarUnidadePorId(id).subscribe(unidade => {
-    //   return this.unidade = unidade;
-    // });
-    // ToastrMensagemUtil.info(this.toastr, 'Bem vindo a tela de edição de unidade');
+    this.configurarFormulario(new Unidade());
   }
 
-  // atualizar(): void {
+  private configurarFormulario(unidade: Unidade): void {
+    this.formularioNovo = this.formBuilder.group(
+      unidade
+    );
+    this.nome.setValidators([Validators.required, Validators.maxLength(20)])
+    this.endereco.setValidators([Validators.required, Validators.maxLength(60)])
+    this.status.setValidators([Validators.required])
+  }
 
-  //   this.service.atualizaUnidade(this.unidade).subscribe((res) => {
-  //     return (res.id > 0 ? this.service.showMessage('unidade atualizada com sucesso ' + res.id) : this.service.showMessage(''));
-  //   },
-  //     (error: any) => {
-  //       console.log(error);
-  //     });
-  // }
+  get nome(): AbstractControl {
+    return this.formularioNovo.get('nome');
+  }
+
+  get endereco(): AbstractControl {
+    return this.formularioNovo.get('endereco');
+  }
+
+  get status(): AbstractControl {
+    return this.formularioNovo.get('status');
+  }
+
+  salvar() {
+    if (this.formularioValido()) {
+
+      this.openModal()
+        .then(() => {
+          //clicou no confirm
+          this.salvarUnidade();
+        }, () => {
+          // clicou no cancel ou no x 
+        });
+    }
+  }
+
+  openModal(): Promise<any> {
+    const ngbModalRef = this.modalService.open(
+      ModalConfirmacaoComponent,
+      {
+        size: 'sm',
+      });
+    ngbModalRef.componentInstance.body = 'Gostaria de incluir a unidade? ';
+    return ngbModalRef.result;    
+  }
+
+  salvarUnidade() {
+    this.service.salvarUnidade(this.formularioNovo.value)
+      .subscribe(() => { this.router.navigate(['unidades']); });
+  }
+
+  mostrarErro(controlName: string) {
+    return FormUtil.mostrarErro(this.formularioNovo, controlName);
+  }
+
+  private formularioValido(): boolean {
+    if (this.formularioNovo.invalid) {
+      FormUtil.marcaComoDirtySeTemErro(this.formularioNovo);
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   cancelar() {
-    this.router.navigate(['unidades']);
+    this.router.navigate(['unidades',]);
   }
 
 }

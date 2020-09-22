@@ -1,5 +1,5 @@
 import { NgbModalRef, NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UnidadeService } from './../unidade.service';
+import { UnidadesService } from '../unidades.service';
 import { Unidade } from './../../../model/unidade';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrMensagemUtil } from 'src/app/util/toastr-mensagem-util';
@@ -21,7 +21,7 @@ export class GridComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: UnidadeService,
+    private service: UnidadesService,
     private toastr: ToastrService,
     private ngbModal: NgbModal,
     ngbModalConfig: NgbModalConfig) {

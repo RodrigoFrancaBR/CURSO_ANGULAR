@@ -1,6 +1,5 @@
-import {  HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {  } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +17,7 @@ const baseUrl = 'api/unidades';
   providedIn: 'root'
 })
 
-export class UnidadeService {
+export class UnidadesService {
   listaDeUnidades: Unidade[] = [];
 
   constructor(
@@ -27,14 +26,17 @@ export class UnidadeService {
 
   salvarUnidade(unidade: Unidade): Observable<Unidade> {
     console.log(`POST:${baseUrl}`);
-    return this.http.post<Unidade>(baseUrl, new Unidade());
+    return this.http.post<Unidade>(baseUrl, unidade)
+      .pipe(tap(() => {        
+      }, (httpErrorResponse: HttpErrorResponse) => {
+        ToastrMensagemUtil.error(this.toastr, httpErrorResponse.error);
+      }));
   }
 
   bustarTodasUnidades(): Observable<Array<Unidade>> {
     console.log(`GET:${baseUrl}`);
     return this.http.get<Array<Unidade>>(baseUrl)
-      .pipe(tap((listaDeUnidades: Array<Unidade>) => {
-        this.listaDeUnidades = listaDeUnidades;
+      .pipe(tap(() => {
       }, (httpErrorResponse: HttpErrorResponse) => {
         ToastrMensagemUtil.error(this.toastr, httpErrorResponse.error);
       }));
@@ -57,7 +59,6 @@ export class UnidadeService {
       .pipe(tap(() => {
         ToastrMensagemUtil.success(this.toastr, 'Unidade atualizada com sucesso!');
       }, (httpErrorResponse: HttpErrorResponse) => {
-        console.log('Error');
         ToastrMensagemUtil.error(this.toastr, `${httpErrorResponse.error}`);
       }));
   }

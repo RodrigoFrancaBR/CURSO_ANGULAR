@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UnidadeService } from '../unidade.service';
+import { UnidadesService } from '../unidades.service';
 import { Unidade } from 'src/app/model/unidade';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-unidade-novo',
@@ -17,8 +17,10 @@ export class UnidadesPrincipalComponent implements OnInit {
   idSelecionado: number;
 
   constructor(
-    private service: UnidadeService,
-    private activatedRoute: ActivatedRoute) {
+    private service: UnidadesService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
   }
 
 
@@ -75,6 +77,10 @@ export class UnidadesPrincipalComponent implements OnInit {
         });
     }
 
+  }
+
+  novaUnidade() {
+    this.router.navigate(['unidades','novo']);
   }
 
 }

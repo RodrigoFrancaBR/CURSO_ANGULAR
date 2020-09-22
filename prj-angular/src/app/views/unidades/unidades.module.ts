@@ -18,11 +18,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { FormMensagemComponent } from 'src/app/components/form-mensagem/form-mensagem.component';
 import { UnidadesRoutingModule } from './unidades-routing.module';
 import { UnidadesComponent } from './unidades.component';
-import { CadastroComponent } from './cadastro/cadastro.component';
 import { GridComponent } from './grid/grid.component';
 
 import { UnidadesPrincipalComponent } from './unidades-principal/unidades-principal.component';
-import { UnidadeEditarComponent } from './unidade-editar/unidade-editar.component';
 import { UnidadesFiltroComponent } from './unidades-filtro/unidades-filtro.component';
 import { UnidadesListaComponent } from './unidades-lista/unidades-lista.component';
 import { UnidadesEditarComponent } from './unidades-editar/unidades-editar.component';
@@ -40,11 +38,8 @@ import { UnidadesNovoComponent } from './unidades-novo/unidades-novo.component';
     UnidadesListaComponent,
     UnidadesDetalheComponent,
     UnidadesEditarComponent,
-    UnidadesNovoComponent,
-
-    CadastroComponent,
+    UnidadesNovoComponent,    
     GridComponent,
-    UnidadeEditarComponent,
     FormMensagemComponent,
   ],
   imports: [

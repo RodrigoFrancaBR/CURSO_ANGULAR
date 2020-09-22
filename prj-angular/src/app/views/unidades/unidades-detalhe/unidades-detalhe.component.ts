@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Unidade } from 'src/app/model/unidade';
-import { UnidadeService } from '../unidade.service';
+import { UnidadesService } from '../unidades.service';
 import { ModalConfirmacaoComponent } from './../../../components/modal-confirmacao/modal-confirmacao.component';
 
 @Component({
@@ -21,7 +21,7 @@ export class UnidadesDetalheComponent implements OnInit, OnDestroy {
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private service: UnidadeService,
+        private service: UnidadesService,
         private formBuilder: FormBuilder,
         private modalService: NgbModal
 
@@ -79,28 +79,13 @@ export class UnidadesDetalheComponent implements OnInit, OnDestroy {
     }
 
     openModal(): Promise<any> {
-        // let modal = null;
         const ngbModalRef = this.modalService.open(
             ModalConfirmacaoComponent,
             {
                 size: 'sm',
-                //  windowClass: 'modalConfirmacao'
             });
-        // setTimeout(() => {
-        //     modal = document.querySelector('.modalConfirmacao');
-        //     modal.classList.remove('fade');
-        // }, 100);
-
         ngbModalRef.componentInstance.body = 'Gostaria de desativar a unidade? ';
-        return ngbModalRef
-            .result
-            //.then(() => {
-                //clicou no confirm                   
-                // this.service.excluirUnidade(this.formularioDetalhe.get('id').value)
-                //     .subscribe(() => this.router.navigate(['unidades']));
-            //}, () => {
-                // clicou no cancel ou no x                    
-            //})
+        return ngbModalRef.result;        
     }
 
 
@@ -114,9 +99,8 @@ export class UnidadesDetalheComponent implements OnInit, OnDestroy {
         this.inscricao.unsubscribe();
     }
 
-
     desabilitar() {
-        return this.formularioDetalhe.get('status').value === 'DESATIVADA' ? false : true
+        return this.formularioDetalhe.get('status').value === 'DESATIVADA' ? true : false
     }
 
 }

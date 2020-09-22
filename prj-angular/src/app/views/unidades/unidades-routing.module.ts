@@ -14,9 +14,9 @@ const unidadesRoutes: Routes = [
     {
         path: 'unidades', component: UnidadesComponent, children: [
             { path: '', component: UnidadesPrincipalComponent },
-            { path: ':id', component: UnidadesPrincipalComponent },
             { path: 'naoEncontrado', component: UnidadesNaoEncontradoComponent },
             { path: 'novo', component: UnidadesNovoComponent },
+            { path: ':id', component: UnidadesPrincipalComponent },            
             { path: ':id/detalhe', component: UnidadesDetalheComponent },
             { path: ':id/editar', component: UnidadesEditarComponent },
 

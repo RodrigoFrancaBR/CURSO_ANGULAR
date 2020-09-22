@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 
 import { TableDataSource } from './table-datasource';
-import { UnidadeService } from '../unidade.service';
+import { UnidadesService } from '../unidades.service';
 import { Unidade } from './../../../model/unidade';
 
 @Component({
@@ -16,7 +16,7 @@ import { Unidade } from './../../../model/unidade';
 
 export class TableComponent implements AfterViewInit, OnInit {
 
-  constructor(private service: UnidadeService) { }
+  constructor(private service: UnidadesService) { }
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
