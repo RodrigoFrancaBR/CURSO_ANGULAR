@@ -27,7 +27,7 @@ export class UnidadesService {
   salvarUnidade(unidade: Unidade): Observable<Unidade> {
     console.log(`POST:${baseUrl}`);
     return this.http.post<Unidade>(baseUrl, unidade)
-      .pipe(tap(() => {        
+      .pipe(tap(() => {
       }, (httpErrorResponse: HttpErrorResponse) => {
         ToastrMensagemUtil.error(this.toastr, httpErrorResponse.error);
       }));

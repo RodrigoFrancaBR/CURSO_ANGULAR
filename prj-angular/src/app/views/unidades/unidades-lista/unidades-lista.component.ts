@@ -78,4 +78,9 @@ export class UnidadesListaComponent implements OnInit {
     this.idSelecionado = this.estaSelecionadoRegistro(id) ? null : id;
   }
 
+
+  desabilitar(status: string) {
+    return status === 'DESATIVADA' ? true : false;
+  }
+
 }
