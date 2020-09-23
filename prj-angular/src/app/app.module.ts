@@ -37,7 +37,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { LoginComponent } from './views/login/login.component';
-import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +48,6 @@ import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.
     AppComponent,
     ModalConfirmacaoComponent,
     LoginComponent,
-    FormMensagemComponent
   ],
   // exports:[GridComponent],
   imports: [

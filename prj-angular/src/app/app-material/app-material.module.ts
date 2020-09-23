@@ -8,13 +8,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormMensagemComponent } from '../components/form-mensagem/form-mensagem.component';
 
 @NgModule({
-    declarations: [],
+    declarations: [
+        FormMensagemComponent
+    ],
     imports: [
         CommonModule
     ],
     exports: [
+        FormMensagemComponent,
         // loiane
         // MatToolbarModule,
         // MatButtonModule,

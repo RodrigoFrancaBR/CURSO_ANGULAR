@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from 'src/app/app-material/app-material.module';
-import { FormMensagemComponent } from 'src/app/components/form-mensagem/form-mensagem.component';
 
 import { UnidadesRoutingModule } from './unidades-routing.module';
 import { UnidadesComponent } from './unidades.component';
@@ -24,7 +23,6 @@ import { UnidadesNovoComponent } from './unidades-novo/unidades-novo.component';
     UnidadesDetalheComponent,
     UnidadesEditarComponent,
     UnidadesNovoComponent,
-    FormMensagemComponent,
   ],
   imports: [
     AppMaterialModule,
