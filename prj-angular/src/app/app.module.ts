@@ -1,3 +1,4 @@
+import { LoginService } from './views/login/login.service';
 import { ModalConfirmacaoComponent } from './components/modal-confirmacao/modal-confirmacao.component';
 /**
  * Angular
@@ -35,6 +36,8 @@ import { HomeComponent } from './views/home/home.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AppMaterialModule } from './app-material/app-material.module';
+import { LoginComponent } from './views/login/login.component';
+import { FormMensagemComponent } from './components/form-mensagem/form-mensagem.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,9 @@ import { AppMaterialModule } from './app-material/app-material.module';
     HomeComponent,
     RedDirective,
     AppComponent,
-    ModalConfirmacaoComponent
+    ModalConfirmacaoComponent,
+    LoginComponent,
+    FormMensagemComponent
   ],
   // exports:[GridComponent],
   imports: [
@@ -59,9 +64,9 @@ import { AppMaterialModule } from './app-material/app-material.module';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  providers: [],
+  providers: [LoginService],
   exports: [],
   entryComponents: [ModalConfirmacaoComponent],
   bootstrap: [AppComponent]
