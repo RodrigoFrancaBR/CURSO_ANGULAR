@@ -6,8 +6,8 @@ export class FormUtil {
     }
 
     static valorMinimo(): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors | null => {
-            return  control.value && control.value < 1 ? { valorMenorQueUm: true } : null;
+        return (control: AbstractControl): ValidationErrors | null => {            
+            return control.value && control.value < 1 ? { valorMenorQueUm: true } : null;
         };
     }
 
@@ -59,17 +59,31 @@ export class FormUtil {
         let key = theEvent.keyCode || theEvent.which;
         key = String.fromCharCode(key);
         const regex = /[0-9]/;
-          /*Para aceitar o backspace */
-          if (key === '\u0008') {
-            return ;
-           }
-        if (!regex.test(key)) {
-          theEvent.returnValue = false;
-          if (theEvent.preventDefault) {
-            theEvent.preventDefault();
-          }
+        /*Para aceitar o backspace */
+        if (key === '\u0008') {
+            return;
         }
-      }
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) {
+                theEvent.preventDefault();
+            }
+        }
+    }
+
+    static converterStringParaNumber(valorString: string) {
+
+        if (valorString && valorString.trim().length > 0) {
+            const valorNumber = Number(valorString);
+            if (isNaN(valorNumber)) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
 
 }
 

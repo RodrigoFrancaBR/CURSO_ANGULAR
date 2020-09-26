@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -18,6 +18,13 @@ const baseUrl = 'api/unidades';
 })
 
 export class UnidadesService {
+  
+  addFiltro(filtro: number) {
+    this.emitirFiltro.emit(filtro);
+  }
+  
+  filtro: string;
+  emitirFiltro = new EventEmitter<number>();
   listaDeUnidades: Unidade[] = [];
 
   constructor(

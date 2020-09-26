@@ -25,6 +25,9 @@ export class UnidadesComponent implements OnInit {
 
 
   ngOnInit() {
+    this.service.emitirFiltro.subscribe((filtro: number) => {
+    });
+
     let idSelecionado = this.obterParametroDaRota();
     if (idSelecionado) {
       // obtem a unidade na base de dados e atualiza o filtro e a grid
@@ -36,11 +39,22 @@ export class UnidadesComponent implements OnInit {
     } else {
       this.buscarTodasUnidades();
     }
+
+    // if (this.service.emitirFiltro) {
+
+    //   );
+    // }
+
+
+
   }
 
   private obterParametroDaRota(): number {
     let idSelecionado;
-    this.inscricao = this.activatedRoute.params.subscribe(params => idSelecionado = params.id);
+    this.inscricao = this.activatedRoute.params.subscribe((params) => {
+      console.log('obterParam')
+      idSelecionado = params.id
+    });
     return idSelecionado;
   }
 
@@ -63,6 +77,7 @@ export class UnidadesComponent implements OnInit {
   }
 
   obterIdDaPesquisa(id: number) {
+    console.log(id);
     this.listaDeUnidades = [];
     this.idSelecionado = null;
     if (id) {

@@ -1,8 +1,10 @@
+import { UnidadesService } from './../unidades.service';
 import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 
 import { FormUtil } from './../../../util/form-util';
 import { Unidade } from 'src/app/model/unidade';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -25,11 +27,22 @@ export class UnidadesFiltroComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private service: UnidadesService,
   ) { }
-
 
   ngOnInit() {
     this.configurarFormulario(new Unidade());
+    this.id.valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe((valor: string) => {
+        let valorAnterio = '';
+        console.log(valor);
+        let resultado = FormUtil.converterStringParaNumber(valor);
+        if (!resultado) {
+          
+          this.id.setValue('');
+        }
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -58,7 +71,8 @@ export class UnidadesFiltroComponent implements OnInit {
 
   pesquisar() {
     if (this.formularioValido()) {
-      this.idDaPesquisa.emit(this.id.value)
+      // this.idDaPesquisa.emit(this.id.value);
+      this.service.emitirFiltro.emit(this.id.value);
     }
   }
 

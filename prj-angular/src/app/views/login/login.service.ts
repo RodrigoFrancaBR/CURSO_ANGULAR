@@ -1,11 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 import { Unidade } from 'src/app/model/unidade';
 import { ToastrMensagemUtil } from 'src/app/util/toastr-mensagem-util';
+import { Login } from 'src/app/model/login';
 
 
 /*Integração com json server
@@ -18,6 +19,15 @@ const baseUrl = 'api/unidades';
 })
 
 export class LoginService {
+
+  teste: string = '1';
+
+  efetuarLogin(login: Login): Observable<Boolean> {
+    if (login.login === 'rodrigo' && login.password === '123') {
+
+      return of(true);
+    }
+  }
   // listaDeUnidades: Unidade[] = [];
 
   // constructor(

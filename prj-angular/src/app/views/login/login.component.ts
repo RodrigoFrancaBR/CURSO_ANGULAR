@@ -42,13 +42,8 @@ export class LoginComponent implements OnInit {
     efetuarLogin() {
         if (this.formularioValido()) {
             console.log('logou');
-            // this.openModal()
-            //     .then(() => {
-            //         //clicou no confirm
-            //         this.loginUnidade();
-            //     }, () => {
-            //         // clicou no cancel ou no x 
-            //     });
+            this.service.efetuarLogin(this.formularioLogin.value)
+                .subscribe((sucesso: boolean) => { console.log(sucesso) })
         }
     }
 
