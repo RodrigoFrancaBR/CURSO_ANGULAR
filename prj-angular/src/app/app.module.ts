@@ -21,9 +21,8 @@ import { ToastrModule } from 'ngx-toastr';
 /**
  * My Components
  */
-import { HeaderComponent } from './components/template/header/header.component';
-import { FooterComponent } from './components/template/footer/footer.component';
-import { NavComponent } from './components/template/nav/nav.component';
+import { HeaderComponent } from './template/header/header.component';
+import { FooterComponent } from './template/footer/footer.component';
 /**
  * My Directives
  */
@@ -41,7 +40,6 @@ import { LoginComponent } from './views/login/login.component';
   declarations: [
     HeaderComponent,
     FooterComponent,
-    NavComponent,
     HomeComponent,
     RedDirective,
     AppComponent,
