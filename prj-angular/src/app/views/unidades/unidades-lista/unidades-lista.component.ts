@@ -5,6 +5,7 @@ import { Unidade } from 'src/app/model/unidade';
 import { Router } from '@angular/router';
 import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-unidades-lista',
@@ -26,6 +27,12 @@ export class UnidadesListaComponent implements OnInit {
     private service: UnidadesService) { }
 
   ngOnInit() {
+    this.service.emitirObservable.subscribe((observable: Observable<any>) => {
+      observable.subscribe((resultado:any) => {
+        if(resultado)
+      });
+    });
+
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -71,7 +71,14 @@ export class UnidadesFiltroComponent implements OnInit {
 
   pesquisar() {
     if (this.formularioValido()) {
-      this.idDaPesquisa.emit(this.id.value);
+      if (this.id.value) {
+        this.service.emitirObservable.emit(this.service.buscarUnidadePorId(this.id.value));
+      } else {
+        this.service.emitirObservable.emit(this.service.bustarTodasUnidades());
+      }
+
+      // this.service.emitirObservable.emit(this.service.buscarUnidadePorId(this.id.value));      
+      // this.idDaPesquisa.emit(this.id.value);
       // this.service.emitirFiltro.emit(this.id.value);
     }
   }

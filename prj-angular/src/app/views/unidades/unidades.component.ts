@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { observable, Subscription, Observable } from 'rxjs';
 import { Unidade } from 'src/app/model/unidade';
 import { UnidadesService } from './unidades.service';
 
@@ -11,6 +11,7 @@ import { UnidadesService } from './unidades.service';
 })
 export class UnidadesComponent implements OnInit {
 
+  titulo = 'Tela de Pesquisa de Unidades';
 
   listaDeUnidades: Array<Unidade> = [];
   inscricao: Subscription;
@@ -25,8 +26,12 @@ export class UnidadesComponent implements OnInit {
 
 
   ngOnInit() {
-    this.service.emitirFiltro.subscribe((filtro: number) => {
-    });
+    // this.service.emitirObservable.subscribe((observable: Observable<Unidade>) => {
+    //   observable.subscribe((unidade: Unidade) => console.log(unidade));
+    // });
+
+    // this.service.emitirFiltro.subscribe((filtro: number) => {
+    // });
 
     let idSelecionado = this.obterParametroDaRota();
     if (idSelecionado) {

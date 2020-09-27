@@ -27,6 +27,7 @@ export class UnidadesService {
 
   filtro: string;
   emitirFiltro = new EventEmitter<number>();
+  emitirObservable = new EventEmitter();
   listaDeUnidades: Unidade[] = [];
 
   constructor(
