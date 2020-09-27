@@ -13,16 +13,18 @@ import { ToastrMensagemUtil } from 'src/app/util/toastr-mensagem-util';
 */
 const baseUrl = 'api/unidades';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable(
+  // {
+  //   providedIn: 'root'
+  // }
+)
 
 export class UnidadesService {
-  
+
   addFiltro(filtro: number) {
     this.emitirFiltro.emit(filtro);
   }
-  
+
   filtro: string;
   emitirFiltro = new EventEmitter<number>();
   listaDeUnidades: Unidade[] = [];

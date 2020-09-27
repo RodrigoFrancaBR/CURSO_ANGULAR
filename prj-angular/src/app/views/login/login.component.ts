@@ -1,6 +1,6 @@
 import { Login } from './../../model/login';
 import { LoginService } from './login.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormUtil } from 'src/app/util/form-util';
@@ -11,13 +11,12 @@ import { FormUtil } from 'src/app/util/form-util';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
     formularioLogin: FormGroup;
 
     constructor(
         private formBuilder: FormBuilder,
-        private service: LoginService,
-        private router: Router) { }
+        private service: LoginService
+    ) { }
 
     ngOnInit() {
         this.configurarFormulario(new Login());
@@ -41,9 +40,13 @@ export class LoginComponent implements OnInit {
 
     efetuarLogin() {
         if (this.formularioValido()) {
-            console.log('logou');
-            this.service.efetuarLogin(this.formularioLogin.value)
-                .subscribe((sucesso: boolean) => { console.log(sucesso) })
+            this.service.efetuarLogin(this.formularioLogin.value);
+            if (this.service.usuarioEstaAutenticado()) {
+                this.service.mostrarMenuEmitter.emit(true);
+                this.service.navigate(['/']);
+            } else {
+                this.service.mostrarMenuEmitter.emit(false);
+            }
         }
     }
 

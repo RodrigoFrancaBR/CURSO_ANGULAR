@@ -1,33 +1,50 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { Unidade } from 'src/app/model/unidade';
-import { ToastrMensagemUtil } from 'src/app/util/toastr-mensagem-util';
 import { Login } from 'src/app/model/login';
-
 
 /*Integração com json server
   const baseUrl = 'http://localhost:3001/unidades';
 */
-const baseUrl = 'api/unidades';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class LoginService {
 
-  teste: string = '1';
+  mostrarMenuEmitter = new EventEmitter<boolean>();
+  usuarioAutenticado = false;
 
-  efetuarLogin(login: Login): Observable<Boolean> {
-    if (login.login === 'rodrigo' && login.password === '123') {
-
-      return of(true);
-    }
+  constructor(
+    private router: Router
+  ) {
+    console.log('LoginService');
   }
+
+
+  teste = '1';
+
+  efetuarLogin(login: Login): void {
+    this.usuarioAutenticado = login.login === 'rodrigo' && login.password === '123' ? true : false;
+  }
+
+  // if (login.login === 'rodrigo' && login.password === '123') {
+  //   this.mostrarMenuEmitter.emit(true);
+  //   this.router.navigate(['/']);
+  // } else {
+  //   this.mostrarMenuEmitter.emit(false);
+  // }
+
+  usuarioEstaAutenticado(): boolean {
+    return this.usuarioAutenticado;
+  }
+
+  navigate(comands: Array<any>): Promise<boolean> {
+    return this.router.navigate(comands);
+  }
+
+
+
   // listaDeUnidades: Unidade[] = [];
 
   // constructor(

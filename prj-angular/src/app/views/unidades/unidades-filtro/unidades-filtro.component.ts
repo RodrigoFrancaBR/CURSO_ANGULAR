@@ -39,7 +39,7 @@ export class UnidadesFiltroComponent implements OnInit {
         console.log(valor);
         let resultado = FormUtil.converterStringParaNumber(valor);
         if (!resultado) {
-          
+
           this.id.setValue('');
         }
       });
@@ -71,8 +71,8 @@ export class UnidadesFiltroComponent implements OnInit {
 
   pesquisar() {
     if (this.formularioValido()) {
-      // this.idDaPesquisa.emit(this.id.value);
-      this.service.emitirFiltro.emit(this.id.value);
+      this.idDaPesquisa.emit(this.id.value);
+      // this.service.emitirFiltro.emit(this.id.value);
     }
   }
 

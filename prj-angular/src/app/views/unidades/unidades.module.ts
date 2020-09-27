@@ -12,6 +12,7 @@ import { UnidadesEditarComponent } from './unidades-editar/unidades-editar.compo
 import { UnidadesDetalheComponent } from './unidades-detalhe/unidades-detalhe.component';
 import { UnidadesNaoEncontradoComponent } from './unidades-nao-encontrado/unidades-nao-encontrado.component';
 import { UnidadesNovoComponent } from './unidades-novo/unidades-novo.component';
+import { UnidadesService } from './unidades.service';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { UnidadesNovoComponent } from './unidades-novo/unidades-novo.component';
     FormsModule,
     CommonModule,
     UnidadesRoutingModule
-  ]
+  ],
+  providers:[UnidadesService]
 })
 export class UnidadesModule { }

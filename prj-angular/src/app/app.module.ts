@@ -1,4 +1,3 @@
-import { LoginService } from './views/login/login.service';
 import { ModalConfirmacaoComponent } from './components/modal-confirmacao/modal-confirmacao.component';
 /**
  * Angular
@@ -64,7 +63,7 @@ import { LoginComponent } from './views/login/login.component';
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [LoginService],
+  providers: [],
   exports: [],
   entryComponents: [ModalConfirmacaoComponent],
   bootstrap: [AppComponent]
