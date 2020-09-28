@@ -21,17 +21,9 @@ export class UnidadesComponent implements OnInit {
     private service: UnidadesService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {
-  }
-
+  ) {}
 
   ngOnInit() {
-    // this.service.emitirObservable.subscribe((observable: Observable<Unidade>) => {
-    //   observable.subscribe((unidade: Unidade) => console.log(unidade));
-    // });
-
-    // this.service.emitirFiltro.subscribe((filtro: number) => {
-    // });
 
     let idSelecionado = this.obterParametroDaRota();
     if (idSelecionado) {
@@ -44,14 +36,6 @@ export class UnidadesComponent implements OnInit {
     } else {
       this.buscarTodasUnidades();
     }
-
-    // if (this.service.emitirFiltro) {
-
-    //   );
-    // }
-
-
-
   }
 
   private obterParametroDaRota(): number {
@@ -66,7 +50,6 @@ export class UnidadesComponent implements OnInit {
   private atualizarFiltroEaLista(unidade: Unidade) {
     this.idSelecionado = unidade.id;
     this.listaDeUnidades.push(unidade);
-
   }
 
   private buscarTodasUnidades() {

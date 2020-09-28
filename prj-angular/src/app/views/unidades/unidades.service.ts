@@ -21,13 +21,6 @@ const baseUrl = 'api/unidades';
 
 export class UnidadesService {
 
-  addFiltro(filtro: number) {
-    this.emitirFiltro.emit(filtro);
-  }
-
-  filtro: string;
-  emitirFiltro = new EventEmitter<number>();
-  emitirObservable = new EventEmitter();
   listaDeUnidades: Unidade[] = [];
 
   constructor(

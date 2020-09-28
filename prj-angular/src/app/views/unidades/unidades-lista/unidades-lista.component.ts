@@ -27,12 +27,6 @@ export class UnidadesListaComponent implements OnInit {
     private service: UnidadesService) { }
 
   ngOnInit() {
-    this.service.emitirObservable.subscribe((observable: Observable<any>) => {
-      observable.subscribe((resultado:any) => {
-        if(resultado)
-      });
-    });
-
   }
 
   ngOnChanges(changes: SimpleChanges) {

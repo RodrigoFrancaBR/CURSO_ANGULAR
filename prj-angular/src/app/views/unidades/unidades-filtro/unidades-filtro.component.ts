@@ -32,17 +32,18 @@ export class UnidadesFiltroComponent implements OnInit {
 
   ngOnInit() {
     this.configurarFormulario(new Unidade());
-    this.id.valueChanges
-      .pipe(distinctUntilChanged())
-      .subscribe((valor: string) => {
-        let valorAnterio = '';
-        console.log(valor);
-        let resultado = FormUtil.converterStringParaNumber(valor);
-        if (!resultado) {
+    // para substituir o validaNUmero
+    // this.id.valueChanges
+    //   .pipe(distinctUntilChanged())
+    //   .subscribe((valor: string) => {
+    //     let valorAnterio = '';
+    //     console.log(valor);
+    //     let resultado = FormUtil.converterStringParaNumber(valor);
+    //     if (!resultado) {
 
-          this.id.setValue('');
-        }
-      });
+    //       this.id.setValue('');
+    //     }
+    //   });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -71,15 +72,7 @@ export class UnidadesFiltroComponent implements OnInit {
 
   pesquisar() {
     if (this.formularioValido()) {
-      if (this.id.value) {
-        this.service.emitirObservable.emit(this.service.buscarUnidadePorId(this.id.value));
-      } else {
-        this.service.emitirObservable.emit(this.service.bustarTodasUnidades());
-      }
-
-      // this.service.emitirObservable.emit(this.service.buscarUnidadePorId(this.id.value));      
-      // this.idDaPesquisa.emit(this.id.value);
-      // this.service.emitirFiltro.emit(this.id.value);
+      this.idDaPesquisa.emit(this.id.value);
     }
   }
 

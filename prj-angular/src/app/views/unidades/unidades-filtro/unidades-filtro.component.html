@@ -10,8 +10,8 @@
                             ID
                         </strong>
                     </label>
-                    <input id="id" type="text" class="" formControlName="id" title="Digite um id válido">
-                    <!-- <input id="id" type="text" class="" formControlName="id" (keypress)="validaNumero($event)"> -->
+                    <!-- <input id="id" type="text" class="" formControlName="id" title="Digite um id válido"> -->
+                    <input id="id" type="text" class="" formControlName="id" (keypress)="validaNumero($event)">
                     <form-mensagem [errors]="id.errors" [mostraErro]="mostrarErro('id')"></form-mensagem>
                 </div>
 
