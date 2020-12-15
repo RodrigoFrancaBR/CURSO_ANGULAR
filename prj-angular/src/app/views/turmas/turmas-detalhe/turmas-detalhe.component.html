@@ -2,20 +2,22 @@
     <div class="container" id="main-container">
         <header class="content-header" style="border-bottom:0">
             <div class="container">
-                <h1 class="section-title">Tela de Detalhes da Turma</h1>
                 <div class="pull-right">
 
-                    <button type="button" (click)="editar()">Editar</button>
+                    <button *ngIf="mostrarBotaoEditar" type="button" (click)="editar()">Editar</button>
 
-                    <button [disabled]="desabilitar()" type="button" tabindex="0"
-                        (click)="desativar()">Desativar</button>
+                    <button *ngIf="mostrarBotaoDesativar"type="button" [disabled]="desabilitar()" (click)="desativar()">Desativar</button>
 
-                    <button type="button" (click)="voltar()">Voltar</button>
+                    <button *ngIf="mostrarBotaoSubmit" type="button" (click)="submit()">{{submitName}}</button>
+
+                    <button *ngIf="mostrarBotaoCancel" type="button" tabindex="0" (click)="cancel()">{{cancelName}}</button>
 
                 </div>
             </div>
         </header>
         <br>
+     
+
         <form [formGroup]="formularioDetalhe" class="form-horizontal" role="form">
             <div class="form-group row">
                 <label for="id" class="col-sm-2 col-form-label">Id</label>
@@ -29,7 +31,7 @@
                     <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome">
                 </div>
             </div>
-            
+
             <div class="form-group row">
                 <label for="nome" class="col-sm-2 col-form-label">Status</label>
                 <div class="col-sm-5">

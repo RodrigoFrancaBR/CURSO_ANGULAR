@@ -1,12 +1,15 @@
-import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
-import { TurmasService } from './../turmas.service';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Turma } from 'src/app/model/turma';
 import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
-import { FormUtil } from 'src/app/util/form-util';
 import { Subscription } from 'rxjs';
+
+import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
+import { TurmasService } from './../turmas.service';
+import { Turma } from 'src/app/model/turma';
+import { FormUtil } from 'src/app/util/form-util';
+
+
 
 @Component({
   selector: 'app-turmas-lista',
@@ -18,7 +21,7 @@ export class TurmasListaComponent implements OnInit {
   formularioPesquisa: FormGroup;
 
   @Input()
-  listaDeTurmas: Array<Turma>=[];
+  listaDeTurmas: Array<Turma> = [];
 
   @Input()
   idSelecionado: number;
@@ -32,9 +35,11 @@ export class TurmasListaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private service: TurmasService) { }
+    private service: TurmasService,    
+  ) { }
 
   ngOnInit() {
+
     let idSelecionado = this.obterParametroDaRota();
     if (idSelecionado) {
       // obtem a Turma na base de dados e atualiza o filtro e a grid
@@ -58,7 +63,7 @@ export class TurmasListaComponent implements OnInit {
     return idSelecionado;
   }
 
-  
+
   private atualizarFiltroEaLista(turma: Turma) {
     this.idSelecionado = turma.id;
     this.listaDeTurmas.push(turma);
@@ -135,7 +140,6 @@ export class TurmasListaComponent implements OnInit {
     FormUtil.validaNumero(event);
   }
 
-
   detalhes(id: number): void {
     this.router.navigate(['turmas', `${id}`, 'detalhe']);
   }
@@ -182,6 +186,10 @@ export class TurmasListaComponent implements OnInit {
 
   desabilitar(status: string) {
     return status === 'DESATIVADA' ? true : false;
+  }
+
+  novaTurma() {
+    this.router.navigate(['turmas', 'novo']);
   }
 
 }

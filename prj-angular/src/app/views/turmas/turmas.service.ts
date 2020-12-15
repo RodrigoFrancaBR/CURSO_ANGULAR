@@ -22,9 +22,9 @@ export class TurmasService {
     private http: HttpClient,
     private toastr: ToastrService) { }
 
-  salvarTurma(Turma: Turma): Observable<Turma> {
+  salvarTurma(turma: Turma): Observable<Turma> {
     console.log(`POST:${baseUrl}`);
-    return this.http.post<Turma>(baseUrl, Turma)
+    return this.http.post<Turma>(baseUrl, turma)
       .pipe(tap(() => {
       }, (httpErrorResponse: HttpErrorResponse) => {
         ToastrMensagemUtil.error(this.toastr, httpErrorResponse.error);
@@ -44,14 +44,15 @@ export class TurmasService {
     console.log(`GET:${baseUrl}/${id}`);
     return this.http
       .get<Turma>(`${baseUrl}/${id}`)
-      .pipe(tap(() => {
+      .pipe(tap((response) => {
+        console.log(response);
       }, (httpErrorResponse: HttpErrorResponse) => {
         console.log(httpErrorResponse);
         ToastrMensagemUtil.error(this.toastr, `${httpErrorResponse.error}`);
       }));
   }
 
-  atualizaTurma(Turma: Turma, id: number): Observable<any> {
+  atualizarTurma(Turma: Turma, id: number): Observable<any> {
     console.log(`PUT:${baseUrl}/${id}`);
     return this.http.put(`${baseUrl}/${id}`, Turma)
       .pipe(tap(() => {

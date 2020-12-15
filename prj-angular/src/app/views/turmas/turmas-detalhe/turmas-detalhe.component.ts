@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
 import { Turma } from 'src/app/model/turma';
+import { FormUtil } from 'src/app/util/form-util';
 import { TurmasService } from '../turmas.service';
 
 @Component({
@@ -13,9 +14,18 @@ import { TurmasService } from '../turmas.service';
   styleUrls: ['./turmas-detalhe.component.css']
 })
 export class TurmasDetalheComponent implements OnInit {
+
   formularioDetalhe: FormGroup;
   inscricao: Subscription;
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
+  submitName: string = 'Editar';
+  cancelName: string = 'Cancelar';
+  turma: Turma;
+  path: string = "";
+  mostrarBotaoSubmit: boolean = false;
+  mostrarBotaoCancel: boolean = false;
+  mostrarBotaoEditar: boolean;
+  mostrarBotaoDesativar: boolean;
 
   constructor(
     private router: Router,
@@ -24,33 +34,78 @@ export class TurmasDetalheComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: NgbModal
 
-  ) { }
-
-  ngOnInit() {
-
-    console.log(this.router);
-    console.log(this.activatedRoute);
-
-    this.configurarFormulario(new Turma());
-    this.inscricao = this.activatedRoute.url.subscribe(value=>{
-      console.log(value[0].path);
-    })
-
-    let idSelecionado = this.obterParametroDaRota();
-
-    if (idSelecionado) {
-      this.buscarTurmaPorId(idSelecionado);
-
-    } else {
-      this.router.navigate(['turmas/naoEncontrado']);
-    }
+  ) {
+    console.log('construtor da classe');
   }
 
-  private configurarFormulario(Turma: Turma): void {
-    this.formularioDetalhe = this.formBuilder.group(
-      Turma
-    );
-    this.formularioDetalhe.disable();
+
+  ngOnInit() {
+    console.log('onInit')
+    console.log(this.router);
+    console.log(this.activatedRoute);
+    this.turma = new Turma();
+    this.obterPath();
+    this.verificarPath();
+
+  }
+
+  obterPath() {
+    this.inscricao = this.activatedRoute.url.subscribe(value => {
+      // pegando o path novo
+      this.path = value[0].path;
+      // pegando o path detalhe 
+      if (value[1] && value[1].path) {
+        this.path = value[1].path;
+      }
+    });
+  }
+
+  verificarPath() {
+
+    switch (this.path) {
+      case 'novo':
+
+        this.submitName = 'Salvar'
+        this.cancelName = 'Cancelar'
+
+        this.mostrarBotaoSubmit = true;
+        this.mostrarBotaoCancel = true;
+
+        this.mostrarBotaoDesativar = false;
+        this.mostrarBotaoEditar = false;
+
+        this.formularioDetalhe = this.formBuilder.group(
+          this.turma
+        );
+
+        this.id.disable();
+
+        this.status.patchValue('ATIVA');
+
+        break;
+
+      case 'detalhe':
+
+        this.formularioDetalhe = this.formBuilder.group(
+          this.turma
+        );
+
+        this.submitName = 'Atualizar'
+        this.cancelName = 'Voltar'
+
+        this.mostrarBotaoEditar = true;
+        this.mostrarBotaoDesativar = true;
+        this.mostrarBotaoCancel = true;
+
+        this.mostrarBotaoSubmit = false;
+
+        let idSelecionado = this.obterParametroDaRota();
+
+        if (idSelecionado) {
+          this.buscarTurmaPorId(idSelecionado)
+        }
+        break;
+    }
   }
 
   private obterParametroDaRota(): number {
@@ -61,15 +116,72 @@ export class TurmasDetalheComponent implements OnInit {
 
   private buscarTurmaPorId(id: number) {
     this.service.buscarTurmaPorId(id)
-      .subscribe((Turma: Turma) => {
-        this.configurarFormulario(Turma);
+      .subscribe((response: Turma) => {
+        this.turma = response;
+        console.log(this.turma);
+        this.formularioDetalhe.patchValue(this.turma);
+        this.formularioDetalhe.disable();
       })
   }
 
-  editar() {
-    this.nome.enable();
-    this.status.enable();
-    // this.router.navigate(['turmas', this.formularioDetalhe.get('id').value, 'editar']);
+  submit() {
+    console.log('confirmar');
+    if (this.formularioValido()) {
+      this.openModal()
+        .then(() => {
+          //clicou no confirm     
+          this.verificarAcao();
+        }, () => {
+          // clicou no cancel ou no x 
+        });
+    }
+  }
+
+  verificarAcao() {
+    switch (this.path) {
+      case 'novo':
+        this.salvarTurma();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  salvarTurma() {
+    this.service.salvarTurma(this.formularioDetalhe.getRawValue())
+      .subscribe(() => { this.router.navigate(['turmas']); });
+  }
+
+  cancel() {
+    this.router.navigate(['turmas',]);
+  }
+
+
+  atualizar() {
+    if (this.formularioValido()) {
+      this.openModal()
+        .then(() => {
+          //clicou no confirm     
+          this.atualizarUnidade();
+        }, () => {
+          // clicou no cancel ou no x 
+        });
+    }
+  }
+
+  private formularioValido(): boolean {
+    if (this.formularioDetalhe.invalid) {
+      FormUtil.marcaComoDirtySeTemErro(this.formularioDetalhe);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  atualizarUnidade() {
+    this.service.atualizarTurma(this.formularioDetalhe.value, this.turma.id)
+      .subscribe(() => { this.router.navigate(['unidades']); });
   }
 
   desativar() {
@@ -110,12 +222,46 @@ export class TurmasDetalheComponent implements OnInit {
   }
 
 
+  get id(): AbstractControl {
+    return this.formularioDetalhe.get('id');
+  }
+
   get nome(): AbstractControl {
     return this.formularioDetalhe.get('nome');
   }
 
   get status(): AbstractControl {
     return this.formularioDetalhe.get('status');
+  }
+
+  mostrarBotao(nomeDoButao: string): boolean {
+
+    let mostrarBotao: boolean = false;
+
+    switch (nomeDoButao) {
+      case 'editar':
+        mostrarBotao = this.path === 'detalhe' ? true : false;
+        break;
+      case 'desativar':
+        mostrarBotao = this.path === 'detalhe' ? true : false;
+        break;
+
+      case 'submit':
+        mostrarBotao = this.path === 'novo' ? true : false;
+        break;
+
+      default:
+        break;
+    }
+    return mostrarBotao;
+    // return this.path === 'detalhe' && (nomeDoButao === 'editar') || (nomeDoButao === 'desativar') ? true : false;
+  }
+
+  editar() {
+    this.formularioDetalhe.enable();
+    this.mostrarBotaoSubmit = true;
+    this.mostrarBotaoDesativar = false;
+    this.mostrarBotaoEditar = false;    
   }
 
 }
