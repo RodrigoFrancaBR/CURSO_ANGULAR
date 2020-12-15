@@ -6,14 +6,22 @@
     <mat-sidenav class="sidenav" mode="side" opened fixedInViewport="true" fixedTopGap="64">
 
         <mat-nav-list class="nav-list" *ngIf="this.mostrarMenu">
+            
             <a mat-list-item routerLink="/">
                 <i class="material-icons">home</i>
                 Inicio
             </a>
+
             <a mat-list-item routerLink="unidades">
                 <i class="material-icons">domain</i>
                 Unidades
             </a>
+            
+            <a mat-list-item routerLink="turmas">
+                <i class="material-icons">domain</i>
+                Turmas
+            </a>
+
         </mat-nav-list>
 
     </mat-sidenav>

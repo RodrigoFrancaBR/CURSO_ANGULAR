@@ -1,3 +1,4 @@
+import { TurmasModule } from './views/turmas/turmas.module';
 import { ModalConfirmacaoComponent } from './components/modal-confirmacao/modal-confirmacao.component';
 /**
  * Angular
@@ -35,9 +36,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { LoginComponent } from './views/login/login.component';
+import { UnidadesModule } from './views/unidades/unidades.module';
 
 @NgModule({
-  declarations: [
+  declarations: [    
     HeaderComponent,
     FooterComponent,
     HomeComponent,
@@ -52,6 +54,8 @@ import { LoginComponent } from './views/login/login.component';
       timeOut: 2000,
       preventDuplicates: true,
     }),
+    UnidadesModule,    
+    TurmasModule,
     AppMaterialModule,
     BrowserAnimationsModule,
     NgbModule,
