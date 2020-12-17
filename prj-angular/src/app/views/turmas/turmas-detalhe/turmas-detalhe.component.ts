@@ -1,3 +1,4 @@
+import { UnidadesService } from './../../unidades/unidades.service';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +8,7 @@ import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/
 import { Turma } from 'src/app/model/turma';
 import { FormUtil } from 'src/app/util/form-util';
 import { TurmasService } from '../turmas.service';
+import { Unidade } from 'src/app/model/unidade';
 
 @Component({
   selector: 'app-turmas-detalhe',
@@ -14,11 +16,11 @@ import { TurmasService } from '../turmas.service';
   styleUrls: ['./turmas-detalhe.component.css']
 })
 export class TurmasDetalheComponent implements OnInit {
-
+  unidadeId: number;
   formularioDetalhe: FormGroup;
   inscricao: Subscription;
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
-  submitName: string = 'Editar';
+  submitName: string = '';
   cancelName: string = 'Cancelar';
   turma: Turma;
   path: string = "";
@@ -26,8 +28,11 @@ export class TurmasDetalheComponent implements OnInit {
   mostrarBotaoCancel: boolean = false;
   mostrarBotaoEditar: boolean;
   mostrarBotaoDesativar: boolean;
+  listaDeUnidades: Array<Unidade> = [];
+  unidade: Unidade;
 
   constructor(
+    private unidadeService: UnidadesService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private service: TurmasService,
@@ -44,6 +49,7 @@ export class TurmasDetalheComponent implements OnInit {
     console.log(this.router);
     console.log(this.activatedRoute);
     this.turma = new Turma();
+    // this.unidade = new Unidade();    
     this.obterPath();
     this.verificarPath();
 
@@ -103,6 +109,7 @@ export class TurmasDetalheComponent implements OnInit {
 
         if (idSelecionado) {
           this.buscarTurmaPorId(idSelecionado)
+          // this.buscarUnidadePorId()
         }
         break;
     }
@@ -116,24 +123,45 @@ export class TurmasDetalheComponent implements OnInit {
 
   private buscarTurmaPorId(id: number) {
     this.service.buscarTurmaPorId(id)
-      .subscribe((response: Turma) => {
-        this.turma = response;
-        console.log(this.turma);
-        this.formularioDetalhe.patchValue(this.turma);
+      .subscribe((response: any) => {
+        this.turma = response;        
+        this.turma.unidadeId = response.unidade.id;
+        this.inscricao = this.unidadeService.bustarTodasUnidades().subscribe(listaDeUnidades => this.listaDeUnidades = listaDeUnidades);
+        this.formularioDetalhe.patchValue(this.turma);        
+        this.formularioDetalhe.get('unidadeId').setValue(this.unidadeId);
         this.formularioDetalhe.disable();
       })
   }
 
   submit() {
-    console.log('confirmar');
-    if (this.formularioValido()) {
-      this.openModal()
-        .then(() => {
-          //clicou no confirm     
-          this.verificarAcao();
-        }, () => {
-          // clicou no cancel ou no x 
-        });
+    console.log(this.formularioDetalhe.value);
+    switch (this.submitName) {
+      case 'Atualizar':
+        if (this.formularioValido()) {
+          this.openModal('Gostaria de atualizar os dados da turma?')
+            .then(() => {
+              //clicou no confirm
+              this.atualizarTurma();
+            }, () => {
+              // clicou no cancel ou no x 
+            });
+        }
+
+        break;
+
+      case 'Salvar':
+        if (this.formularioValido()) {
+          this.openModal('Gostaria de salvar os dados da turma?')
+            .then(() => {
+              //clicou no confirm
+              this.salvarTurma();
+            }, () => {
+              // clicou no cancel ou no x 
+            });
+        }
+
+        break;
+
     }
   }
 
@@ -158,17 +186,6 @@ export class TurmasDetalheComponent implements OnInit {
   }
 
 
-  atualizar() {
-    if (this.formularioValido()) {
-      this.openModal()
-        .then(() => {
-          //clicou no confirm     
-          this.atualizarUnidade();
-        }, () => {
-          // clicou no cancel ou no x 
-        });
-    }
-  }
 
   private formularioValido(): boolean {
     if (this.formularioDetalhe.invalid) {
@@ -179,13 +196,13 @@ export class TurmasDetalheComponent implements OnInit {
     }
   }
 
-  atualizarUnidade() {
+  atualizarTurma() {
     this.service.atualizarTurma(this.formularioDetalhe.value, this.turma.id)
-      .subscribe(() => { this.router.navigate(['unidades']); });
+      .subscribe(() => { this.router.navigate(['turmas']); });
   }
 
   desativar() {
-    this.openModal()
+    this.openModal('')
       .then(() => {
         //clicou no confirm     
         this.desativarTurma();
@@ -198,13 +215,13 @@ export class TurmasDetalheComponent implements OnInit {
     this.router.navigate(['turmas', this.formularioDetalhe.get('id').value]);
   }
 
-  openModal(): Promise<any> {
+  openModal(body: string): Promise<any> {
     const ngbModalRef = this.modalService.open(
       ModalConfirmacaoComponent,
       {
         size: 'sm',
       });
-    ngbModalRef.componentInstance.body = 'Gostaria de desativar a Turma? ';
+    ngbModalRef.componentInstance.body = body;
     return ngbModalRef.result;
   }
 
@@ -261,7 +278,7 @@ export class TurmasDetalheComponent implements OnInit {
     this.formularioDetalhe.enable();
     this.mostrarBotaoSubmit = true;
     this.mostrarBotaoDesativar = false;
-    this.mostrarBotaoEditar = false;    
+    this.mostrarBotaoEditar = false;
   }
 
 }

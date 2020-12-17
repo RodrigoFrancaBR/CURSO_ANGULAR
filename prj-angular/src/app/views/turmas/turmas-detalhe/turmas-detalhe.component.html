@@ -1,24 +1,28 @@
 <section class="scrollable-section" data-spy="scroll">
     <div class="container" id="main-container">
-        <header class="content-header" style="border-bottom:0">
-            <div class="container">
-                <div class="pull-right">
 
-                    <button *ngIf="mostrarBotaoEditar" type="button" (click)="editar()">Editar</button>
+        <form [formGroup]="formularioDetalhe" class="form-horizontal" role="form" (ngSubmit)="submit()">
 
-                    <button *ngIf="mostrarBotaoDesativar"type="button" [disabled]="desabilitar()" (click)="desativar()">Desativar</button>
+            <header class="content-header" style="border-bottom:0">
+                <div class="container">
+                    <div class="pull-right">
 
-                    <button *ngIf="mostrarBotaoSubmit" type="button" (click)="submit()">{{submitName}}</button>
+                        <button *ngIf="mostrarBotaoEditar" type="button" (click)="editar()">Editar</button>
 
-                    <button *ngIf="mostrarBotaoCancel" type="button" tabindex="0" (click)="cancel()">{{cancelName}}</button>
+                        <button *ngIf="mostrarBotaoDesativar" type="button" [disabled]="desabilitar()"
+                            (click)="desativar()">Desativar</button>
 
+                        <button *ngIf="mostrarBotaoSubmit" type="submit">{{submitName}}</button>
+
+                        <button *ngIf="mostrarBotaoCancel" type="button" tabindex="0"
+                            (click)="cancel()">{{cancelName}}</button>
+
+                    </div>
                 </div>
-            </div>
-        </header>
-        <br>
-     
+            </header>
 
-        <form [formGroup]="formularioDetalhe" class="form-horizontal" role="form">
+            <br>
+
             <div class="form-group row">
                 <label for="id" class="col-sm-2 col-form-label">Id</label>
                 <div class="col-sm-2">
@@ -33,15 +37,32 @@
             </div>
 
             <div class="form-group row">
-                <label for="nome" class="col-sm-2 col-form-label">Status</label>
+                <label for="status" class="col-sm-2 col-form-label">Status</label>
                 <div class="col-sm-5">
-                    <select id="fila" type="text" class="col-sm-6" formControlName="status"
+                    <select id="status" type="text" class="col-sm-6" formControlName="status"
                         title="Selecione uma listaDeStatus">
                         <option *ngFor="let status of listaDeStatus" [ngValue]="status">
                             {{status}}
                         </option>
-                    </select>
-                    <!-- <input type="text" class="form-control" id="status" placeholder="Nome" formControlName="status"> -->
+                    </select>                    
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="unidade" class="col-sm-2 col-form-label">Unidades</label>
+                <div class="col-sm-5">
+                    <select id="unidade" type="text" class="col-sm-6" formControlName="unidadeId"
+                        title="Selecione uma unidade">
+                        <option *ngFor="let unidade of listaDeUnidades" [ngValue]="unidade.id">
+                            {{unidade.id}} - {{unidade.nome}}
+                        </option>
+                    </select>                    
+                    <!-- <select id="unidade" type="text" class="col-sm-6" formControlName="unidade"
+                        title="Selecione uma unidade" [(ngModel)]="unidadeId">
+                        <option *ngFor="let unidade of listaDeUnidades" [value]="unidade.id">
+                            {{unidade.id}} - {{unidade.nome}}
+                        </option>
+                    </select>                     -->
                 </div>
             </div>
         </form>

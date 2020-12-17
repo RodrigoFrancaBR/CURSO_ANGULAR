@@ -40,10 +40,10 @@ export class TurmasService {
       }));
   }
 
-  buscarTurmaPorId(id: number): Observable<Turma> {
+  buscarTurmaPorId(id: number): Observable<any> {
     console.log(`GET:${baseUrl}/${id}`);
     return this.http
-      .get<Turma>(`${baseUrl}/${id}`)
+      .get<any>(`${baseUrl}/${id}`)
       .pipe(tap((response) => {
         console.log(response);
       }, (httpErrorResponse: HttpErrorResponse) => {
@@ -52,9 +52,9 @@ export class TurmasService {
       }));
   }
 
-  atualizarTurma(Turma: Turma, id: number): Observable<any> {
+  atualizarTurma(turma: Turma, id: number): Observable<any> {
     console.log(`PUT:${baseUrl}/${id}`);
-    return this.http.put(`${baseUrl}/${id}`, Turma)
+    return this.http.put(`${baseUrl}/${id}`, turma)
       .pipe(tap(() => {
         ToastrMensagemUtil.success(this.toastr, 'Turma atualizada com sucesso!');
       }, (httpErrorResponse: HttpErrorResponse) => {

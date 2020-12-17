@@ -5,7 +5,7 @@ export class Turma {
         public id?: number,
         public nome?: string,
         public status?: string,
-        public unidade?: Unidade
+        public unidadeId?: number
     ) {
 
     }
