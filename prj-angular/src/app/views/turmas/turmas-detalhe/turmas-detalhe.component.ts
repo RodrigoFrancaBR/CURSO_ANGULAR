@@ -1,10 +1,11 @@
-import { TurmaDTO } from './../../../interfaces/tudma.dto';
-import { UnidadesService } from './../../unidades/unidades.service';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+
+import { TurmaDTO } from './../../../interfaces/tudma.dto';
+import { UnidadesService } from './../../unidades/unidades.service';
 import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
 import { Turma } from 'src/app/model/turma';
 import { FormUtil } from 'src/app/util/form-util';
@@ -16,9 +17,11 @@ import { Unidade } from 'src/app/model/unidade';
   templateUrl: './turmas-detalhe.component.html',
   styleUrls: ['./turmas-detalhe.component.css']
 })
-export class TurmasDetalheComponent implements OnInit {  
+export class TurmasDetalheComponent implements OnInit {
+
   formularioDetalhe: FormGroup;
   inscricao: Subscription;
+
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
   submitName: string = '';
   cancelName: string = 'Cancelar';
@@ -45,11 +48,7 @@ export class TurmasDetalheComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log('onInit')
-    console.log(this.router);
-    console.log(this.activatedRoute);
     this.turma = new Turma();
-    // this.unidade = new Unidade();
     this.bustarTodasUnidades();
     this.obterPath();
     this.verificarPath();
@@ -57,7 +56,8 @@ export class TurmasDetalheComponent implements OnInit {
   }
 
   bustarTodasUnidades() {
-    this.inscricao = this.unidadeService.bustarTodasUnidades().subscribe(listaDeUnidades => this.listaDeUnidades = listaDeUnidades);
+    this.inscricao = this.unidadeService.bustarTodasUnidades()
+      .subscribe(listaDeUnidades => this.listaDeUnidades = listaDeUnidades);
   }
 
   obterPath() {
@@ -74,8 +74,9 @@ export class TurmasDetalheComponent implements OnInit {
   verificarPath() {
 
     switch (this.path) {
+
       case 'novo':
-        //this.bustarTodasUnidades();
+
         this.submitName = 'Salvar'
         this.cancelName = 'Cancelar'
 
@@ -91,9 +92,9 @@ export class TurmasDetalheComponent implements OnInit {
 
         this.id.disable();
 
-        this.status.patchValue('ATIVA');        
-        this.status.disable();
-        this.unidadeId.patchValue('');        
+        this.status.patchValue('ATIVA');
+        this.status.disable()
+        this.unidadeId.patchValue('');
 
         break;
 
@@ -116,7 +117,6 @@ export class TurmasDetalheComponent implements OnInit {
 
         if (idSelecionado) {
           this.buscarTurmaPorId(idSelecionado)
-          // this.buscarUnidadePorId()
         }
         break;
     }
@@ -124,14 +124,15 @@ export class TurmasDetalheComponent implements OnInit {
 
   private obterParametroDaRota(): number {
     let idSelecionado;
-    this.inscricao = this.activatedRoute.params.subscribe(params => idSelecionado = params.id);
+    this.inscricao = this.activatedRoute.params
+      .subscribe(params => idSelecionado = params.id);
     return idSelecionado;
   }
 
   private buscarTurmaPorId(id: number) {
     this.service.buscarTurmaPorId(id)
-      .subscribe((turmaDTO: TurmaDTO) => {        
-        this.formularioDetalhe.setValue(turmaDTO);        
+      .subscribe((turmaDTO: TurmaDTO) => {
+        this.formularioDetalhe.setValue(turmaDTO);
         this.formularioDetalhe.disable();
       })
   }
@@ -168,54 +169,13 @@ export class TurmasDetalheComponent implements OnInit {
     }
   }
 
-  verificarAcao() {
-    switch (this.path) {
-      case 'novo':
-        this.salvarTurma();
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  salvarTurma() {
-    this.service.salvarTurma(this.formularioDetalhe.getRawValue())
-      .subscribe(() => { this.router.navigate(['turmas']); });
-  }
-
-  cancel() {
-    this.router.navigate(['turmas',]);
-  }
-
-
-
-  private formularioValido(): boolean {
+  formularioValido(): boolean {
     if (this.formularioDetalhe.invalid) {
       FormUtil.marcaComoDirtySeTemErro(this.formularioDetalhe);
       return false;
     } else {
       return true;
     }
-  }
-
-  atualizarTurma() {
-    this.service.atualizarTurma(this.formularioDetalhe.getRawValue())
-      .subscribe(() => { this.router.navigate(['turmas']); });
-  }
-
-  desativar() {
-    this.openModal('')
-      .then(() => {
-        //clicou no confirm     
-        this.desativarTurma();
-      }, () => {
-        // clicou no cancel ou no x 
-      });
-  }
-
-  voltar() {
-    this.router.navigate(['turmas', this.formularioDetalhe.get('id').value]);
   }
 
   openModal(body: string): Promise<any> {
@@ -228,50 +188,16 @@ export class TurmasDetalheComponent implements OnInit {
     return ngbModalRef.result;
   }
 
-  desativarTurma() {
-    this.service.excluirTurma(this.formularioDetalhe.get('id').value)
-      .subscribe(() => this.status.patchValue('DESATIVADA'));
+  atualizarTurma() {
+    this.service.atualizarTurma(this.formularioDetalhe.getRawValue())
+      .subscribe(() => { this.router.navigate(['turmas']); });
   }
 
-  ngOnDestroy() {
-    this.inscricao.unsubscribe();
+  salvarTurma() {
+    this.service.salvarTurma(this.formularioDetalhe.getRawValue())
+      .subscribe(() => { this.router.navigate(['turmas']); });
   }
 
-  desabilitar() {
-    return this.formularioDetalhe.get('status').value === 'DESATIVADA' ? true : false
-  }
-
-
-  get id(): AbstractControl { return this.formularioDetalhe.get('id'); }
-
-  get nome(): AbstractControl { return this.formularioDetalhe.get('nome'); }
-
-  get status(): AbstractControl { return this.formularioDetalhe.get('status'); }
-  
-  get unidadeId(): AbstractControl { return this.formularioDetalhe.get('unidadeId'); }
-
-  mostrarBotao(nomeDoButao: string): boolean {
-
-    let mostrarBotao: boolean = false;
-
-    switch (nomeDoButao) {
-      case 'editar':
-        mostrarBotao = this.path === 'detalhe' ? true : false;
-        break;
-      case 'desativar':
-        mostrarBotao = this.path === 'detalhe' ? true : false;
-        break;
-
-      case 'submit':
-        mostrarBotao = this.path === 'novo' ? true : false;
-        break;
-
-      default:
-        break;
-    }
-    return mostrarBotao;
-    // return this.path === 'detalhe' && (nomeDoButao === 'editar') || (nomeDoButao === 'desativar') ? true : false;
-  }
 
   editar() {
     this.nome.enable();
@@ -280,5 +206,54 @@ export class TurmasDetalheComponent implements OnInit {
     this.mostrarBotaoDesativar = false;
     this.mostrarBotaoEditar = false;
   }
+
+  desabilitar() {
+    return this.formularioDetalhe.get('status').value === 'DESATIVADA' ? true : false
+  }
+
+  desativar() {
+    this.openModal('Gostaria de desativar a turma?')
+      .then(() => {
+        //clicou no confirm     
+        this.desativarTurma();
+      }, () => {
+        // clicou no cancel ou no x 
+      });
+  }
+
+  cancel() {
+    switch (this.cancelName) {
+      case 'Voltar':
+        this.router.navigate(['turmas', this.id.value]);
+        break;
+
+      case 'Cancelar':
+        this.router.navigate(['turmas']);
+        break;
+    }
+
+  }
+
+  desativarTurma() {
+    this.service.excluirTurma(this.id.value)
+      .subscribe(() => {
+        this.status.patchValue('DESATIVADA')
+        this.router.navigate(['turmas']);
+      });
+  }
+
+
+
+  ngOnDestroy() {
+    this.inscricao.unsubscribe();
+  }
+
+  get id(): AbstractControl { return this.formularioDetalhe.get('id'); }
+
+  get nome(): AbstractControl { return this.formularioDetalhe.get('nome'); }
+
+  get status(): AbstractControl { return this.formularioDetalhe.get('status'); }
+
+  get unidadeId(): AbstractControl { return this.formularioDetalhe.get('unidadeId'); }
 
 }

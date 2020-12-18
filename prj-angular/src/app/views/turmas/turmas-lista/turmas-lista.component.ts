@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
@@ -17,30 +17,25 @@ import { FormUtil } from 'src/app/util/form-util';
   styleUrls: ['./turmas-lista.component.css']
 })
 export class TurmasListaComponent implements OnInit {
-
-  formularioPesquisa: FormGroup;
-
-  @Input()
-  listaDeTurmas: Array<Turma> = [];
-
-  @Input()
-  idSelecionado: number;
   inscricao: Subscription;
   formularioDetalhe: FormGroup;
 
-
+  formularioPesquisa: FormGroup;
+  listaDeTurmas: Array<Turma> = [];
+  idSelecionado: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private service: TurmasService,    
+    private service: TurmasService,
   ) { }
 
   ngOnInit() {
 
     let idSelecionado = this.obterParametroDaRota();
+
     if (idSelecionado) {
       // obtem a Turma na base de dados e atualiza o filtro e a grid
       this.service.buscarTurmaPorId(idSelecionado)
@@ -51,38 +46,30 @@ export class TurmasListaComponent implements OnInit {
     } else {
       this.buscarTodasTurmas();
     }
+
     this.configurarFormulario();
   }
 
-  private obterParametroDaRota(): number {
+  obterParametroDaRota(): number {
     let idSelecionado;
     this.inscricao = this.activatedRoute.params.subscribe((params) => {
-      console.log('obterParam')
       idSelecionado = params.id
     });
     return idSelecionado;
   }
 
-
-  private atualizarFiltroEaLista(turma: Turma) {
+  atualizarFiltroEaLista(turma: Turma) {
     this.idSelecionado = turma.id;
     this.listaDeTurmas.push(turma);
     this.id.patchValue(turma.id);
   }
 
-  private buscarTodasTurmas() {
+  buscarTodasTurmas() {
     this.service.bustarTodasTurmas()
       .subscribe((listaDeTurmas: Array<Turma>) => {
         this.listaDeTurmas = listaDeTurmas;
       });
   }
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes.idSelecionado && this.idSelecionado) {
-  //     this.idSelecionado = null;
-  //     this.selecionarRegistro(changes.idSelecionado.currentValue);
-  //   }
-  // }
 
   configurarFormulario() {
     this.formularioPesquisa = this.formBuilder.group(
@@ -91,6 +78,10 @@ export class TurmasListaComponent implements OnInit {
     this.id.setValidators([
       FormUtil.valorMinimo(),
     ]);
+  }
+
+  novaTurma() {
+    this.router.navigate(['turmas', 'novo']);
   }
 
   pesquisar() {
@@ -112,17 +103,6 @@ export class TurmasListaComponent implements OnInit {
     }
   }
 
-  get id(): AbstractControl {
-    return this.formularioPesquisa.get('id');
-  }
-
-  limpar(): void {
-    this.formularioPesquisa.reset();
-    this.listaDeTurmas = [];
-    this.idSelecionado = null;
-  }
-
-
   formularioValido() {
     if (this.formularioPesquisa.invalid) {
       FormUtil.marcaComoDirtySeTemErro(this.formularioPesquisa);
@@ -132,16 +112,34 @@ export class TurmasListaComponent implements OnInit {
     }
   }
 
-  mostrarErro(controlName: string): boolean {
-    return FormUtil.mostrarErro(this.formularioPesquisa, controlName);
-  }
-
   validaNumero(event: any) {
     FormUtil.validaNumero(event);
   }
 
+  mostrarErro(controlName: string): boolean {
+    return FormUtil.mostrarErro(this.formularioPesquisa, controlName);
+  }
+
+  limpar(): void {
+    this.formularioPesquisa.reset();
+    this.listaDeTurmas = [];
+    this.idSelecionado = null;
+  }
+
+  estaSelecionadoRegistro(id: number): boolean {
+    return (this.idSelecionado === id) ? true : false;
+  }
+
+  selecionarRegistro(id: number): void {
+    this.idSelecionado = this.estaSelecionadoRegistro(id) ? null : id;
+  }
+
   detalhes(id: number): void {
     this.router.navigate(['turmas', `${id}`, 'detalhe']);
+  }
+
+  desabilitar(status: string) {
+    return status === 'DESATIVADA' ? true : false;
   }
 
   desativar(id: number) {
@@ -164,7 +162,6 @@ export class TurmasListaComponent implements OnInit {
     return ngbModalRef.result;
   }
 
-
   desativarTurma(id: number) {
     this.service.excluirTurma(id)
       .subscribe(() => {
@@ -175,21 +172,6 @@ export class TurmasListaComponent implements OnInit {
       });
   }
 
-  estaSelecionadoRegistro(id: number): boolean {
-    return (this.idSelecionado === id) ? true : false;
-  }
-
-  selecionarRegistro(id: number): void {
-    this.idSelecionado = this.estaSelecionadoRegistro(id) ? null : id;
-  }
-
-
-  desabilitar(status: string) {
-    return status === 'DESATIVADA' ? true : false;
-  }
-
-  novaTurma() {
-    this.router.navigate(['turmas', 'novo']);
-  }
+  get id(): AbstractControl { return this.formularioPesquisa.get('id'); }
 
 }
