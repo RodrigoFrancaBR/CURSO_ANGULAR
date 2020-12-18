@@ -1,3 +1,4 @@
+import { TurmaDTO } from './../../../interfaces/tudma.dto';
 import { UnidadesService } from './../../unidades/unidades.service';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
@@ -15,8 +16,7 @@ import { Unidade } from 'src/app/model/unidade';
   templateUrl: './turmas-detalhe.component.html',
   styleUrls: ['./turmas-detalhe.component.css']
 })
-export class TurmasDetalheComponent implements OnInit {
-  unidadeId: number;
+export class TurmasDetalheComponent implements OnInit {  
   formularioDetalhe: FormGroup;
   inscricao: Subscription;
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
@@ -49,10 +49,15 @@ export class TurmasDetalheComponent implements OnInit {
     console.log(this.router);
     console.log(this.activatedRoute);
     this.turma = new Turma();
-    // this.unidade = new Unidade();    
+    // this.unidade = new Unidade();
+    this.bustarTodasUnidades();
     this.obterPath();
     this.verificarPath();
 
+  }
+
+  bustarTodasUnidades() {
+    this.inscricao = this.unidadeService.bustarTodasUnidades().subscribe(listaDeUnidades => this.listaDeUnidades = listaDeUnidades);
   }
 
   obterPath() {
@@ -70,7 +75,7 @@ export class TurmasDetalheComponent implements OnInit {
 
     switch (this.path) {
       case 'novo':
-
+        //this.bustarTodasUnidades();
         this.submitName = 'Salvar'
         this.cancelName = 'Cancelar'
 
@@ -86,7 +91,9 @@ export class TurmasDetalheComponent implements OnInit {
 
         this.id.disable();
 
-        this.status.patchValue('ATIVA');
+        this.status.patchValue('ATIVA');        
+        this.status.disable();
+        this.unidadeId.patchValue('');        
 
         break;
 
@@ -123,12 +130,8 @@ export class TurmasDetalheComponent implements OnInit {
 
   private buscarTurmaPorId(id: number) {
     this.service.buscarTurmaPorId(id)
-      .subscribe((response: any) => {
-        this.turma = response;        
-        this.turma.unidadeId = response.unidade.id;
-        this.inscricao = this.unidadeService.bustarTodasUnidades().subscribe(listaDeUnidades => this.listaDeUnidades = listaDeUnidades);
-        this.formularioDetalhe.patchValue(this.turma);        
-        this.formularioDetalhe.get('unidadeId').setValue(this.unidadeId);
+      .subscribe((turmaDTO: TurmaDTO) => {        
+        this.formularioDetalhe.setValue(turmaDTO);        
         this.formularioDetalhe.disable();
       })
   }
@@ -197,7 +200,7 @@ export class TurmasDetalheComponent implements OnInit {
   }
 
   atualizarTurma() {
-    this.service.atualizarTurma(this.formularioDetalhe.value, this.turma.id)
+    this.service.atualizarTurma(this.formularioDetalhe.getRawValue())
       .subscribe(() => { this.router.navigate(['turmas']); });
   }
 
@@ -239,17 +242,13 @@ export class TurmasDetalheComponent implements OnInit {
   }
 
 
-  get id(): AbstractControl {
-    return this.formularioDetalhe.get('id');
-  }
+  get id(): AbstractControl { return this.formularioDetalhe.get('id'); }
 
-  get nome(): AbstractControl {
-    return this.formularioDetalhe.get('nome');
-  }
+  get nome(): AbstractControl { return this.formularioDetalhe.get('nome'); }
 
-  get status(): AbstractControl {
-    return this.formularioDetalhe.get('status');
-  }
+  get status(): AbstractControl { return this.formularioDetalhe.get('status'); }
+  
+  get unidadeId(): AbstractControl { return this.formularioDetalhe.get('unidadeId'); }
 
   mostrarBotao(nomeDoButao: string): boolean {
 
@@ -275,7 +274,8 @@ export class TurmasDetalheComponent implements OnInit {
   }
 
   editar() {
-    this.formularioDetalhe.enable();
+    this.nome.enable();
+    this.status.enable();
     this.mostrarBotaoSubmit = true;
     this.mostrarBotaoDesativar = false;
     this.mostrarBotaoEditar = false;

@@ -29,6 +29,7 @@
                     <input type="text" class="form-control" id="id" placeholder="id" formControlName="id">
                 </div>
             </div>
+            
             <div class="form-group row">
                 <label for="nome" class="col-sm-2 col-form-label">Nome</label>
                 <div class="col-sm-10">
@@ -53,7 +54,8 @@
                 <div class="col-sm-5">
                     <select id="unidade" type="text" class="col-sm-6" formControlName="unidadeId"
                         title="Selecione uma unidade">
-                        <option *ngFor="let unidade of listaDeUnidades" [ngValue]="unidade.id">
+                        <option value="">Selecione</option>
+                        <option *ngFor="let unidade of listaDeUnidades" [value]="unidade.id">
                             {{unidade.id}} - {{unidade.nome}}
                         </option>
                     </select>                    

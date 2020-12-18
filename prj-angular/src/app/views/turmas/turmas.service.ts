@@ -1,3 +1,4 @@
+import { TurmaDTO } from './../../interfaces/tudma.dto';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -22,9 +23,9 @@ export class TurmasService {
     private http: HttpClient,
     private toastr: ToastrService) { }
 
-  salvarTurma(turma: Turma): Observable<Turma> {
+  salvarTurma(turmaDTO: TurmaDTO): Observable<Turma> {
     console.log(`POST:${baseUrl}`);
-    return this.http.post<Turma>(baseUrl, turma)
+    return this.http.post<Turma>(baseUrl, turmaDTO)
       .pipe(tap(() => {
       }, (httpErrorResponse: HttpErrorResponse) => {
         ToastrMensagemUtil.error(this.toastr, httpErrorResponse.error);
@@ -40,7 +41,7 @@ export class TurmasService {
       }));
   }
 
-  buscarTurmaPorId(id: number): Observable<any> {
+  buscarTurmaPorId(id: number): Observable<TurmaDTO> {
     console.log(`GET:${baseUrl}/${id}`);
     return this.http
       .get<any>(`${baseUrl}/${id}`)
@@ -52,9 +53,9 @@ export class TurmasService {
       }));
   }
 
-  atualizarTurma(turma: Turma, id: number): Observable<any> {
-    console.log(`PUT:${baseUrl}/${id}`);
-    return this.http.put(`${baseUrl}/${id}`, turma)
+  atualizarTurma(turma: Turma): Observable<any> {
+    console.log(`PUT:${baseUrl}/${turma.id}`);
+    return this.http.put(`${baseUrl}/${turma.id}`, turma)
       .pipe(tap(() => {
         ToastrMensagemUtil.success(this.toastr, 'Turma atualizada com sucesso!');
       }, (httpErrorResponse: HttpErrorResponse) => {
