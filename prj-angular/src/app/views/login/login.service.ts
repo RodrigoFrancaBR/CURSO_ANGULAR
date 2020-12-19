@@ -7,9 +7,11 @@ import { Login } from 'src/app/model/login';
   const baseUrl = 'http://localhost:3001/unidades';
 */
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable(
+//   {
+//   providedIn: 'root'
+// }
+)
 export class LoginService {
 
   mostrarMenuEmitter = new EventEmitter<boolean>();

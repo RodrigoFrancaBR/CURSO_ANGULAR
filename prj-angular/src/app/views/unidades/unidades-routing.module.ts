@@ -8,26 +8,22 @@ import { UnidadesDetalheComponent } from './unidades-detalhe/unidades-detalhe.co
 import { UnidadesEditarComponent } from './unidades-editar/unidades-editar.component';
 
 // const unidadesRoutes: Routes = [
-//     {
-//         path: '', component: UnidadesComponent, children: [
-//             { path: '', component: UnidadesPrincipalComponent },
-//             { path: 'naoEncontrado', component: UnidadesNaoEncontradoComponent },
-//             { path: 'novo', component: UnidadesNovoComponent },
-//             { path: ':id', component: UnidadesPrincipalComponent },
-//             { path: ':id/detalhe', component: UnidadesDetalheComponent },
-//             { path: ':id/editar', component: UnidadesEditarComponent },
-
-//         ]
-//     },
+//     { path: 'unidades', component: UnidadesComponent },
+//     { path: 'naoEncontrado', component: UnidadesNaoEncontradoComponent },
+//     { path: 'unidades/novo', component: UnidadesNovoComponent },
+//     { path: 'unidades/:id', component: UnidadesComponent },
+//     { path: 'unidades/:id/detalhe', component: UnidadesDetalheComponent },
+//     { path: 'unidades/:id/editar', component: UnidadesEditarComponent },
 // ];
 
+
 const unidadesRoutes: Routes = [
-    { path: 'unidades', component: UnidadesComponent },
+    { path: '', component: UnidadesComponent },
     { path: 'naoEncontrado', component: UnidadesNaoEncontradoComponent },
-    { path: 'unidades/novo', component: UnidadesNovoComponent },
-    { path: 'unidades/:id', component: UnidadesComponent },
-    { path: 'unidades/:id/detalhe', component: UnidadesDetalheComponent },
-    { path: 'unidades/:id/editar', component: UnidadesEditarComponent },
+    { path: 'novo', component: UnidadesNovoComponent },
+    { path: ':id', component: UnidadesComponent },
+    { path: ':id/detalhe', component: UnidadesDetalheComponent },
+    { path: ':id/editar', component: UnidadesEditarComponent },
 ];
 
 @NgModule({

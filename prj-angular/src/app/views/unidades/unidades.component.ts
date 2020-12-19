@@ -21,10 +21,13 @@ export class UnidadesComponent implements OnInit {
     private service: UnidadesService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
-
+    console.log(this.service);
+    let u = new Unidade();
+    u.id = 666;
+    this.service.listaDeUnidades.push(u);
     let idSelecionado = this.obterParametroDaRota();
     if (idSelecionado) {
       // obtem a unidade na base de dados e atualiza o filtro e a grid

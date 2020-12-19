@@ -12,9 +12,11 @@ import { Injectable } from '@angular/core';
 */
 const baseUrl = 'api/turmas';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable(
+  // {
+  //   providedIn: 'root'
+  // }
+)
 export class TurmasService {
 
   listaDeTurmas: Turma[] = [];
@@ -73,4 +75,10 @@ export class TurmasService {
         ToastrMensagemUtil.error(this.toastr, `${httpErrorResponse.error}`);
       }));
   }
+
+  temPermissaoParaIncluir(): boolean {
+    ToastrMensagemUtil.error(this.toastr, `Usuário sem permissão para incluir uma nova turma`);
+    return false;
+  }
+
 }

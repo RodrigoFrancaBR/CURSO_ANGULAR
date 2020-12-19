@@ -48,6 +48,7 @@ export class TurmasDetalheComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log(this.unidadeService.listaDeUnidades);
     this.turma = new Turma();
     this.bustarTodasUnidades();
     this.obterPath();

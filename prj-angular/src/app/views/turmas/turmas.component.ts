@@ -12,8 +12,14 @@ import { TurmasService } from './turmas.service';
 export class TurmasComponent implements OnInit {
   titulo = 'Tela de Pesquisa de Turmas';
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit() { }
+
+  // lista() {
+  //   this.router.navigate(['turmas', 'lista']);
+  // }
 
 }
