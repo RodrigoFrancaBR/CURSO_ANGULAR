@@ -1,0 +1,84 @@
+<div class="pull-right">
+    <button type="button" (click)="novaTurma()">Nova Turma</button>
+</div>
+
+<div class="card">
+    
+    <div class="card-body">
+        <form [formGroup]="formularioPesquisa" (ngSubmit)="pesquisar()">
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+
+                    <label for="id" class="col-sm-3 text-center">
+                        <strong>
+                            ID
+                        </strong>
+                    </label>
+
+                    <input id="id" type="text" class="" formControlName="id" (keypress)="validaNumero($event)">
+                    <form-mensagem [errors]="id.errors" [mostraErro]="mostrarErro('id')"></form-mensagem>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="text-right">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12 mt-4 mb-4">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="float-right">
+                        <button class="btn btn-lg ml-4 btn-primary rounded border border-secondary" id="btnPesquisa"
+                            type="submit">
+                            Pesquisar
+                        </button>
+                    </div>
+                    <div class="float-right">
+                        <button class="btn btn-lg btn-primary rounded border border-secondary" id="btnLimpar"
+                            type="button" (click)="limpar()">
+                            Limpar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="details-table font-small card">
+    <table class="table table-striped table-hover table-bordered table-sm">
+        <thead>
+            <tr>
+                <th class="headers" scope="col">ID</th>
+                <th class="headers" scope="col">NOME</th>
+                <th class="headers" scope="col">STATUS</th>
+                <th class="headers" scope="col">AÇÕES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ngDefaultControl [class.table-primary]="estaSelecionadoRegistro(turma.id)"
+                (click)="selecionarRegistro(turma.id)" *ngFor="let turma of listaDeTurmas">
+                <td>{{turma.id}}</td>
+                <td>{{turma.nome}}</td>
+                <td>{{turma.status}}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Ações">
+                        <button type="button" (click)="detalhes(turma.id)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <button [disabled]="desabilitar(turma.status)" type="button" (click)="desativar(turma.id)">
+                            <i class="material-icons delete">delete</i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -22,15 +22,16 @@ import { UnidadesEditarComponent } from './unidades-editar/unidades-editar.compo
 // ];
 
 const unidadesRoutes: Routes = [
-    { path: '', component: UnidadesComponent },
+    { path: 'unidades', component: UnidadesComponent },
     { path: 'naoEncontrado', component: UnidadesNaoEncontradoComponent },
-    { path: 'novo', component: UnidadesNovoComponent },
-    { path: ':id', component: UnidadesComponent },
-    { path: ':id/detalhe', component: UnidadesDetalheComponent },
-    { path: ':id/editar', component: UnidadesEditarComponent },
+    { path: 'unidades/novo', component: UnidadesNovoComponent },
+    { path: 'unidades/:id', component: UnidadesComponent },
+    { path: 'unidades/:id/detalhe', component: UnidadesDetalheComponent },
+    { path: 'unidades/:id/editar', component: UnidadesEditarComponent },
 ];
 
 @NgModule({
+    // por ser um módulo de funcionalidade usamos o forChild 
     imports: [RouterModule.forChild(unidadesRoutes)],
     exports: [RouterModule]
 })
