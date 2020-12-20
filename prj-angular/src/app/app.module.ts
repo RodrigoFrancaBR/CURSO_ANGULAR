@@ -17,6 +17,8 @@ import { AppMaterialModule } from './app-material/app-material.module';
 import { LoginComponent } from './views/login/login.component';
 // import { TurmaGuard } from './views/turmas/guard/turma.guard';
 import { LoginService } from './views/login/login.service';
+import { AuthGuard } from './guards/auth.guard';
+import { DeactivateGuard } from './guards/deactivate.guard';
 
 //import { UnidadesModule } from './views/unidades/unidades.module';
 //import { TurmasModule } from './views/turmas/turmas.module';
@@ -48,6 +50,8 @@ import { LoginService } from './views/login/login.service';
     AppRoutingModule,
   ],
   providers: [
+    AuthGuard,
+    DeactivateGuard,
     LoginService    
     // TurmaGuard
   ],

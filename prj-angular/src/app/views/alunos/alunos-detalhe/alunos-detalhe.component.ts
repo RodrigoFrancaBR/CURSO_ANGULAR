@@ -1,14 +1,14 @@
+import { ICanDeactivate } from './../../../guards/ican-deactivate';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+
 import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
 import { Aluno } from 'src/app/model/aluno';
 import { Turma } from 'src/app/model/Turma';
 import { FormUtil } from 'src/app/util/form-util';
-import { resolve } from 'url';
-import { TurmasService } from '../../turmas/turmas.service';
 import { AlunosService } from '../alunos.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { AlunosService } from '../alunos.service';
   templateUrl: './alunos-detalhe.component.html',
   styleUrls: ['./alunos-detalhe.component.css']
 })
-export class AlunosDetalheComponent implements OnInit {
+export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
   formularioDetalhe: FormGroup;
   inscricao: Subscription;
@@ -40,10 +40,27 @@ export class AlunosDetalheComponent implements OnInit {
     private service: AlunosService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
+  ) { }
 
-  ) {
-    console.log('construtor da classe');
+  async podeDesativar() {
+    let resultado: boolean = true;
+    if (this.formularioDetalhe.dirty) {
+      let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
+      return await resultado;
+    }
+    return resultado;
   }
+
+  // usado pelo AlunoDeactivateGuard
+  async podeMudarRota() {
+    let resultado: boolean = true;
+    if (this.formularioDetalhe.dirty) {
+      let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
+      return await resultado;
+    }
+    return resultado;
+  }
+
 
 
   ngOnInit() {
@@ -242,33 +259,14 @@ export class AlunosDetalheComponent implements OnInit {
   }
 
 
-  async podeMudarRota() {
-    let resultado: boolean = true;
-    if (this.formularioDetalhe.dirty) {
-      let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
-      return await resultado;
-    }
-    return resultado;
-  }
-
-  // async podeMudarRota(): Promise<boolean> {
-  //   let retorno;
+  // async podeMudarRota() {
+  //   let resultado: boolean = true;
   //   if (this.formularioDetalhe.dirty) {
-  //     this.openModal('Tem certeza que deseja sair dessa página?')
-  //       .then(() => {
-  //         //clicou no confirm     
-  //         //retorno = true;
-  //         return true;
-  //       }, () => {
-  //         // clicou no cancel ou no x 
-  //         // retorno = false;
-  //         return false;
-  //       });
+  //     let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
+  //     return await resultado;
   //   }
-  //   return false;
+  //   return resultado;
   // }
-
-
 
   ngOnDestroy() {
     this.inscricao.unsubscribe();

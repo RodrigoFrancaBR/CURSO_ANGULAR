@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 import { AlunosDetalheComponent } from '../alunos-detalhe/alunos-detalhe.component';
-import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
-
 
 @Injectable(
   // {
@@ -14,7 +12,7 @@ import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/
 )
 export class AlunoDeactivateGuard implements CanDeactivate<AlunosDetalheComponent> {
 
-  constructor(private modalService: NgbModal) { }
+  constructor() { }
 
   canDeactivate(
     component: AlunosDetalheComponent,
