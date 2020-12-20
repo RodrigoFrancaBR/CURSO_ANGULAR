@@ -1,8 +1,7 @@
-import { TurmaGuard } from './views/turmas/guard/turma.guard';
-import { LoginComponent } from './views/login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { LoginComponent } from './views/login/login.component';
 import { HomeComponent } from './views/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -29,6 +28,12 @@ const appRoutes: Routes = [
         loadChildren: 'src/app/views/turmas/turmas.module#TurmasModule',
         canActivate: [AuthGuard],
         // canActivateChild:[TurmaGuard]
+    },
+
+    {
+        path: 'alunos',
+        loadChildren: 'src/app/views/alunos/alunos.module#AlunosModule',
+        canActivate: [AuthGuard],        
     }
 
 ];

@@ -14,7 +14,10 @@ import { TurmaGuard } from './guard/turma.guard';
 
 
 @NgModule({
-  declarations: [TurmasComponent, TurmasDetalheComponent, TurmasListaComponent],
+  declarations: [
+    TurmasComponent,
+    TurmasDetalheComponent,
+    TurmasListaComponent],
   imports: [
     CommonModule,
     TurmasRoutingModule,
@@ -22,7 +25,7 @@ import { TurmaGuard } from './guard/turma.guard';
     ReactiveFormsModule,
     FormsModule,
     // UnidadesModule    
-  ], providers: [    
+  ], providers: [
     TurmaGuard,
     TurmasService,
     UnidadesService
