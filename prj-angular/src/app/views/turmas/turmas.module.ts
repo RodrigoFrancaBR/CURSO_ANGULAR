@@ -11,6 +11,7 @@ import { TurmasDetalheComponent } from './turmas-detalhe/turmas-detalhe.componen
 import { TurmasListaComponent } from './turmas-lista/turmas-lista.component';
 import { UnidadesService } from '../unidades/unidades.service';
 import { TurmaGuard } from './guard/turma.guard';
+import { TurmaDetalheResolver } from './guard/turma-detalhe.resolver';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { TurmaGuard } from './guard/turma.guard';
     // UnidadesModule    
   ], providers: [
     TurmaGuard,
+    TurmaDetalheResolver,
     TurmasService,
     UnidadesService
   ]

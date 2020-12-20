@@ -24,10 +24,6 @@ export class UnidadesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.service);
-    let u = new Unidade();
-    u.id = 666;
-    this.service.listaDeUnidades.push(u);
     let idSelecionado = this.obterParametroDaRota();
     if (idSelecionado) {
       // obtem a unidade na base de dados e atualiza o filtro e a grid
@@ -41,12 +37,28 @@ export class UnidadesComponent implements OnInit {
     }
   }
 
+  /**
+   * Existem 2 maneiras de acessar os parâmetros. 
+   * O primeiro é usando route.snapshot.params 
+   * e o segundo é por meio de route.params.subscribe.
+   */
   private obterParametroDaRota(): number {
     let idSelecionado;
-    this.inscricao = this.activatedRoute.params.subscribe((params) => {
-      console.log('obterParam')
-      idSelecionado = params.id
-    });
+
+    /**
+ * Se você não pretende atualizar seu parâmetro de URL no mesmo componente que está acessando
+ */
+
+    idSelecionado = this.activatedRoute.snapshot.params.id;
+
+    /**
+     * Se você pretende atualizar o parâmetro de URL no mesmo componente
+      */
+
+    // this.inscricao = this.activatedRoute.params.subscribe((params) => {
+    //   idSelecionado = params.id
+    // });
+
     return idSelecionado;
   }
 

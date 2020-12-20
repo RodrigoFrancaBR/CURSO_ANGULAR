@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 
-import { TurmaDTO } from './../../../interfaces/tudma.dto';
-import { UnidadesService } from './../../unidades/unidades.service';
 import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
 import { Turma } from 'src/app/model/turma';
 import { FormUtil } from 'src/app/util/form-util';
@@ -20,45 +18,48 @@ import { Unidade } from 'src/app/model/unidade';
 export class TurmasDetalheComponent implements OnInit {
 
   formularioDetalhe: FormGroup;
-  inscricao: Subscription;
-
+  turma: Turma;
+  listaDeUnidades: Array<Unidade> = [];
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
+
+  inscricao: Subscription;
   submitName: string = '';
   cancelName: string = 'Cancelar';
-  turma: Turma;
   path: string = "";
+
   mostrarBotaoSubmit: boolean = false;
   mostrarBotaoCancel: boolean = false;
   mostrarBotaoEditar: boolean;
   mostrarBotaoDesativar: boolean;
-  listaDeUnidades: Array<Unidade> = [];
-  unidade: Unidade;
 
   constructor(
-    private unidadeService: UnidadesService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private service: TurmasService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
-
   ) {
-    console.log('construtor da classe');
+    this.turma = new Turma();
+    this.turma = this.router.getCurrentNavigation().extras.state.turma;
   }
 
-
   ngOnInit() {
-    console.log(this.unidadeService.listaDeUnidades);
-    this.turma = new Turma();
     this.bustarTodasUnidades();
     this.obterPath();
     this.verificarPath();
-
   }
 
   bustarTodasUnidades() {
-    this.inscricao = this.unidadeService.bustarTodasUnidades()
-      .subscribe(listaDeUnidades => this.listaDeUnidades = listaDeUnidades);
+    // loiane
+    // this.inscricao = this.activatedRoute.data.subscribe(resolve => this.listaDeUnidades = resolve.listaDeUnidades);
+
+    // flavio
+    this.listaDeUnidades = this.activatedRoute.snapshot.data.listaDeUnidades;
+
+    // sem resolver
+    // this.inscricao = this.unidadeService.bustarTodasUnidades()
+    //   .subscribe(listaDeUnidades => this.listaDeUnidades = listaDeUnidades);
+
   }
 
   obterPath() {
@@ -114,32 +115,41 @@ export class TurmasDetalheComponent implements OnInit {
 
         this.mostrarBotaoSubmit = false;
 
-        let idSelecionado = this.obterParametroDaRota();
+        // this.formularioDetalhe.setValue(this.turma);
+        this.formularioDetalhe.disable();
 
-        if (idSelecionado) {
-          this.buscarTurmaPorId(idSelecionado)
-        }
+        // let idSelecionado = this.obterParametroDaRota();
+
+        // if (idSelecionado) {
+        //   this.buscarTurmaPorId(idSelecionado)
+        // }
+
         break;
     }
   }
 
-  private obterParametroDaRota(): number {
-    let idSelecionado;
-    this.inscricao = this.activatedRoute.params
-      .subscribe(params => idSelecionado = params.id);
-    return idSelecionado;
-  }
+  // private obterParametroDaRota(): number {
+  //   let idSelecionado;
 
-  private buscarTurmaPorId(id: number) {
-    this.service.buscarTurmaPorId(id)
-      .subscribe((turmaDTO: TurmaDTO) => {
-        this.formularioDetalhe.setValue(turmaDTO);
-        this.formularioDetalhe.disable();
-      })
-  }
+  //   idSelecionado = this.activatedRoute.snapshot.params.id;
+  //   let turma = this.activatedRoute.snapshot.queryParams.turma
+  //   console.log(turma);
 
-  submit() {
-    console.log(this.formularioDetalhe.value);
+  //   // this.inscricao = this.activatedRoute.params
+  //   //   .subscribe(params => idSelecionado = params.id);
+
+  //   return idSelecionado;
+  // }
+
+  // private buscarTurmaPorId(id: number) {
+  //   this.service.buscarTurmaPorId(id)
+  //     .subscribe((turmaDTO: TurmaDTO) => {
+  //       this.formularioDetalhe.setValue(turmaDTO);
+  //       this.formularioDetalhe.disable();
+  //     })
+  // }
+
+  submit() {    
     switch (this.submitName) {
       case 'Atualizar':
         if (this.formularioValido()) {
@@ -242,8 +252,6 @@ export class TurmasDetalheComponent implements OnInit {
         this.router.navigate(['turmas']);
       });
   }
-
-
 
   ngOnDestroy() {
     this.inscricao.unsubscribe();

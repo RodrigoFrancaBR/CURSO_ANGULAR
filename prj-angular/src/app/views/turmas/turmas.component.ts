@@ -1,8 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Turma } from 'src/app/model/turma';
-import { TurmasService } from './turmas.service';
 
 @Component({
   selector: 'app-turmas',
@@ -12,14 +8,8 @@ import { TurmasService } from './turmas.service';
 export class TurmasComponent implements OnInit {
   titulo = 'Tela de Pesquisa de Turmas';
 
-  constructor(
-    private router: Router,
-  ) { }
+  constructor() { }
 
   ngOnInit() { }
-
-  // lista() {
-  //   this.router.navigate(['turmas', 'lista']);
-  // }
 
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
@@ -8,8 +8,6 @@ import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/
 import { TurmasService } from './../turmas.service';
 import { Turma } from 'src/app/model/turma';
 import { FormUtil } from 'src/app/util/form-util';
-
-
 
 @Component({
   selector: 'app-turmas-lista',
@@ -85,8 +83,7 @@ export class TurmasListaComponent implements OnInit {
   }
 
   pesquisar() {
-    if (this.formularioValido()) {
-      console.log(this.id.value);
+    if (this.formularioValido()) {      
       this.listaDeTurmas = [];
       this.idSelecionado = null;
       if (this.id.value) {
@@ -134,8 +131,10 @@ export class TurmasListaComponent implements OnInit {
     this.idSelecionado = this.estaSelecionadoRegistro(id) ? null : id;
   }
 
-  detalhes(id: number): void {
-    this.router.navigate(['turmas', `${id}`, 'detalhe']);
+  detalhes(turma: Turma): void {        
+    // this.router.navigate(['turmas', `${id}`, 'detalhe']);
+    // this.router.navigate(['turmas', `${turma.id}`, 'detalhe'], { queryParams: turma });
+    this.router.navigate(['turmas', `${turma.id}`, 'detalhe'], { state: { turma: turma } });
   }
 
   desabilitar(status: string) {

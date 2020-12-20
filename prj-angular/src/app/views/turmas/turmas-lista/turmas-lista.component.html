@@ -70,9 +70,13 @@
                 <td>{{turma.status}}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Ações">
-                        <button type="button" (click)="detalhes(turma.id)">
+                        <!-- <button type="button" (click)="detalhes(turma.id)">
+                            <i class="fa fa-eye"></i>
+                        </button> -->
+                        <button type="button" (click)="detalhes(turma)">
                             <i class="fa fa-eye"></i>
                         </button>
+
                         <button [disabled]="desabilitar(turma.status)" type="button" (click)="desativar(turma.id)">
                             <i class="material-icons delete">delete</i>
                         </button>
