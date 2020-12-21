@@ -43,7 +43,8 @@ export class LoginComponent implements OnInit {
             this.service.efetuarLogin(this.formularioLogin.value);
             if (this.service.usuarioEstaAutenticado()) {
                 this.service.mostrarMenuEmitter.emit(true);
-                this.service.navigate(['/']);
+                // this.service.navigate(['/']);
+                this.service.navigate(['']);
             } else {
                 this.service.mostrarMenuEmitter.emit(false);
             }
