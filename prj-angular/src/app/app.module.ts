@@ -1,3 +1,4 @@
+import { FundoVermelhoDirective } from './directives/fundo-vermelho.directive';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -9,7 +10,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { HeaderComponent } from './template/header/header.component';
 import { FooterComponent } from './template/footer/footer.component';
 import { ModalConfirmacaoComponent } from './components/modal-confirmacao/modal-confirmacao.component';
-import { RedDirective } from './directives/red.directive';
 import { HomeComponent } from './views/home/home.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
@@ -30,7 +30,7 @@ import { PaginaNaoEncontradaComponent } from './views/pagina-nao-encontrada/pagi
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    RedDirective,
+    FundoVermelhoDirective,
     AppComponent,
     ModalConfirmacaoComponent,
     LoginComponent,

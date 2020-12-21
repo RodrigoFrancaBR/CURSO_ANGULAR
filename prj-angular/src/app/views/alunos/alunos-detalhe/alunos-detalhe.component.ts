@@ -1,5 +1,5 @@
 import { ICanDeactivate } from './../../../guards/ican-deactivate';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,6 +18,7 @@ import { AlunosService } from '../alunos.service';
 })
 export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
+  @ViewChild('campoInput', null) campoInput: ElementRef;
   formularioDetalhe: FormGroup;
   inscricao: Subscription;
 
@@ -216,6 +217,12 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
 
   editar() {
+    console.log(this.campoInput);    
+    
+    // this.nome.valueChanges.subscribe((valor) => {
+    //   console.log(valor);
+    // });
+
     this.nome.enable();
     this.status.enable();
     this.mostrarBotaoSubmit = true;

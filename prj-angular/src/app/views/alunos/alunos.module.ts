@@ -15,14 +15,14 @@ import { AlunoDeactivateGuard } from './guard/aluno-deactivate.guard';
   declarations: [
     AlunosComponent,
     AlunosDetalheComponent,
-    AlunosListaComponent,
+    AlunosListaComponent,    
   ],
   imports: [
     CommonModule,
     AlunosRoutingModule,
     AppMaterialModule,
     ReactiveFormsModule,
-    FormsModule,
+    FormsModule,    
   ],
   providers: [
     AlunosService,

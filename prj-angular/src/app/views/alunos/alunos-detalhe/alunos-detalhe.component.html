@@ -7,7 +7,7 @@
                 <div class="container">
                     <div class="pull-right">
 
-                        <button *ngIf="mostrarBotaoEditar" type="button" (click)="editar()">Editar</button>
+                        <button *ngIf="mostrarBotaoEditar" type="button" (click)="editar()" fundoVermelho>Editar</button>
 
                         <button *ngIf="mostrarBotaoDesativar" type="button" [disabled]="desabilitar()"
                             (click)="desativar()">Desativar</button>
@@ -33,7 +33,7 @@
             <div class="form-group row">
                 <label for="nome" class="col-sm-2 col-form-label">Nome</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome">
+                    <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome" #campoInput>
                 </div>
             </div>
 
