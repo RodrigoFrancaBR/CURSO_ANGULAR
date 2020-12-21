@@ -1,5 +1,5 @@
 <div class="pull-right">
-    <button type="button" (click)="novaTurma()">Nova Turma</button>
+    <button type="button" (click)="novoAluno()">Nova aluno</button>
 </div>
 
 <div class="card">
@@ -57,27 +57,22 @@
         <thead>
             <tr>
                 <th class="headers" scope="col">ID</th>
-                <th class="headers" scope="col">NOME</th>
-                <th class="headers" scope="col">STATUS</th>
+                <th class="headers" scope="col">NOME</th>                
                 <th class="headers" scope="col">AÇÕES</th>
             </tr>
         </thead>
         <tbody>
-            <tr ngDefaultControl [class.table-primary]="estaSelecionadoRegistro(turma.id)"
-                (click)="selecionarRegistro(turma.id)" *ngFor="let turma of listaDeTurmas">
-                <td>{{turma.id}}</td>
-                <td>{{turma.nome}}</td>
-                <td>{{turma.status}}</td>
+            <tr ngDefaultControl [class.table-primary]="estaSelecionadoRegistro(aluno.id)"
+                (click)="selecionarRegistro(aluno.id)" *ngFor="let aluno of listaDeAlunos">
+                <td>{{aluno.id}}</td>
+                <td>{{aluno.nome}}</td>
+                <td>{{aluno.status}}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Ações">
-                        <!-- <button type="button" (click)="detalhes(turma.id)">
-                            <i class="fa fa-eye"></i>
-                        </button> -->
-                        <button type="button" (click)="detalhes(turma)">
+                        <button type="button" (click)="detalhes(aluno.id)">
                             <i class="fa fa-eye"></i>
                         </button>
-
-                        <button [disabled]="desabilitar(turma.status)" type="button" (click)="desativar(turma.id)">
+                        <button [disabled]="desabilitar(aluno.status)" type="button" (click)="desativar(aluno.id)">
                             <i class="material-icons delete">delete</i>
                         </button>
                     </div>

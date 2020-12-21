@@ -1,25 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
-import { TurmasService } from './../turmas.service';
-import { Turma } from 'src/app/model/turma';
+import { Aluno } from 'src/app/model/aluno';
 import { FormUtil } from 'src/app/util/form-util';
+import { AlunosService } from '../alunos.service';
 
 @Component({
-  selector: 'app-turmas-lista',
-  templateUrl: './turmas-lista.component.html',
-  styleUrls: ['./turmas-lista.component.css']
+  selector: 'app-alunos-lista',
+  templateUrl: './alunos-lista.component.html',
+  styleUrls: ['./alunos-lista.component.css']
 })
-export class TurmasListaComponent implements OnInit {
+export class AlunosListaComponent implements OnInit {
+
   inscricao: Subscription;
   formularioDetalhe: FormGroup;
 
   formularioPesquisa: FormGroup;
-  listaDeTurmas: Array<Turma> = [];
+  listaDeAlunos: Array<Aluno> = [];
   idSelecionado: number;
 
   constructor(
@@ -27,7 +28,7 @@ export class TurmasListaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private service: TurmasService,
+    private service: AlunosService,
   ) { }
 
   ngOnInit() {
@@ -35,14 +36,14 @@ export class TurmasListaComponent implements OnInit {
     let idSelecionado = this.obterParametroDaRota();
 
     if (idSelecionado) {
-      // obtem a Turma na base de dados e atualiza o filtro e a grid
-      this.service.buscarTurmaPorId(idSelecionado)
-        .subscribe((turmaselecionada: Turma) => {
-          this.atualizarFiltroEaLista(turmaselecionada);
+      // obtem a Aluno na base de dados e atualiza o filtro e a grid
+      this.service.buscarAlunoPorId(idSelecionado)
+        .subscribe((alunoSelecionado: Aluno) => {
+          this.atualizarFiltroEaLista(alunoSelecionado);
         });
 
     } else {
-      this.buscarTodasTurmas();
+      this.buscarTodasAlunos();
     }
 
     this.configurarFormulario();
@@ -56,45 +57,46 @@ export class TurmasListaComponent implements OnInit {
     return idSelecionado;
   }
 
-  atualizarFiltroEaLista(turma: Turma) {
-    this.idSelecionado = turma.id;
-    this.listaDeTurmas.push(turma);
-    this.id.patchValue(turma.id);
+  atualizarFiltroEaLista(aluno: Aluno) {
+    this.idSelecionado = aluno.id;
+    this.listaDeAlunos.push(aluno);
+    this.id.patchValue(aluno.id);
   }
 
-  buscarTodasTurmas() {
-    this.service.bustarTodasTurmas()
-      .subscribe((listaDeTurmas: Array<Turma>) => {
-        this.listaDeTurmas = listaDeTurmas;
+  buscarTodasAlunos() {
+    this.service.bustarTodosAlunos()
+      .subscribe((listaDeAlunos: Array<Aluno>) => {
+        this.listaDeAlunos = listaDeAlunos;
       });
   }
 
   configurarFormulario() {
     this.formularioPesquisa = this.formBuilder.group(
-      new Turma()
+      new Aluno()
     );
     this.id.setValidators([
       FormUtil.valorMinimo(),
     ]);
   }
 
-  novaTurma() {
-    this.router.navigate(['turmas', 'novo']);
+  novoAluno() {
+    this.router.navigate(['alunos', 'novo']);
   }
 
   pesquisar() {
-    if (this.formularioValido()) {      
-      this.listaDeTurmas = [];
+    if (this.formularioValido()) {
+      console.log(this.id.value);
+      this.listaDeAlunos = [];
       this.idSelecionado = null;
       if (this.id.value) {
-        this.service.buscarTurmaPorId(this.id.value)
-          .subscribe((turma: Turma) => {
-            this.listaDeTurmas.push(turma);
+        this.service.buscarAlunoPorId(this.id.value)
+          .subscribe((Aluno: Aluno) => {
+            this.listaDeAlunos.push(Aluno);
           });
       } else {
-        this.service.bustarTodasTurmas()
-          .subscribe((listaDeTurmas: Array<Turma>) => {
-            this.listaDeTurmas = listaDeTurmas;
+        this.service.bustarTodosAlunos()
+          .subscribe((listaDeAlunos: Array<Aluno>) => {
+            this.listaDeAlunos = listaDeAlunos;
           });
       }
     }
@@ -119,7 +121,7 @@ export class TurmasListaComponent implements OnInit {
 
   limpar(): void {
     this.formularioPesquisa.reset();
-    this.listaDeTurmas = [];
+    this.listaDeAlunos = [];
     this.idSelecionado = null;
   }
 
@@ -131,10 +133,8 @@ export class TurmasListaComponent implements OnInit {
     this.idSelecionado = this.estaSelecionadoRegistro(id) ? null : id;
   }
 
-  detalhes(turma: Turma): void {        
-    // this.router.navigate(['turmas', `${id}`, 'detalhe']);
-    // this.router.navigate(['turmas', `${turma.id}`, 'detalhe'], { queryParams: turma });
-    this.router.navigate(['turmas', `${turma.id}`, 'detalhe'], { state: { turma: turma } });
+  detalhes(id: number): void {
+    this.router.navigate(['alunos', `${id}`, 'detalhe']);
   }
 
   desabilitar(status: string) {
@@ -145,7 +145,7 @@ export class TurmasListaComponent implements OnInit {
     this.openModal()
       .then(() => {
         //clicou no confirm     
-        this.desativarTurma(id);
+        this.desativarAluno(id);
       }, () => {
         // clicou no cancel ou no x 
       });
@@ -157,20 +157,21 @@ export class TurmasListaComponent implements OnInit {
       {
         size: 'sm',
       });
-    ngbModalRef.componentInstance.body = 'Gostaria de desativar a Turma? ';
+    ngbModalRef.componentInstance.body = 'Gostaria de desativar o Aluno? ';
     return ngbModalRef.result;
   }
 
-  desativarTurma(id: number) {
-    this.service.excluirTurma(id)
+  desativarAluno(id: number) {
+    this.service.excluirAluno(id)
       .subscribe(() => {
-        this.service.bustarTodasTurmas()
-          .subscribe((listaDeTurmas: Array<Turma>) => {
-            this.listaDeTurmas = listaDeTurmas;
+        this.service.bustarTodosAlunos()
+          .subscribe((listaDeAlunos: Array<Aluno>) => {
+            this.listaDeAlunos = listaDeAlunos;
           })
       });
   }
 
   get id(): AbstractControl { return this.formularioPesquisa.get('id'); }
+
 
 }

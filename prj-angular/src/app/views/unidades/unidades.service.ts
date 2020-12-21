@@ -20,12 +20,14 @@ const baseUrl = 'api/unidades';
 )
 
 export class UnidadesService {
-
+  
   listaDeUnidades: Unidade[] = [];
 
   constructor(
     private http: HttpClient,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService) { 
+      console.log('UnidadesService');
+    }
 
   salvarUnidade(unidade: Unidade): Observable<Unidade> {
     console.log(`POST:${baseUrl}`);
