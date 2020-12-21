@@ -17,8 +17,10 @@ import { AppMaterialModule } from './app-material/app-material.module';
 import { LoginComponent } from './views/login/login.component';
 // import { TurmaGuard } from './views/turmas/guard/turma.guard';
 import { LoginService } from './views/login/login.service';
-import { AuthGuard } from './guards/auth.guard';
+// import { AuthGuard } from './guards/auth.guard';
 import { DeactivateGuard } from './guards/deactivate.guard';
+import { CursoGuard } from './guards/curso.guard';
+import { PaginaNaoEncontradaComponent } from './views/pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 //import { UnidadesModule } from './views/unidades/unidades.module';
 //import { TurmasModule } from './views/turmas/turmas.module';
@@ -32,6 +34,7 @@ import { DeactivateGuard } from './guards/deactivate.guard';
     AppComponent,
     ModalConfirmacaoComponent,
     LoginComponent,
+    PaginaNaoEncontradaComponent,
   ],  
   imports: [
     ToastrModule.forRoot({
@@ -49,8 +52,9 @@ import { DeactivateGuard } from './guards/deactivate.guard';
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [
-    AuthGuard,
+  providers: [    
+    // AuthGuard,
+    CursoGuard,
     DeactivateGuard,
     LoginService    
     // TurmaGuard
