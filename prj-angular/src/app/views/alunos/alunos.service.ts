@@ -23,7 +23,7 @@ export class AlunosService {
     let listaDeAlunos: Array<Aluno> = []
     for (let index = 0; index < 5; index++) {
       let aluno: Aluno = new Aluno();
-      aluno.id = 1;
+      aluno.id = index;
       aluno.nome = `Aluno_${index}`;
       aluno.status = 'ATIVO';
       listaDeAlunos.push(aluno);
