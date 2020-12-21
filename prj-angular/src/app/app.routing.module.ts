@@ -67,6 +67,12 @@ const appRoutes: Routes = [
         path: '', redirectTo: 'home', pathMatch: 'full'
     },
 
+    /**
+     * Caso 2 pathMatch: 'prefixo':
+     * Se as rotas tiverem {path: '', redirectTo: 'welcome', pathMatch: 'prefix'},
+     * Isso nunca alcançará a rota curinga, pois cada url corresponderia ao path: '' definido.
+     */
+
     {
         path: '**',
         component: PaginaNaoEncontradaComponent,
