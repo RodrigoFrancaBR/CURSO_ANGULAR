@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Directive, ElementRef, HostBinding, HostListener, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostBinding, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
   // selector: 'button[fundoVermelho]'
@@ -20,17 +20,26 @@ export class FundoVermelhoDirective {
     // this.renderer.setStyle(this.elementRef.nativeElement, 'color', '#e35e6b');            
   }
 
-
   @HostListener('mouseenter') onMouseEnter() {
-    this.styleColor = '#e35e6b';
+    // this.styleColor = '#e35e6b';
+    this.styleColor = this.highlightColor;
   }
 
   @HostListener('mouseleave') onMouseLeave() {
-
-    this.styleColor = 'black';
+    // this.styleColor = 'black';
+    this.styleColor = this.defaultColor;
   }
 
   @HostBinding('style.color') styleColor: string
   // @HostBinding('innerText') styleColor: string
+
+  @Input() defaultColor: string = 'black';
+  
+  // @Input() highlightColor: string = 'red';
+  @Input('fundoVermelho') highlightColor: string = 'red';
+
+  ngOnInit() {
+    this.styleColor = this.defaultColor;
+  }
 
 }

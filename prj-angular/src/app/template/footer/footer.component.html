@@ -1,8 +1,17 @@
 <mat-toolbar class="footer">
     <span>
         Desenvolvido com
-        <i class="material-icons v-middle" fundoVermelho>favorite</i>
         <!-- <i class="material-icons red v-middle">favorite</i> -->
+        
+        <!-- <i class="material-icons v-middle" fundoVermelho 
+            [defaultColor]="'grey'"
+            [highlightColor]="'green'">
+            favorite
+        </i> -->
+        <i class="material-icons v-middle" [fundoVermelho]="'green'" [defaultColor]="'grey'">
+            favorite
+        </i>
+
         por Rodrigo França.
-    </span>    
+    </span>
 </mat-toolbar>
