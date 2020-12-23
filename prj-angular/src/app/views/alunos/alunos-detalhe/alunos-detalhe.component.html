@@ -7,16 +7,10 @@
                 <div class="container">
                     <div class="pull-right">
 
-                        <button *ngIf="mostrarBotaoEditar" type="button" (click)="editar()" fundoVermelho>Editar</button>
+                        <button type="submit" buttonSubmit></button>
 
-                        <button *ngIf="mostrarBotaoDesativar" type="button" [disabled]="desabilitar()"
-                            (click)="desativar()">Desativar</button>
-
-                        <button *ngIf="mostrarBotaoSubmit" type="submit">{{submitName}}</button>
-
-                        <button *ngIf="mostrarBotaoCancel" type="button" tabindex="0"
-                            (click)="cancel()">{{cancelName}}</button>
-
+                        <button type="button" tabindex="0" (click)="cancel()">Cancelar</button>
+                        
                     </div>
                 </div>
             </header>
@@ -33,7 +27,7 @@
             <div class="form-group row">
                 <label for="nome" class="col-sm-2 col-form-label">Nome</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome" #campoInput>
+                    <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome">
                 </div>
             </div>
 

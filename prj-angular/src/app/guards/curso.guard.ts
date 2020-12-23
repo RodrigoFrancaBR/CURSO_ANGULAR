@@ -2,6 +2,7 @@ import { LoginService } from '../views/login/login.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ICanDeactivate } from './ican-deactivate';
 
 @Injectable(
   // {
@@ -12,8 +13,7 @@ export class CursoGuard implements CanActivate, CanLoad {
 
   constructor(private service: LoginService) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
+  canActivate(route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
     console.log('canActivate');
@@ -29,14 +29,13 @@ export class CursoGuard implements CanActivate, CanLoad {
 
   }
 
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]):boolean | Observable<boolean> | Promise<boolean> {
-    
-      console.log('canLoad');
+  canLoad(route: Route,
+    segments: UrlSegment[]): boolean | Observable<boolean> | Promise<boolean> {
+
+    console.log('canLoad');
 
     return this.verificarAcesso();
-    
+
   }
 
   private verificarAcesso() {
@@ -46,6 +45,23 @@ export class CursoGuard implements CanActivate, CanLoad {
 
     this.service.navigate(['/login']);
     return false;
+  }
+
+  canDeactivate(component: ICanDeactivate,
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+
+    console.log('canDeactivate');
+    return component.podeDesativar()
+      // return component.podeMudarRota()
+      .then(() => {
+        //clicou no confirm     
+        return true;
+
+      }, () => {
+        // clicou no cancel ou no x 
+        return false;
+      });
   }
 
 }

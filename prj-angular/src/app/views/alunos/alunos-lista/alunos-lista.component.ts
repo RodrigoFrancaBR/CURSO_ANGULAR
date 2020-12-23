@@ -133,8 +133,8 @@ export class AlunosListaComponent implements OnInit {
     this.idSelecionado = this.estaSelecionadoRegistro(id) ? null : id;
   }
 
-  detalhes(id: number): void {
-    this.router.navigate(['alunos', `${id}`, 'detalhe']);
+  detalhes(aluno: Aluno): void {
+    this.router.navigate(['alunos', `${aluno.id}`, 'detalhe'], { state: { aluno: aluno } });
   }
 
   desabilitar(status: string) {

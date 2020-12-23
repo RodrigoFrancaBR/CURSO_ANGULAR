@@ -7,10 +7,9 @@ import { Directive, ElementRef, HostBinding, HostListener, Input, Renderer2 } fr
 })
 export class FundoVermelhoDirective {
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private elementRef: ElementRef,
-    private renderer: Renderer2
+  constructor(    
+    // private elementRef: ElementRef,
+    // private renderer: Renderer2
   ) {
     // não recomendado usar assim
     // elementRef.nativeElement.style.color = '#e35e6b';
@@ -23,15 +22,17 @@ export class FundoVermelhoDirective {
   @HostListener('mouseenter') onMouseEnter() {
     // this.styleColor = '#e35e6b';
     this.styleColor = this.highlightColor;
+    // this.texto = 'Rodirgo';
   }
 
   @HostListener('mouseleave') onMouseLeave() {
     // this.styleColor = 'black';
     this.styleColor = this.defaultColor;
+    // this.texto = 'Bruna';
   }
 
   @HostBinding('style.color') styleColor: string
-  // @HostBinding('innerText') styleColor: string
+  // @HostBinding('innerText') texto: string
 
   @Input() defaultColor: string = 'black';
   

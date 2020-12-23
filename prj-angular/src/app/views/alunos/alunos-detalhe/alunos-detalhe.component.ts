@@ -1,10 +1,9 @@
-import { ICanDeactivate } from './../../../guards/ican-deactivate';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, UrlSegment, NavigationExtras } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
 
+import { ICanDeactivate } from './../../../guards/ican-deactivate';
 import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
 import { Aluno } from 'src/app/model/aluno';
 import { Turma } from 'src/app/model/Turma';
@@ -18,30 +17,31 @@ import { AlunosService } from '../alunos.service';
 })
 export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
-  @ViewChild('campoInput', null) campoInput: ElementRef;
   formularioDetalhe: FormGroup;
-  inscricao: Subscription;
+
 
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
-  submitName: string = '';
-  cancelName: string = 'Cancelar';
   aluno: Aluno;
   path: string = "";
-  mostrarBotaoSubmit: boolean = false;
-  mostrarBotaoCancel: boolean = false;
-  mostrarBotaoEditar: boolean;
-  mostrarBotaoDesativar: boolean;
   listaDeTurmas: Array<Turma> = [];
   turma: Turma;
 
   constructor(
-    // private turmaService: TurmasService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private service: AlunosService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
-  ) { }
+  ) {
+
+    this.aluno = new Aluno();
+    // this.aluno = this.router.getCurrentNavigation().extras.state.aluno;
+    let nav: NavigationExtras = this.router.getCurrentNavigation().extras;
+    if (nav && nav.state && nav.state.aluno) {
+      this.aluno;
+    }
+
+  }
 
   async podeDesativar() {
     let resultado: boolean = true;
@@ -62,30 +62,22 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     return resultado;
   }
 
-
-
   ngOnInit() {
-    this.aluno = new Aluno();
-    // this.bustarTodasTurmas();
     this.obterPath();
     this.verificarPath();
-
   }
 
-  // bustarTodasTurmas() {
-  //   this.inscricao = this.turmaService.bustarTodasTurmas()
-  //     .subscribe(listaDeTurmas => this.listaDeTurmas = listaDeTurmas);
-  // }
-
   obterPath() {
-    this.inscricao = this.activatedRoute.url.subscribe(value => {
-      // pegando o path novo
-      this.path = value[0].path;
-      // pegando o path detalhe 
-      if (value[1] && value[1].path) {
-        this.path = value[1].path;
-      }
-    });
+
+    let url: Array<UrlSegment> = this.activatedRoute.snapshot.url;
+
+    // pegando o path novo
+    this.path = url[0].path
+
+    // pegando o path detalhe 
+    if (url[1] && url[1].path) {
+      this.path = url[1].path;
+    }
   }
 
   verificarPath() {
@@ -93,15 +85,6 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     switch (this.path) {
 
       case 'novo':
-
-        this.submitName = 'Salvar'
-        this.cancelName = 'Cancelar'
-
-        this.mostrarBotaoSubmit = true;
-        this.mostrarBotaoCancel = true;
-
-        this.mostrarBotaoDesativar = false;
-        this.mostrarBotaoEditar = false;
 
         this.formularioDetalhe = this.formBuilder.group(
           this.aluno
@@ -111,7 +94,6 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
         this.status.patchValue('ATIVA');
         this.status.disable()
-        // this.TurmaId.patchValue('');
 
         break;
 
@@ -121,43 +103,15 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
           this.aluno
         );
 
-        this.submitName = 'Atualizar'
-        this.cancelName = 'Voltar'
-
-        this.mostrarBotaoEditar = true;
-        this.mostrarBotaoDesativar = true;
-        this.mostrarBotaoCancel = true;
-
-        this.mostrarBotaoSubmit = false;
-
-        let idSelecionado = this.obterParametroDaRota();
-
-        // if (idSelecionado) {
-        //   this.buscarAlunoPorId(idSelecionado)
-        // }
         break;
     }
   }
 
-  private obterParametroDaRota(): number {
-    let idSelecionado;
-    this.inscricao = this.activatedRoute.params
-      .subscribe(params => idSelecionado = params.id);
-    return idSelecionado;
-  }
-
-  private buscarAlunoPorId(id: number) {
-    this.service.buscarAlunoPorId(id)
-      .subscribe((aluno: Aluno) => {
-        this.formularioDetalhe.setValue(new Aluno());
-        this.formularioDetalhe.disable();
-      })
-  }
-
   submit() {
     console.log(this.formularioDetalhe.value);
-    switch (this.submitName) {
-      case 'Atualizar':
+    // switch (this.submitName) {
+    switch (this.path) {
+      case 'detalhe':
         if (this.formularioValido()) {
           this.openModal('Gostaria de atualizar os dados do Aluno?')
             .then(() => {
@@ -170,7 +124,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
         break;
 
-      case 'Salvar':
+      case 'novo':
         if (this.formularioValido()) {
           this.openModal('Gostaria de salvar os dados do Aluno?')
             .then(() => {
@@ -206,32 +160,15 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   }
 
   atualizarAluno() {
+    console.log('atualizando');
     this.service.atualizarAluno(this.formularioDetalhe.getRawValue())
       .subscribe(() => { this.router.navigate(['alunos']); });
   }
 
   salvarAluno() {
+    console.log('salvando');
     this.service.salvarAluno(this.formularioDetalhe.getRawValue())
       .subscribe(() => { this.router.navigate(['alunos']); });
-  }
-
-
-  editar() {
-    console.log(this.campoInput);    
-    
-    // this.nome.valueChanges.subscribe((valor) => {
-    //   console.log(valor);
-    // });
-
-    this.nome.enable();
-    this.status.enable();
-    this.mostrarBotaoSubmit = true;
-    this.mostrarBotaoDesativar = false;
-    this.mostrarBotaoEditar = false;
-  }
-
-  desabilitar() {
-    return this.formularioDetalhe.get('status').value === 'DESATIVADA' ? true : false
   }
 
   desativar() {
@@ -245,16 +182,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   }
 
   cancel() {
-    switch (this.cancelName) {
-      case 'Voltar':
-        this.router.navigate(['alunos', this.id.value]);
-        break;
-
-      case 'Cancelar':
-        this.router.navigate(['alunos']);
-        break;
-    }
-
+    this.router.navigate(['alunos']);
   }
 
   desativarAluno() {
@@ -265,18 +193,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
       });
   }
 
-
-  // async podeMudarRota() {
-  //   let resultado: boolean = true;
-  //   if (this.formularioDetalhe.dirty) {
-  //     let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
-  //     return await resultado;
-  //   }
-  //   return resultado;
-  // }
-
   ngOnDestroy() {
-    this.inscricao.unsubscribe();
   }
 
   get id(): AbstractControl { return this.formularioDetalhe.get('id'); }
