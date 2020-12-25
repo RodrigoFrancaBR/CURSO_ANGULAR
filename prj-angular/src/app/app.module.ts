@@ -1,7 +1,8 @@
+import { SharedModule } from 'src/app/shared/shared.module';
 import { FundoVermelhoDirective } from './directives/fundo-vermelho.directive';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -26,7 +27,7 @@ import { PaginaNaoEncontradaComponent } from './views/pagina-nao-encontrada/pagi
 //import { TurmasModule } from './views/turmas/turmas.module';
 
 @NgModule({
-  declarations: [    
+  declarations: [
     HeaderComponent,
     FooterComponent,
     HomeComponent,
@@ -35,7 +36,7 @@ import { PaginaNaoEncontradaComponent } from './views/pagina-nao-encontrada/pagi
     ModalConfirmacaoComponent,
     LoginComponent,
     PaginaNaoEncontradaComponent,
-  ],  
+  ],
   imports: [
     ToastrModule.forRoot({
       timeOut: 2000,
@@ -51,12 +52,17 @@ import { PaginaNaoEncontradaComponent } from './views/pagina-nao-encontrada/pagi
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    SharedModule
   ],
-  providers: [    
+  providers: [
+    // {
+    //   provide: LOCALE_ID,
+    //   useValue: 'pt-BR'
+    // },
     // AuthGuard,
     CursoGuard,
     DeactivateGuard,
-    LoginService    
+    LoginService
     // TurmaGuard
   ],
   exports: [],
