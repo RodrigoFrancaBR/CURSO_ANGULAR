@@ -1,0 +1,17 @@
+<p>exemplos-pipes works!</p>
+
+
+<h5>Exemplos de Pipes</h5>
+
+<p>Título: {{ livro.titulo | uppercase}}</p>
+<!--minimo de casas inteiras . minimo e maximo de casas decimais-->
+<p>Estrelas1: {{ livro.rating1 | number:'1.1-1'}}</p>
+<p>Data Lançamento: {{ livro.dataLancamento | date:'dd-mm-yyy' }}</p>
+<p>Url: {{ livro.url }}</p>
+<br>
+<p>Livro: {{ livro | json}}</p>
+
+<p>valor_1: {{ livro.valor_1 | custoNumber:'1.2-2'}}</p>
+<p>valor_2: {{ livro.valor_2 | custoNumber:'1.2-2'}}</p>
+<p>valor_3: {{ livro.valor_3 | custoNumber:'1.2-2'}}</p>
+<p>valor_4: {{ livro.valor_4 | custoNumber:'1.2-2'}}</p>
