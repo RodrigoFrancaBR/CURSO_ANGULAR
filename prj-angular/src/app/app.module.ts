@@ -1,5 +1,3 @@
-import { SharedModule } from 'src/app/shared/shared.module';
-import { FundoVermelhoDirective } from './directives/fundo-vermelho.directive';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LOCALE_ID, NgModule } from '@angular/core';
@@ -8,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FundoVermelhoDirective } from './directives/fundo-vermelho.directive';
 import { HeaderComponent } from './template/header/header.component';
 import { FooterComponent } from './template/footer/footer.component';
 import { ModalConfirmacaoComponent } from './components/modal-confirmacao/modal-confirmacao.component';

@@ -17,8 +17,7 @@ import { AlunosService } from '../alunos.service';
 export class AlunosListaComponent implements OnInit {
 
   inscricao: Subscription;
-  formularioDetalhe: FormGroup;
-
+  
   formularioPesquisa: FormGroup;
   listaDeAlunos: Array<Aluno> = [];
   idSelecionado: number;

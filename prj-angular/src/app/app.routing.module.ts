@@ -1,4 +1,3 @@
-import { PaginaNaoEncontradaComponent } from './views/pagina-nao-encontrada/pagina-nao-encontrada.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
@@ -6,6 +5,8 @@ import { LoginComponent } from './views/login/login.component';
 import { HomeComponent } from './views/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CursoGuard } from './guards/curso.guard';
+import { PaginaNaoEncontradaComponent } from './views/pagina-nao-encontrada/pagina-nao-encontrada.component';
+
 
 const appRoutes: Routes = [
     {

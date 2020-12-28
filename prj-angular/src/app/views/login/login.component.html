@@ -1,4 +1,4 @@
-<section class="scrollable-section" data-spy="scroll">
+<!-- <section class="scrollable-section" data-spy="scroll">
     <div class="container" id="main-container">
         <form [formGroup]="formularioLogin" (ngSubmit)="efetuarLogin()" class="form-horizontal" role="form">
             <header class="content-header" style="border-bottom:0">
@@ -30,4 +30,20 @@
             </div>
         </form>
     </div>
-</section>
+</section> -->
+
+<form [formGroup]="formularioLogin" (ngSubmit)="efetuarLogin()">
+    <div class="form-group">
+        <label for="login">Login</label>
+        <input type="text" class="form-control" id="login" aria-describedby="emailHelp" placeholder="Seu Login"
+            formControlName="login" maxlength="11">
+        <form-mensagem [errors]="login.errors" [mostraErro]="mostrarErro('login')"></form-mensagem>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="pass" placeholder="password" formControlName="password"
+            maxlength="11">
+        <form-mensagem [errors]="password.errors" [mostraErro]="mostrarErro('password')"></form-mensagem>
+    </div>
+    <button type="submit" class="btn btn-primary">Efetuar Login</button>
+</form>

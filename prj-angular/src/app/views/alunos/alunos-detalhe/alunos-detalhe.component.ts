@@ -17,7 +17,7 @@ import { AlunosService } from '../alunos.service';
 })
 export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
-  formularioDetalhe: FormGroup;
+  formulario: FormGroup;
 
 
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
@@ -45,7 +45,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
   async podeDesativar() {
     let resultado: boolean = true;
-    if (this.formularioDetalhe.dirty) {
+    if (this.formulario.dirty) {
       let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
       return await resultado;
     }
@@ -55,7 +55,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   // usado pelo AlunoDeactivateGuard
   async podeMudarRota() {
     let resultado: boolean = true;
-    if (this.formularioDetalhe.dirty) {
+    if (this.formulario.dirty) {
       let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
       return await resultado;
     }
@@ -86,7 +86,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
       case 'novo':
 
-        this.formularioDetalhe = this.formBuilder.group(
+        this.formulario = this.formBuilder.group(
           this.aluno
         );
 
@@ -99,7 +99,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
       case 'detalhe':
 
-        this.formularioDetalhe = this.formBuilder.group(
+        this.formulario = this.formBuilder.group(
           this.aluno
         );
 
@@ -108,7 +108,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   }
 
   submit() {
-    console.log(this.formularioDetalhe.value);
+    console.log(this.formulario.value);
     // switch (this.submitName) {
     switch (this.path) {
       case 'detalhe':
@@ -141,8 +141,8 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   }
 
   formularioValido(): boolean {
-    if (this.formularioDetalhe.invalid) {
-      FormUtil.marcaComoDirtySeTemErro(this.formularioDetalhe);
+    if (this.formulario.invalid) {
+      FormUtil.marcaComoDirtySeTemErro(this.formulario);
       return false;
     } else {
       return true;
@@ -161,13 +161,13 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
   atualizarAluno() {
     console.log('atualizando');
-    this.service.atualizarAluno(this.formularioDetalhe.getRawValue())
+    this.service.atualizarAluno(this.formulario.getRawValue())
       .subscribe(() => { this.router.navigate(['alunos']); });
   }
 
   salvarAluno() {
     console.log('salvando');
-    this.service.salvarAluno(this.formularioDetalhe.getRawValue())
+    this.service.salvarAluno(this.formulario.getRawValue())
       .subscribe(() => { this.router.navigate(['alunos']); });
   }
 
@@ -196,12 +196,29 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   ngOnDestroy() {
   }
 
-  get id(): AbstractControl { return this.formularioDetalhe.get('id'); }
+  get id(): AbstractControl { return this.formulario.get('id'); }
 
-  get nome(): AbstractControl { return this.formularioDetalhe.get('nome'); }
+  get nome(): AbstractControl { return this.formulario.get('nome'); }
 
-  get status(): AbstractControl { return this.formularioDetalhe.get('status'); }
+  get email(): AbstractControl { return this.formulario.get('email'); }
 
-  // get TurmaId(): AbstractControl { return this.formularioDetalhe.get('TurmaId'); }
+  get cep(): AbstractControl { return this.formulario.get('cep'); }
+
+  get numero(): AbstractControl { return this.formulario.get('numero'); }
+
+  get complemento(): AbstractControl { return this.formulario.get('complemento'); }
+
+  get rua(): AbstractControl { return this.formulario.get('rua'); }
+
+  get bairro(): AbstractControl { return this.formulario.get('bairro'); }
+  
+  get cidade(): AbstractControl { return this.formulario.get('cidade'); }
+  
+  get estado(): AbstractControl { return this.formulario.get('estado'); }
+
+  get status(): AbstractControl { return this.formulario.get('status'); }
+
+  // get TurmaId(): AbstractControl { return this.formulario.get('TurmaId'); }
 
 }
+

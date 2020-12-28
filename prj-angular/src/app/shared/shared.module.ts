@@ -13,7 +13,8 @@ registerLocaleData(localePt, 'pt');
   declarations: [
     ExemplosPipesComponent,
     ButtonSubmitDirective,
-    CustoNumberPipe]
+    CustoNumberPipe,
+    ]
   ,
   imports: [
     CommonModule
@@ -31,4 +32,5 @@ registerLocaleData(localePt, 'pt');
     },
   ]
 })
+
 export class SharedModule { }
