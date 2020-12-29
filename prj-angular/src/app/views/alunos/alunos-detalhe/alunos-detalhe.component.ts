@@ -13,6 +13,7 @@ import { ConsultaCepService } from 'src/app/shared/services/consulta-cep.service
 import { DropdownService } from 'src/app/shared/services/dropdown.service';
 import { Estado } from 'src/app/shared/interfaces/estados.interface';
 import { Observable } from 'rxjs';
+import { ChaveValorDTO } from 'src/app/shared/interfaces/chave-valor-dto.interface';
 
 @Component({
   selector: 'app-alunos-detalhe',
@@ -23,6 +24,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
   //aluno: Aluno;
   estados: Observable<Array<Estado>>
+  sexos: Array<ChaveValorDTO>;
   formulario: FormGroup
 
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
@@ -30,6 +32,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   path: string = "";
   listaDeTurmas: Array<Turma> = [];
   turma: Turma;
+  
 
   constructor(
     private dropdownService: DropdownService,
@@ -75,6 +78,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   }
 
   ngOnInit() {
+    this.sexos = this.dropdownService.getSexo();
     this.estados = this.dropdownService.getEstadosBr();
     this.obterPath();
     this.verificarPath();
@@ -102,6 +106,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
           nome: [null],
           email: [null],
           status: [null],
+          sexo:['f'],
           endereco: this.formBuilder.group({
             cep: [null],
             numero: [null],

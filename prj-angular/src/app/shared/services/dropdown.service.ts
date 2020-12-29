@@ -39,10 +39,10 @@ export class DropdownService {
   //   ];
   // }
 
-  // getNewsletter() {
-  //   return [
-  //     { valor: 's', desc: 'Sim' },
-  //     { valor: 'n', desc: 'Não' }
-  //   ];
-  // }
+  getSexo() {
+    return [
+      { chave: 'f', valor: 'Feminino' },
+      { chave: 'm', valor: 'Masculino' }
+    ];
+  }
 }
