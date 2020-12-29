@@ -1,5 +1,5 @@
 import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { Directive, ElementRef, HostBinding, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostBinding, HostListener, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Directive({
@@ -49,5 +49,8 @@ export class ButtonSubmitDirective {
 
   @HostBinding('innerText') buttonSubmit: string
   @HostBinding('class') class: string = 'btn btn-sm btn-success';
+  @HostListener('blur') onBlur() {
+    console.log('blur');
+  }
 
 }

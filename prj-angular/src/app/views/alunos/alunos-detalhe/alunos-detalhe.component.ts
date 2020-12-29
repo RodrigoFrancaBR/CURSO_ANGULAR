@@ -9,6 +9,10 @@ import { Aluno } from 'src/app/model/aluno';
 import { Turma } from 'src/app/model/Turma';
 import { FormUtil } from 'src/app/util/form-util';
 import { AlunosService } from '../alunos.service';
+import { ConsultaCepService } from 'src/app/shared/services/consulta-cep.service';
+import { DropdownService } from 'src/app/shared/services/dropdown.service';
+import { Estado } from 'src/app/shared/interfaces/estados.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-alunos-detalhe',
@@ -17,16 +21,19 @@ import { AlunosService } from '../alunos.service';
 })
 export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
-  formulario: FormGroup;
-
+  //aluno: Aluno;
+  estados: Observable<Array<Estado>>
+  formulario: FormGroup
 
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
-  aluno: Aluno;
+
   path: string = "";
   listaDeTurmas: Array<Turma> = [];
   turma: Turma;
 
   constructor(
+    private dropdownService: DropdownService,
+    private consultaCepService: ConsultaCepService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private service: AlunosService,
@@ -34,12 +41,17 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     private modalService: NgbModal
   ) {
 
-    this.aluno = new Aluno();
+    // this.aluno = new Aluno();
+
+    // this.formulario = this.formBuilder.group(
+    //   this.aluno
+    // );    
+
     // this.aluno = this.router.getCurrentNavigation().extras.state.aluno;
-    let nav: NavigationExtras = this.router.getCurrentNavigation().extras;
-    if (nav && nav.state && nav.state.aluno) {
-      this.aluno;
-    }
+    // let nav: NavigationExtras = this.router.getCurrentNavigation().extras;
+    // if (nav && nav.state && nav.state.aluno) {
+    //   this.aluno;
+    // }
 
   }
 
@@ -63,6 +75,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   }
 
   ngOnInit() {
+    this.estados = this.dropdownService.getEstadosBr();
     this.obterPath();
     this.verificarPath();
   }
@@ -85,23 +98,32 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     switch (this.path) {
 
       case 'novo':
+        this.formulario = this.formBuilder.group({
+          nome: [null],
+          email: [null],
+          status: [null],
+          endereco: this.formBuilder.group({
+            cep: [null],
+            numero: [null],
+            complemento: [null],
+            rua: [null],
+            bairro: [null],
+            cidade: [null],
+            estado: [null]
+          }),
+        });
+        // this.id.disable();
 
-        this.formulario = this.formBuilder.group(
-          this.aluno
-        );
-
-        this.id.disable();
-
-        this.status.patchValue('ATIVA');
-        this.status.disable()
+        // this.status.patchValue('ATIVA');
+        // this.status.disable()
 
         break;
 
       case 'detalhe':
 
-        this.formulario = this.formBuilder.group(
-          this.aluno
-        );
+        // this.formulario = this.formBuilder.group(
+        //   this.aluno
+        // );
 
         break;
     }
@@ -186,37 +208,67 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   }
 
   desativarAluno() {
-    this.service.excluirAluno(this.id.value)
+    //this.service.excluirAluno(this.id.value)
+    this.service.excluirAluno(null)
       .subscribe(() => {
-        this.status.patchValue('DESATIVADA')
+        // this.status.patchValue('DESATIVADA')
         this.router.navigate(['alunos']);
       });
   }
 
+  consultaCEP() {
+    const cep = this.formulario.get('endereco.cep').value;
+
+    if (cep != null && cep !== '') {
+      this.consultaCepService.consultaCEP(cep)
+        .subscribe(dados => this.populaDadosForm(dados));
+    }
+  }
+
+  populaDadosForm(dados) {
+    // this.formulario.setValue({});
+
+    this.formulario.patchValue({
+      endereco: {
+        rua: dados.logradouro,
+        // cep: dados.cep,
+        complemento: dados.complemento,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });
+  }
+
+  compararEstados(obj1, obj2) {
+    return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
+  }
+
+
   ngOnDestroy() {
   }
 
-  get id(): AbstractControl { return this.formulario.get('id'); }
+  // get id(): AbstractControl { return this.formulario.get('id'); }
 
-  get nome(): AbstractControl { return this.formulario.get('nome'); }
+  // get nome(): AbstractControl { return this.formulario.get('nome'); }
 
-  get email(): AbstractControl { return this.formulario.get('email'); }
+  // get email(): AbstractControl { return this.formulario.get('email'); }
 
-  get cep(): AbstractControl { return this.formulario.get('cep'); }
+  // get cep(): AbstractControl { return this.formulario.get('cep'); }
 
-  get numero(): AbstractControl { return this.formulario.get('numero'); }
+  // get numero(): AbstractControl { return this.formulario.get('numero'); }
 
-  get complemento(): AbstractControl { return this.formulario.get('complemento'); }
+  // get complemento(): AbstractControl { return this.formulario.get('complemento'); }
 
-  get rua(): AbstractControl { return this.formulario.get('rua'); }
+  // get rua(): AbstractControl { return this.formulario.get('rua'); }
 
-  get bairro(): AbstractControl { return this.formulario.get('bairro'); }
-  
-  get cidade(): AbstractControl { return this.formulario.get('cidade'); }
-  
-  get estado(): AbstractControl { return this.formulario.get('estado'); }
+  // get bairro(): AbstractControl { return this.formulario.get('bairro'); }
 
-  get status(): AbstractControl { return this.formulario.get('status'); }
+  // get cidade(): AbstractControl { return this.formulario.get('cidade'); }
+
+  // get estado(): AbstractControl { return this.formulario.get('estado'); }
+
+  // get status(): AbstractControl { return this.formulario.get('status'); }
 
   // get TurmaId(): AbstractControl { return this.formulario.get('TurmaId'); }
 

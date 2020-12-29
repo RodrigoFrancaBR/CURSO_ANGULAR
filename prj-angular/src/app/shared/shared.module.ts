@@ -5,6 +5,8 @@ import localePt from '@angular/common/locales/pt';
 import { ButtonSubmitDirective } from './directives/button-submit.directive';
 import { ExemplosPipesComponent } from './components/exemplos-pipes/exemplos-pipes.component';
 import { CustoNumberPipe } from './pipe/custo-number.pipe';
+import { ConsultaCepService } from './services/consulta-cep.service';
+import { DropdownService } from './services/dropdown.service';
 
 registerLocaleData(localePt, 'pt');
 
@@ -14,7 +16,7 @@ registerLocaleData(localePt, 'pt');
     ExemplosPipesComponent,
     ButtonSubmitDirective,
     CustoNumberPipe,
-    ]
+  ]
   ,
   imports: [
     CommonModule
@@ -25,6 +27,8 @@ registerLocaleData(localePt, 'pt');
     CustoNumberPipe
   ],
   providers: [
+    DropdownService,
+    ConsultaCepService,
     {
       provide: LOCALE_ID,
       // useValue: 'pt-BR'

@@ -4,20 +4,21 @@
 
     <div class="form-group col-md-12">
       <label for="inputNome">Nome</label>
-      <input type="password" class="form-control" id="inputNome" placeholder="Nome" formControlName="nome">
+      <input type="text" class="form-control" id="inputNome" placeholder="Nome" formControlName="nome">
     </div>
 
     <div class="form-group col-md-12">
       <label for="inputEmail">Email</label>
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email"formControlName="email">
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email" formControlName="email">
     </div>
   </div>
 
-  <div class="form-row">
+  <div formGroupName="endereco" class="form-row">
 
     <div class="form-group col-md-3">
       <label for="inputCep">CEP</label>
-      <input type="text" class="form-control" id="inputCep" placeholder="21345-60"formControlName="cep">
+      <input type="text" class="form-control" id="inputCep" placeholder="21345-60" formControlName="cep"
+        (blur)="consultaCEP()">
     </div>
 
     <div class="form-group col-md-3">
@@ -27,49 +28,66 @@
 
     <div class="form-group col-md-6">
       <label for="inputComplemento">Complemento</label>
-      <input type="text" class="form-control" id="inputComplemento" placeholder="Apartamento, hotel, casa, etc." formControlName="complemento">
+      <input type="text" class="form-control" id="inputComplemento" placeholder="Apartamento, hotel, casa, etc."
+        formControlName="complemento">
     </div>
 
-  </div>
-
-  <div class="form-row">
     <div class="form-group col-md-12">
       <label for="inputRua">Rua</label>
       <input type="text" class="form-control" id="inputRua" placeholder="Rua dos Bobos, nº 0" formControlName="rua">
     </div>
+
+
+
+    <div class="form-group col-md-4">
+      <label for="inputBairro">Bairro</label>
+      <input type="text" class="form-control" id="inputBairro" formControlName="bairro">
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="inputCidade">Cidade</label>
+      <input type="text" class="form-control" id="inputCidade" formControlName="cidade">
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="selectEstado">Estado</label>
+      <select id="selectEstado" class="form-control" formControlName="estado">
+        <!-- <select id="inputEstado" class="form-control" formControlName="estado" [compareWith]="compararObjetos"> -->
+        <!-- <option *ngFor="let estado of estados | async" [ngValue]="estado">{{ estado.nome }}</option> -->
+        <option *ngFor="let estado of estados | async" [value]="estado.sigla">
+          {{ estado.nome }}
+        </option>
+      </select>
+    </div>
   </div>
 
   <div class="form-row">
 
     <div class="form-group col-md-3">
-      <label for="inputBairro">Bairro</label>
-      <input type="text" class="form-control" id="inputBairro" formControlName="bairro">
+      <label for="checkFeminino"class="form-check-label mr-4" >Feminino</label>
+      <input type="checkbox" class="form-check-input" id="checkFeminino" >
     </div>
 
     <div class="form-group col-md-3">
-      <label for="inputCidade">Cidade</label>
-      <input type="text" class="form-control" id="inputCidade" formControlName="cidade">
+      <label for="checkMasculino"class="form-check-label mr-4" >Masculino</label>
+      <input type="checkbox" class="form-check-input" id="checkMasculino" >
     </div>
+  </div>
 
-    <div class="form-group col-md-3">
-      <label for="inputEstado">Estado</label>
-      <select id="inputEstado" class="form-control" formControlName="estado">
-        <option selected>Escolher...</option>
-        <option>...</option>
+  <div class="form-row">
+
+    <div class="form-group col-md-4">
+      <label for="selectStatus">Status</label>
+      <select id="selectStatus" class="form-control" formControlName="status">
+        <option *ngFor="let status of listaDeStatus" [value]="status">
+          {{status}}
+        </option>
       </select>
     </div>
-
   </div>
 
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Clique em mim
-      </label>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Entrar</button>
+  <button type="submit" buttonSubmit></button>
+  <!-- <button type="submit" class="btn btn-primary">Entrar</button> -->
 </form>
 
 <!-- <section class="scrollable-section" data-spy="scroll">
