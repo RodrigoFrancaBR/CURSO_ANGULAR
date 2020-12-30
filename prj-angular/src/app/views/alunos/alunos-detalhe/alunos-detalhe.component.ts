@@ -1,5 +1,6 @@
+import { TurmasService } from './../../turmas/turmas.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, AbstractControl, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute, UrlSegment, NavigationExtras } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -14,6 +15,7 @@ import { DropdownService } from 'src/app/shared/services/dropdown.service';
 import { Estado } from 'src/app/shared/interfaces/estados.interface';
 import { Observable } from 'rxjs';
 import { ChaveValorDTO } from 'src/app/shared/interfaces/chave-valor-dto.interface';
+import { Endereco } from 'src/app/model/endereco';
 
 @Component({
   selector: 'app-alunos-detalhe',
@@ -22,7 +24,9 @@ import { ChaveValorDTO } from 'src/app/shared/interfaces/chave-valor-dto.interfa
 })
 export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
-  //aluno: Aluno;
+  aluno: Aluno = new Aluno();
+  endereco: Endereco = new Endereco();
+  // turmas: Array<Turma>
   estados: Observable<Array<Estado>>
   sexos: Array<ChaveValorDTO>;
   formulario: FormGroup
@@ -30,11 +34,13 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
 
   path: string = "";
-  listaDeTurmas: Array<Turma> = [];
+  listaDeTurmas: Array<any> = ['1000','2000','3000'];
+  // listaDeTurmas: Array<any> = [];
   turma: Turma;
-  
+
 
   constructor(
+    private turmasService: TurmasService,
     private dropdownService: DropdownService,
     private consultaCepService: ConsultaCepService,
     private router: Router,
@@ -80,6 +86,12 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   ngOnInit() {
     this.sexos = this.dropdownService.getSexo();
     this.estados = this.dropdownService.getEstadosBr();
+    
+    // this.turmasService.bustarTodasTurmas().subscribe(response => { 
+    //   this.listaDeTurmas = response;
+    //   console.log(response);
+    // });
+    // this.turmas = [];
     this.obterPath();
     this.verificarPath();
   }
@@ -102,22 +114,27 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     switch (this.path) {
 
       case 'novo':
-        this.formulario = this.formBuilder.group({
-          nome: [null],
-          email: [null],
-          status: [null],
-          sexo:['f'],
-          condicao:[null, Validators.pattern('true')],
-          endereco: this.formBuilder.group({
-            cep: [null],
-            numero: [null],
-            complemento: [null],
-            rua: [null],
-            bairro: [null],
-            cidade: [null],
-            estado: [null]
-          }),
-        });
+
+
+        this.formulario = this.formBuilder.group(
+          {
+            nome: [null],
+            email: [null],
+            status: [null],
+            sexo: ['f'],
+            condicao: [null, Validators.pattern('true')],
+            endereco: this.formBuilder.group({
+              cep: [null],
+              numero: [null],
+              complemento: [null],
+              rua: [null],
+              bairro: [null],
+              cidade: [null],
+              estado: [null]
+            }),
+            listaDeTurmas: this.buildTurmas()
+          }
+        );
         // this.id.disable();
 
         // this.status.patchValue('ATIVA');
@@ -133,6 +150,11 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
         break;
     }
+  }
+
+  buildTurmas(): FormArray {
+    let values = this.listaDeTurmas.map(t => new FormControl(false));
+    return this.formBuilder.array(values);
   }
 
   submit() {

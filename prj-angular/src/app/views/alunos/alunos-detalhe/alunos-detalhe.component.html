@@ -82,6 +82,19 @@
   </div>
 
   <div class="form-row">
+
+    <div class="col-md-3">
+      <label for="listaDeTurmas">Turmas</label>
+      <div id="listaDeTurmas" class="row">
+        <div class="checkbox" class="col-sm-4" formArrayName="listaDeTurmas"
+          *ngFor="let item of formulario.get('listaDeTurmas')['controls']; let i = index">
+          <label class="checkbox-inline">
+            <input type="checkbox" [formControlName]="i"> {{ listaDeTurmas[i]}}
+          </label>
+        </div>
+      </div>
+    </div>
+
     <div class="form-group col-md-3">
       <label for="checkCondicao" class="form-check-label mr-4">Aceito as condições</label>
       <input type="checkbox" class="form-check-input" id="checkCondicao" formControlName="condicao">

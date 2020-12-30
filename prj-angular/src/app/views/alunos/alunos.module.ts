@@ -1,3 +1,4 @@
+import { TurmasService } from './../turmas/turmas.service';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -29,6 +30,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
   providers: [
     AlunosService,
+    TurmasService
   ]
 })
 export class AlunosModule { }

@@ -6,7 +6,8 @@ export class Aluno {
         public id?: number,
         public nome?: string,
         public email?: string,
-        public endereco: Endereco= new Endereco(),
         public status?: string,
+        public sexo?: string,
+        public condicao?:boolean
     ) { }
 }
