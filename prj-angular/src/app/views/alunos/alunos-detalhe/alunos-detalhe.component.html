@@ -62,7 +62,7 @@
   </div>
 
   <div class="form-row">
-    
+
     <div class="form-group col-md-3" *ngFor="let s of sexos">
       <label for="checkSexo" class="form-check-label mr-4">{{s.valor}}</label>
       <input [value]="s.chave" type="radio" class="form-check-input" id="checkSexo" formControlName="sexo">
@@ -80,6 +80,13 @@
       </select>
     </div>
   </div>
-  
+
+  <div class="form-row">
+    <div class="form-group col-md-3">
+      <label for="checkCondicao" class="form-check-label mr-4">Aceito as condições</label>
+      <input type="checkbox" class="form-check-input" id="checkCondicao" formControlName="condicao">
+    </div>
+  </div>
+
   <button type="submit" buttonSubmit></button>
 </form>

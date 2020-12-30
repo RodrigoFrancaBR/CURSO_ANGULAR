@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, UrlSegment, NavigationExtras } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -107,6 +107,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
           email: [null],
           status: [null],
           sexo:['f'],
+          condicao:[null, Validators.pattern('true')],
           endereco: this.formBuilder.group({
             cep: [null],
             numero: [null],
