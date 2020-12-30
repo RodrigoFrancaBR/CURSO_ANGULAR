@@ -1,16 +1,18 @@
+import { FormGroup } from '@angular/forms';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Login } from 'src/app/model/login';
+import { FormUtil } from 'src/app/util/form-util';
 
 /*Integração com json server
   const baseUrl = 'http://localhost:3001/unidades';
 */
 
 @Injectable(
-//   {
-//   providedIn: 'root'
-// }
+  //   {
+  //   providedIn: 'root'
+  // }
 )
 export class LoginService {
 
@@ -45,6 +47,18 @@ export class LoginService {
     return this.router.navigate(comands);
   }
 
+  aplicarCSSErro(formGroup: FormGroup, controlName?: string) {
+    const resultado = FormUtil.isValid(formGroup, controlName);
+    // return resultado ? { 'is-invalid': true } : null;
+    // usado para retornar css verde para campos válidos
+    return resultado ? { 'is-invalid': true } : formGroup.get(controlName).pristine && !resultado ? null : { 'is-valid': true };
+  }
+
+   // um campo é inválido qdo possui algum erro, e se tiver sido tocado ou ganho foco.
+   isValid(formGroup: FormGroup, controlName: string): boolean {
+    return formGroup.get(controlName).errors
+        && (formGroup.get(controlName).touched || formGroup.get(controlName).dirty) ? true : false;
+}
 
 
   // listaDeUnidades: Unidade[] = [];

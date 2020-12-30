@@ -7,7 +7,7 @@ import { Directive, ElementRef, HostBinding, HostListener, Input, Renderer2 } fr
 })
 export class FundoVermelhoDirective {
 
-  constructor(    
+  constructor(
     // private elementRef: ElementRef,
     // private renderer: Renderer2
   ) {
@@ -35,7 +35,7 @@ export class FundoVermelhoDirective {
   // @HostBinding('innerText') texto: string
 
   @Input() defaultColor: string = 'black';
-  
+
   // @Input() highlightColor: string = 'red';
   @Input('fundoVermelho') highlightColor: string = 'red';
 

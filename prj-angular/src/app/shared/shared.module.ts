@@ -7,6 +7,7 @@ import { ExemplosPipesComponent } from './components/exemplos-pipes/exemplos-pip
 import { CustoNumberPipe } from './pipe/custo-number.pipe';
 import { ConsultaCepService } from './services/consulta-cep.service';
 import { DropdownService } from './services/dropdown.service';
+import { ClassValidOrInvalidDirective } from './directives/aplicar-css.directive';
 
 registerLocaleData(localePt, 'pt');
 
@@ -16,6 +17,7 @@ registerLocaleData(localePt, 'pt');
     ExemplosPipesComponent,
     ButtonSubmitDirective,
     CustoNumberPipe,
+    ClassValidOrInvalidDirective
   ]
   ,
   imports: [
@@ -24,7 +26,8 @@ registerLocaleData(localePt, 'pt');
   exports: [
     ButtonSubmitDirective,
     ExemplosPipesComponent,
-    CustoNumberPipe
+    CustoNumberPipe,
+    ClassValidOrInvalidDirective
   ],
   providers: [
     DropdownService,

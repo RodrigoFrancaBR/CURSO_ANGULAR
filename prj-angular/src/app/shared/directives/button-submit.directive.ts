@@ -52,5 +52,4 @@ export class ButtonSubmitDirective {
   @HostListener('blur') onBlur() {
     console.log('blur');
   }
-
 }

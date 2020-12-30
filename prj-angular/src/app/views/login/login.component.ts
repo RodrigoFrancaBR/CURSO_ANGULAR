@@ -1,21 +1,24 @@
+import { FormUtil } from 'src/app/util/form-util';
 import { Login } from './../../model/login';
 import { LoginService } from './login.service';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormUtil } from 'src/app/util/form-util';
+
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    styleUrls: ['./login.component.css'],
+    providers:[FormUtil]
 })
 export class LoginComponent implements OnInit {
     formularioLogin: FormGroup;
 
-    constructor(
+    constructor(        
         private formBuilder: FormBuilder,
-        private service: LoginService
+        public formUtil:FormUtil,
+        public service: LoginService
     ) { }
 
     ngOnInit() {
@@ -39,6 +42,7 @@ export class LoginComponent implements OnInit {
     }
 
     efetuarLogin() {
+        console.log(this.formularioLogin)
         if (this.formularioValido()) {
             this.service.efetuarLogin(this.formularioLogin.value);
             if (this.service.usuarioEstaAutenticado()) {
@@ -65,6 +69,10 @@ export class LoginComponent implements OnInit {
     //     this.service.loginUnidade(this.formularioLogin.value)
     //         .subscribe(() => { this.router.navigate(['unidades']); });
     // }
+
+    // aplicarCSSErro(controlName: string) {
+    //     return FormUtil.aplicarCSSErro(this.formularioLogin, controlName);
+    //   }
 
     mostrarErro(controlName: string) {
         return FormUtil.mostrarErro(this.formularioLogin, controlName);

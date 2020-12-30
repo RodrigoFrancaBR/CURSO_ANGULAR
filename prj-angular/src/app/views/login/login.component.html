@@ -32,17 +32,17 @@
     </div>
 </section> -->
 
-<form [formGroup]="formularioLogin" (ngSubmit)="efetuarLogin()">
+<form [formGroup]="formularioLogin" (ngSubmit)="efetuarLogin()" autocomplete="off">
     <div class="form-group">
         <label for="login">Login</label>
         <input type="text" class="form-control" id="login" aria-describedby="emailHelp" placeholder="Seu Login"
-            formControlName="login" maxlength="11">
+            formControlName="login" maxlength="11" [classValidOrInvalid]="this.login">
         <form-mensagem [errors]="login.errors" [mostraErro]="mostrarErro('login')"></form-mensagem>
     </div>
     <div class="form-group">
         <label for="password">Password</label>
         <input type="password" class="form-control" id="pass" placeholder="password" formControlName="password"
-            maxlength="11">
+            maxlength="11" [ngClass]="this.formUtil.aplicarCSSErro(this.formularioLogin,'password')">
         <form-mensagem [errors]="password.errors" [mostraErro]="mostrarErro('password')"></form-mensagem>
     </div>
     <button type="submit" class="btn btn-primary">Efetuar Login</button>

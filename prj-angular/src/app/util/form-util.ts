@@ -85,5 +85,18 @@ export class FormUtil {
         }
     }
 
+    aplicarCSSErro(formGroup: FormGroup, controlName?: string) {
+        const resultado = FormUtil.isValid(formGroup, controlName);
+        // return resultado ? { 'is-invalid': true } : null;
+        // usado para retornar css verde para campos válidos
+        return resultado ? { 'is-invalid': true } : formGroup.get(controlName).pristine && !resultado ? null : { 'is-valid': true };
+      }
+    
+       // um campo é inválido qdo possui algum erro, e se tiver sido tocado ou ganho foco.
+       isValid(formGroup: FormGroup, controlName: string): boolean {
+        return formGroup.get(controlName).errors
+            && (formGroup.get(controlName).touched || formGroup.get(controlName).dirty) ? true : false;
+    }
+
 }
 
