@@ -1,53 +1,49 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, AbstractControl, FormGroup } from '@angular/forms';
+
 import { FormUtil } from 'src/app/util/form-util';
 import { Login } from './../../model/login';
 import { LoginService } from './login.service';
-import { Component, OnInit, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators, AbstractControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
-    providers:[FormUtil]
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    formularioLogin: FormGroup;
+    formulario: FormGroup = this.formBuilder.group(new Login());
 
-    constructor(        
+    constructor(
         private formBuilder: FormBuilder,
-        public formUtil:FormUtil,
         public service: LoginService
     ) { }
 
     ngOnInit() {
-        this.configurarFormulario(new Login());
+        this.configurarFormulario();
     }
 
-    private configurarFormulario(login: Login): void {
-        this.formularioLogin = this.formBuilder.group(
-            login
-        );
-        this.login.setValidators([Validators.required, Validators.maxLength(10)])
+    private configurarFormulario(): void {
+        this.userName.setValidators([Validators.required, Validators.maxLength(10)])
         this.password.setValidators([Validators.required, Validators.maxLength(10)])
     }
 
-    get login(): AbstractControl {
-        return this.formularioLogin.get('login');
+    get userName(): AbstractControl {
+        return this.formulario.get('userName');
     }
 
     get password(): AbstractControl {
-        return this.formularioLogin.get('password');
+        return this.formulario.get('password');
     }
 
     efetuarLogin() {
-        console.log(this.formularioLogin)
-        if (this.formularioValido()) {
-            this.service.efetuarLogin(this.formularioLogin.value);
+        console.log(this.formulario)
+
+        if (this.formulario.valid) {
+            
+            this.service.efetuarLogin(this.formulario.value);
+
             if (this.service.usuarioEstaAutenticado()) {
                 this.service.mostrarMenuEmitter.emit(true);
-                // this.service.navigate(['/']);
                 this.service.navigate(['']);
             } else {
                 this.service.mostrarMenuEmitter.emit(false);
@@ -55,40 +51,8 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    // openModal(): Promise<any> {
-    //     const ngbModalRef = this.modalService.open(
-    //         ModalConfirmacaoComponent,
-    //         {
-    //             size: 'sm',
-    //         });
-    //     ngbModalRef.componentInstance.body = 'Gostaria de incluir a unidade? ';
-    //     return ngbModalRef.result;
-    // }
-
-    // loginUnidade() {
-    //     this.service.loginUnidade(this.formularioLogin.value)
-    //         .subscribe(() => { this.router.navigate(['unidades']); });
-    // }
-
-    // aplicarCSSErro(controlName: string) {
-    //     return FormUtil.aplicarCSSErro(this.formularioLogin, controlName);
-    //   }
-
     mostrarErro(controlName: string) {
-        return FormUtil.mostrarErro(this.formularioLogin, controlName);
+        return FormUtil.mostrarErro(this.formulario, controlName);
     }
-
-    private formularioValido(): boolean {
-        if (this.formularioLogin.invalid) {
-            FormUtil.marcaComoDirtySeTemErro(this.formularioLogin);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    cancelar() {
-        console.log('cancelou o login');
-        //  this.router.navigate(['unidades',]);
-    }
+    
 }

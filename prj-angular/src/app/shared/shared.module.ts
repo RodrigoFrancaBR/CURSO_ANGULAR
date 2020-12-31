@@ -2,12 +2,14 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
-import { ButtonSubmitDirective } from './directives/button-submit.directive';
 import { ExemplosPipesComponent } from './components/exemplos-pipes/exemplos-pipes.component';
 import { CustoNumberPipe } from './pipe/custo-number.pipe';
+import { ChangeButtonNameDirective } from './directives/change-button-name.directive';
+import { AddValidOrInvalidClassDirective } from './directives/add-valid-or-invalid-class.directive';
+import { MarkAsDirtyAllControlsDirective } from './directives/mark-as-dirty-all-controls.directive';
 import { ConsultaCepService } from './services/consulta-cep.service';
 import { DropdownService } from './services/dropdown.service';
-import { ClassValidOrInvalidDirective } from './directives/aplicar-css.directive';
+
 
 registerLocaleData(localePt, 'pt');
 
@@ -15,19 +17,21 @@ registerLocaleData(localePt, 'pt');
 @NgModule({
   declarations: [
     ExemplosPipesComponent,
-    ButtonSubmitDirective,
     CustoNumberPipe,
-    ClassValidOrInvalidDirective
+    AddValidOrInvalidClassDirective,
+    MarkAsDirtyAllControlsDirective,
+    ChangeButtonNameDirective
   ]
   ,
   imports: [
     CommonModule
   ],
   exports: [
-    ButtonSubmitDirective,
     ExemplosPipesComponent,
     CustoNumberPipe,
-    ClassValidOrInvalidDirective
+    ChangeButtonNameDirective,
+    AddValidOrInvalidClassDirective,
+    MarkAsDirtyAllControlsDirective
   ],
   providers: [
     DropdownService,
