@@ -1,21 +1,19 @@
-import { TurmasService } from './../../turmas/turmas.service';
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl, Validators, FormControl, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute, UrlSegment, NavigationExtras } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { CONSTANTES } from './../../../shared/const/constantes';
 import { ICanDeactivate } from './../../../guards/ican-deactivate';
 import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
-import { Aluno } from 'src/app/model/aluno';
-import { Turma } from 'src/app/model/Turma';
 import { FormUtil } from 'src/app/util/form-util';
 import { AlunosService } from '../alunos.service';
 import { ConsultaCepService } from 'src/app/shared/services/consulta-cep.service';
 import { DropdownService } from 'src/app/shared/services/dropdown.service';
 import { Estado } from 'src/app/shared/interfaces/estados.interface';
-import { Observable } from 'rxjs';
 import { ChaveValorDTO } from 'src/app/shared/interfaces/chave-valor-dto.interface';
-import { Endereco } from 'src/app/model/endereco';
+
 
 @Component({
   selector: 'app-alunos-detalhe',
@@ -23,24 +21,18 @@ import { Endereco } from 'src/app/model/endereco';
   styleUrls: ['./alunos-detalhe.component.css']
 })
 export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
+  formulario: FormGroup;
 
-  aluno: Aluno = new Aluno();
-  endereco: Endereco = new Endereco();
-  // turmas: Array<Turma>
   estados: Observable<Array<Estado>>
   sexos: Array<ChaveValorDTO>;
-  formulario: FormGroup
-
   listaDeStatus: Array<string> = ['ATIVA', 'DESATIVADA'];
-
-  path: string = "";
-  listaDeTurmas: Array<any> = ['1000','2000','3000'];
-  // listaDeTurmas: Array<any> = [];
-  turma: Turma;
+  listaDeTurmas: Array<any> = ['1000', '2000', '3000'];
+  openType: string;
+  id: string;
+  buttonSubmit: string = '';
 
 
   constructor(
-    private turmasService: TurmasService,
     private dropdownService: DropdownService,
     private consultaCepService: ConsultaCepService,
     private router: Router,
@@ -48,125 +40,77 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     private service: AlunosService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
-  ) {
-
-    // this.aluno = new Aluno();
-
-    // this.formulario = this.formBuilder.group(
-    //   this.aluno
-    // );    
-
-    // this.aluno = this.router.getCurrentNavigation().extras.state.aluno;
-    // let nav: NavigationExtras = this.router.getCurrentNavigation().extras;
-    // if (nav && nav.state && nav.state.aluno) {
-    //   this.aluno;
-    // }
-
-  }
-
-  async podeDesativar() {
-    let resultado: boolean = true;
-    if (this.formulario.dirty) {
-      let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
-      return await resultado;
-    }
-    return resultado;
-  }
-
-  // usado pelo AlunoDeactivateGuard
-  async podeMudarRota() {
-    let resultado: boolean = true;
-    if (this.formulario.dirty) {
-      let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
-      return await resultado;
-    }
-    return resultado;
-  }
+  ) { }
 
   ngOnInit() {
+    this.iniciarFormulario();
     this.sexos = this.dropdownService.getSexo();
     this.estados = this.dropdownService.getEstadosBr();
-    
-    // this.turmasService.bustarTodasTurmas().subscribe(response => { 
-    //   this.listaDeTurmas = response;
-    //   console.log(response);
-    // });
-    // this.turmas = [];
-    this.obterPath();
-    this.verificarPath();
+
+    this.openType = this.activatedRoute.snapshot.paramMap.get('openType')
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.verificarOpenType();
   }
 
-  obterPath() {
-
-    let url: Array<UrlSegment> = this.activatedRoute.snapshot.url;
-
-    // pegando o path novo
-    this.path = url[0].path
-
-    // pegando o path detalhe 
-    if (url[1] && url[1].path) {
-      this.path = url[1].path;
-    }
+  iniciarFormulario() {
+    this.formulario = this.formBuilder.group(
+      {
+        nome: [null, [Validators.required, Validators.maxLength(30)]],
+        email: [null, [Validators.required, Validators.email, Validators.maxLength(30)]],
+        status: [null, Validators.required],
+        sexo: [null, Validators.required],
+        // valida se o check é true;
+        condicao: [false, Validators.pattern('true')],
+        endereco: this.formBuilder.group({
+          cep: [null, Validators.required],
+          numero: [null, [Validators.required, Validators.maxLength(5)]],
+          complemento: [null, Validators.maxLength(30)],
+          rua: [null, [Validators.required, Validators.maxLength(30)]],
+          bairro: [null, [Validators.required, Validators.maxLength(30)]],
+          cidade: [null, [Validators.required, Validators.maxLength(30)]],
+          estado: [null]
+        }),
+        listaDeTurmas: this.buildTurmas()
+      }
+    );
   }
 
-  verificarPath() {
+  buildTurmas(): FormArray {
+    // para cada turma um novo controle com value false.
+    let checks = this.listaDeTurmas.map(t => new FormControl(false));
+    return this.formBuilder.array(checks);
+  }
 
-    switch (this.path) {
 
-      case 'novo':
+  verificarOpenType() {
 
+    switch (this.openType) {
 
-        this.formulario = this.formBuilder.group(
-          {
-            nome: [null],
-            email: [null],
-            status: [null],
-            sexo: ['f'],
-            condicao: [null, Validators.pattern('true')],
-            endereco: this.formBuilder.group({
-              cep: [null],
-              numero: [null],
-              complemento: [null],
-              rua: [null],
-              bairro: [null],
-              cidade: [null],
-              estado: [null]
-            }),
-            listaDeTurmas: this.buildTurmas()
-          }
-        );
-        // this.id.disable();
-
+      case CONSTANTES.OPEN_TYPE.CREATE:
+        this.buttonSubmit = CONSTANTES.BUTTON_SUBMIT.SAVE;
+        // this.iniciarFormulario();
         // this.status.patchValue('ATIVA');
         // this.status.disable()
 
         break;
 
-      case 'detalhe':
-
-        // this.formulario = this.formBuilder.group(
-        //   this.aluno
-        // );
-
+      case CONSTANTES.OPEN_TYPE.CHANGE:
+        console.log('change')
         break;
     }
-  }
-
-  buildTurmas(): FormArray {
-    let values = this.listaDeTurmas.map(t => new FormControl(false));
-    return this.formBuilder.array(values);
   }
 
   submit() {
     console.log(this.formulario.value);
     // switch (this.submitName) {
-    switch (this.path) {
-      case 'detalhe':
-        if (this.formularioValido()) {
-          this.openModal('Gostaria de atualizar os dados do Aluno?')
+    switch (this.openType) {
+      case CONSTANTES.OPEN_TYPE.CREATE:
+
+        if (this.formulario.valid) {
+          this.openModal('Gostaria de salvar os dados do Aluno?')
             .then(() => {
               //clicou no confirm
-              this.atualizarAluno();
+              this.salvarAluno();
             }, () => {
               // clicou no cancel ou no x 
             });
@@ -175,7 +119,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
         break;
 
       case 'novo':
-        if (this.formularioValido()) {
+        if (this.formulario.valid) {
           this.openModal('Gostaria de salvar os dados do Aluno?')
             .then(() => {
               //clicou no confirm
@@ -209,15 +153,15 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     return ngbModalRef.result;
   }
 
-  atualizarAluno() {
-    console.log('atualizando');
-    this.service.atualizarAluno(this.formulario.getRawValue())
-      .subscribe(() => { this.router.navigate(['alunos']); });
-  }
-
   salvarAluno() {
     console.log('salvando');
     this.service.salvarAluno(this.formulario.getRawValue())
+      .subscribe(() => { this.router.navigate(['alunos']); });
+  }
+
+  atualizarAluno() {
+    console.log('atualizando');
+    this.service.atualizarAluno(this.formulario.getRawValue())
       .subscribe(() => { this.router.navigate(['alunos']); });
   }
 
@@ -276,29 +220,55 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   ngOnDestroy() {
   }
 
-  // get id(): AbstractControl { return this.formulario.get('id'); }
+  async podeDesativar() {
+    let resultado: boolean = true;
+    if (this.formulario.dirty) {
+      let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
+      return await resultado;
+    }
+    return resultado;
+  }
 
-  // get nome(): AbstractControl { return this.formulario.get('nome'); }
+  // usado pelo AlunoDeactivateGuard
+  async podeMudarRota() {
+    let resultado: boolean = true;
+    if (this.formulario.dirty) {
+      let resultado = this.openModal('Tem certeza que deseja sair dessa página?');
+      return await resultado;
+    }
+    return resultado;
+  }
 
-  // get email(): AbstractControl { return this.formulario.get('email'); }
+  mostrarErro(controlName: string) {
+    return FormUtil.mostrarErro(this.formulario, controlName);
+  }
 
-  // get cep(): AbstractControl { return this.formulario.get('cep'); }
 
-  // get numero(): AbstractControl { return this.formulario.get('numero'); }
+  get nome(): AbstractControl { return this.formulario.get('nome'); }
 
-  // get complemento(): AbstractControl { return this.formulario.get('complemento'); }
+  get email(): AbstractControl { return this.formulario.get('email'); }
 
-  // get rua(): AbstractControl { return this.formulario.get('rua'); }
+  get sexo(): AbstractControl { return this.formulario.get('sexo'); }
 
-  // get bairro(): AbstractControl { return this.formulario.get('bairro'); }
+  get status(): AbstractControl { return this.formulario.get('status'); }
 
-  // get cidade(): AbstractControl { return this.formulario.get('cidade'); }
+  get turmas(): AbstractControl { return this.formulario.get('listaDeTurmas'); }
 
-  // get estado(): AbstractControl { return this.formulario.get('estado'); }
+  get condicao(): AbstractControl { return this.formulario.get('condicao'); }
 
-  // get status(): AbstractControl { return this.formulario.get('status'); }
+  get cep(): AbstractControl { return this.formulario.get('endereco.cep'); }
 
-  // get TurmaId(): AbstractControl { return this.formulario.get('TurmaId'); }
+  get numero(): AbstractControl { return this.formulario.get('endereco.numero'); }
+
+  get complemento(): AbstractControl { return this.formulario.get('endereco.complemento'); }
+
+  get rua(): AbstractControl { return this.formulario.get('endereco.rua'); }
+
+  get bairro(): AbstractControl { return this.formulario.get('endereco.bairro'); }
+
+  get cidade(): AbstractControl { return this.formulario.get('endereco.cidade'); }
+
+  get estado(): AbstractControl { return this.formulario.get('endereco.estado'); }
 
 }
 

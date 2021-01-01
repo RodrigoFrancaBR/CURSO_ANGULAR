@@ -1,3 +1,4 @@
+import { CONSTANTES } from './../../../shared/const/constantes';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,8 +18,8 @@ import { AlunosService } from '../alunos.service';
 export class AlunosListaComponent implements OnInit {
 
   inscricao: Subscription;
-  
-  formularioPesquisa: FormGroup;
+
+  formulario: FormGroup; 
   listaDeAlunos: Array<Aluno> = [];
   idSelecionado: number;
 
@@ -30,30 +31,9 @@ export class AlunosListaComponent implements OnInit {
     private service: AlunosService,
   ) { }
 
-  ngOnInit() {
-
-    let idSelecionado = this.obterParametroDaRota();
-
-    if (idSelecionado) {
-      // obtem a Aluno na base de dados e atualiza o filtro e a grid
-      this.service.buscarAlunoPorId(idSelecionado)
-        .subscribe((alunoSelecionado: Aluno) => {
-          this.atualizarFiltroEaLista(alunoSelecionado);
-        });
-
-    } else {
-      this.buscarTodasAlunos();
-    }
-
-    this.configurarFormulario();
-  }
-
-  obterParametroDaRota(): number {
-    let idSelecionado;
-    this.inscricao = this.activatedRoute.params.subscribe((params) => {
-      idSelecionado = params.id
-    });
-    return idSelecionado;
+  ngOnInit() { 
+    this.formulario = this.formBuilder.group(new Aluno);
+    this.buscarTodasAlunos();
   }
 
   atualizarFiltroEaLista(aluno: Aluno) {
@@ -70,7 +50,7 @@ export class AlunosListaComponent implements OnInit {
   }
 
   configurarFormulario() {
-    this.formularioPesquisa = this.formBuilder.group(
+    this.formulario = this.formBuilder.group(
       new Aluno()
     );
     this.id.setValidators([
@@ -79,7 +59,7 @@ export class AlunosListaComponent implements OnInit {
   }
 
   novoAluno() {
-    this.router.navigate(['alunos', 'novo']);
+    this.router.navigate(['alunos', CONSTANTES.OPEN_TYPE.CREATE]);
   }
 
   pesquisar() {
@@ -102,8 +82,8 @@ export class AlunosListaComponent implements OnInit {
   }
 
   formularioValido() {
-    if (this.formularioPesquisa.invalid) {
-      FormUtil.marcaComoDirtySeTemErro(this.formularioPesquisa);
+    if (this.formulario.invalid) {
+      FormUtil.marcaComoDirtySeTemErro(this.formulario);
       return false;
     } else {
       return true;
@@ -115,11 +95,11 @@ export class AlunosListaComponent implements OnInit {
   }
 
   mostrarErro(controlName: string): boolean {
-    return FormUtil.mostrarErro(this.formularioPesquisa, controlName);
+    return FormUtil.mostrarErro(this.formulario, controlName);
   }
 
   limpar(): void {
-    this.formularioPesquisa.reset();
+    this.formulario.reset();
     this.listaDeAlunos = [];
     this.idSelecionado = null;
   }
@@ -170,7 +150,7 @@ export class AlunosListaComponent implements OnInit {
       });
   }
 
-  get id(): AbstractControl { return this.formularioPesquisa.get('id'); }
+  get id(): AbstractControl { return this.formulario.get('id'); }
 
 
 }
