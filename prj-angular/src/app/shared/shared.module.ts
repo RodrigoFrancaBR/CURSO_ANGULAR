@@ -4,7 +4,6 @@ import localePt from '@angular/common/locales/pt';
 
 import { ExemplosPipesComponent } from './components/exemplos-pipes/exemplos-pipes.component';
 import { CustoNumberPipe } from './pipe/custo-number.pipe';
-import { ChangeButtonNameDirective } from './directives/change-button-name.directive';
 import { AddValidOrInvalidClassDirective } from './directives/add-valid-or-invalid-class.directive';
 import { MarkAsDirtyAllControlsDirective } from './directives/mark-as-dirty-all-controls.directive';
 import { ConsultaCepService } from './services/consulta-cep.service';
@@ -20,7 +19,6 @@ registerLocaleData(localePt, 'pt');
     CustoNumberPipe,
     AddValidOrInvalidClassDirective,
     MarkAsDirtyAllControlsDirective,
-    ChangeButtonNameDirective
   ]
   ,
   imports: [
@@ -29,7 +27,6 @@ registerLocaleData(localePt, 'pt');
   exports: [
     ExemplosPipesComponent,
     CustoNumberPipe,
-    ChangeButtonNameDirective,
     AddValidOrInvalidClassDirective,
     MarkAsDirtyAllControlsDirective
   ],

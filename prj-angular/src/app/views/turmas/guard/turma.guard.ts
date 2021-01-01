@@ -19,7 +19,7 @@ export class TurmaGuard implements CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
-    console.log('TurmaGuard');
+    console.log('TurmaGuard : canActivateChild()');
 
     if (state.url.includes('novo')) {
       return this.service.temPermissaoParaIncluir();

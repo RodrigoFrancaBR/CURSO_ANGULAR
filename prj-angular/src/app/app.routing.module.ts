@@ -36,8 +36,8 @@ const appRoutes: Routes = [
         path: 'alunos',
         loadChildren: 'src/app/views/alunos/alunos.module#AlunosModule',
         // canActivate: [AuthGuard],
-        canActivate: [CursoGuard],
-        canLoad: [CursoGuard]
+        // canActivate: [CursoGuard],
+        // canLoad: [CursoGuard]
     },
 
     // {
@@ -64,8 +64,12 @@ const appRoutes: Routes = [
      * isso irá redirecionar para a tela pageNotFound devido ao caminho: '**' curinga
      */
 
+    // {
+    //     path: '', redirectTo: 'home', pathMatch: 'full'
+    // },
+
     {
-        path: '', redirectTo: 'home', pathMatch: 'full'
+        path: '', redirectTo: 'alunos', pathMatch: 'full'
     },
 
     /**

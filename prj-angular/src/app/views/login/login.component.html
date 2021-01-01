@@ -1,13 +1,17 @@
 <form [formGroup]="formulario" (ngSubmit)="efetuarLogin()" autocomplete="off">
+    
     <div class="form-group">
         <label for="userName">Login</label>
-        <input type="text" class="form-control" id="userName" aria-describedby="emailHelp" placeholder="Digite o UserName"
-            formControlName="userName" maxlength="11" [addValidOrInvalidClass]="userName">
+        <input id="userName" placeholder="nome de usuário" maxlength="11" 
+        class="form-control" 
+        formControlName="userName" [addValidOrInvalidClass]="userName" >
         <form-mensagem [errors]="userName.errors" [mostraErro]="mostrarErro('userName')"></form-mensagem>
     </div>
+
+
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="pass" placeholder="password" formControlName="password"
+        <input type="password" class="form-control" id="password" placeholder="password" formControlName="password"
             maxlength="11" [addValidOrInvalidClass]="password">
         <form-mensagem [errors]="password.errors" [mostraErro]="mostrarErro('password')"></form-mensagem>
     </div>
