@@ -9,21 +9,16 @@ export class MarkAsDirtyAllControlsDirective {
   constructor() { }
 
   @Input('markAsDirtyAllControls') formulario: FormGroup
-
+  //  passando o btn do html
   // @HostListener('click', ['$event.target']) onClick(target) {
   @HostListener('click') onClick() {
 
-    if (this.formulario.invalid) {
+    // Object.keys(this.formulario.controls).forEach(c => {
+    //   const control = this.formulario.get(c);
+    //   control.markAllAsTouched();
+    // });
 
-      Object.keys(this.formulario.controls).forEach(c => {
+    this.formulario.markAllAsTouched();
 
-        const control = this.formulario.get(c);
-
-        if (control.errors) {
-          console.log(`${control.errors}`);
-          control.markAsDirty();
-        }
-      });
-    }
   }
 }

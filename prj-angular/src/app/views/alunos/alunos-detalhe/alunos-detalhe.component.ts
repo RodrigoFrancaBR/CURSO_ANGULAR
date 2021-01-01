@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -29,7 +29,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   listaDeTurmas: Array<any> = ['1000', '2000', '3000'];
   openType: string;
   id: string;
-  buttonSubmit: string='';
+  buttonSubmit: string = '';
 
 
   constructor(
@@ -55,19 +55,19 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   iniciarFormulario() {
     this.formulario = this.formBuilder.group(
       {
-        nome: [null, [Validators.required]],
-        email: [null, [Validators.required, Validators.email]],
-        status: [null, [Validators.required]],
-        sexo: ['f', [Validators.required]],
+        nome: [null, [Validators.required, Validators.maxLength(30)]],
+        email: [null, [Validators.required, Validators.email, Validators.maxLength(30)]],
+        status: [null, Validators.required],
+        sexo: [null, Validators.required],
         // valida se o check é true;
         condicao: [false, Validators.pattern('true')],
         endereco: this.formBuilder.group({
-          cep: [null, [Validators.required]],
-          numero: [null, [Validators.required]],
-          complemento: [null],
-          rua: [null, [Validators.required]],
-          bairro: [null, [Validators.required]],
-          cidade: [null,[Validators.required]],
+          cep: [null, Validators.required],
+          numero: [null, [Validators.required, Validators.maxLength(5)]],
+          complemento: [null, Validators.maxLength(30)],
+          rua: [null, [Validators.required, Validators.maxLength(30)]],
+          bairro: [null, [Validators.required, Validators.maxLength(30)]],
+          cidade: [null, [Validators.required, Validators.maxLength(30)]],
           estado: [null]
         }),
         listaDeTurmas: this.buildTurmas()
@@ -105,7 +105,8 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     // switch (this.submitName) {
     switch (this.openType) {
       case CONSTANTES.OPEN_TYPE.CREATE:
-        if (this.formularioValido()) {
+
+        if (this.formulario.valid) {
           this.openModal('Gostaria de salvar os dados do Aluno?')
             .then(() => {
               //clicou no confirm
@@ -118,7 +119,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
         break;
 
       case 'novo':
-        if (this.formularioValido()) {
+        if (this.formulario.valid) {
           this.openModal('Gostaria de salvar os dados do Aluno?')
             .then(() => {
               //clicou no confirm
@@ -217,7 +218,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
 
   ngOnDestroy() {
-  }  
+  }
 
   async podeDesativar() {
     let resultado: boolean = true;
@@ -237,7 +238,37 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     }
     return resultado;
   }
-  
+
+  mostrarErro(controlName: string) {
+    return FormUtil.mostrarErro(this.formulario, controlName);
+  }
+
+
+  get nome(): AbstractControl { return this.formulario.get('nome'); }
+
+  get email(): AbstractControl { return this.formulario.get('email'); }
+
+  get sexo(): AbstractControl { return this.formulario.get('sexo'); }
+
+  get status(): AbstractControl { return this.formulario.get('status'); }
+
+  get turmas(): AbstractControl { return this.formulario.get('listaDeTurmas'); }
+
+  get condicao(): AbstractControl { return this.formulario.get('condicao'); }
+
+  get cep(): AbstractControl { return this.formulario.get('endereco.cep'); }
+
+  get numero(): AbstractControl { return this.formulario.get('endereco.numero'); }
+
+  get complemento(): AbstractControl { return this.formulario.get('endereco.complemento'); }
+
+  get rua(): AbstractControl { return this.formulario.get('endereco.rua'); }
+
+  get bairro(): AbstractControl { return this.formulario.get('endereco.bairro'); }
+
+  get cidade(): AbstractControl { return this.formulario.get('endereco.cidade'); }
+
+  get estado(): AbstractControl { return this.formulario.get('endereco.estado'); }
 
 }
 

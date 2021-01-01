@@ -8,6 +8,7 @@ import { AddValidOrInvalidClassDirective } from './directives/add-valid-or-inval
 import { MarkAsDirtyAllControlsDirective } from './directives/mark-as-dirty-all-controls.directive';
 import { ConsultaCepService } from './services/consulta-cep.service';
 import { DropdownService } from './services/dropdown.service';
+import { ControlErrorComponent } from './components/control-error/control-error.component';
 
 
 registerLocaleData(localePt, 'pt');
@@ -19,6 +20,7 @@ registerLocaleData(localePt, 'pt');
     CustoNumberPipe,
     AddValidOrInvalidClassDirective,
     MarkAsDirtyAllControlsDirective,
+    ControlErrorComponent,
   ]
   ,
   imports: [
@@ -28,7 +30,8 @@ registerLocaleData(localePt, 'pt');
     ExemplosPipesComponent,
     CustoNumberPipe,
     AddValidOrInvalidClassDirective,
-    MarkAsDirtyAllControlsDirective
+    MarkAsDirtyAllControlsDirective,
+    ControlErrorComponent
   ],
   providers: [
     DropdownService,
