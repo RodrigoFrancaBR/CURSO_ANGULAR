@@ -5,14 +5,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { CONSTANTES } from './../../../shared/const/constantes';
+import { FormValidations } from './../../../shared/util/form-validations';
 import { ICanDeactivate } from './../../../guards/ican-deactivate';
-import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
+// import { ModalConfirmacaoComponent } from 'src/app/components/modal-confirmacao/modal-confirmacao.component';
 import { FormUtil } from 'src/app/util/form-util';
 import { AlunosService } from '../alunos.service';
 import { ConsultaCepService } from 'src/app/shared/services/consulta-cep.service';
 import { DropdownService } from 'src/app/shared/services/dropdown.service';
 import { Estado } from 'src/app/shared/interfaces/estados.interface';
 import { ChaveValorDTO } from 'src/app/shared/interfaces/chave-valor-dto.interface';
+import { ModalConfirmacaoComponent } from 'src/app/shared/modal/modal-confirmacao/modal-confirmacao.component';
 
 
 @Component({
@@ -78,7 +80,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   buildTurmas(): FormArray {
     // para cada turma um novo controle com value false.
     let checks = this.listaDeTurmas.map(t => new FormControl(false));
-    return this.formBuilder.array(checks);
+    return this.formBuilder.array(checks, FormValidations.requiredMinCheckbox());
   }
 
 

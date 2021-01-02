@@ -39,7 +39,8 @@ export class ControlErrorComponent implements DoCheck {
       'maxlength': `Quantidade de caracteres deve ser menor ou igual a ${error.requiredLength} e não ${error.actualLength}`,
       'required': `Campo de preenchimento obrigatório`,
       'email': `Informe um email válido. Ex: email@email.com`,
-      'valorMenorQueUm': ' Digite um valor maior que 0.'
+      'valorMenorQueUm': ' Digite um valor maior que 0.',
+      'pattern': 'Campo de preenchimento obrigatório'
     }
     return message[errorCode];
   }

@@ -1,6 +1,7 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ExemplosPipesComponent } from './components/exemplos-pipes/exemplos-pipes.component';
 import { CustoNumberPipe } from './pipe/custo-number.pipe';
@@ -9,7 +10,7 @@ import { MarkAsDirtyAllControlsDirective } from './directives/mark-as-dirty-all-
 import { ConsultaCepService } from './services/consulta-cep.service';
 import { DropdownService } from './services/dropdown.service';
 import { ControlErrorComponent } from './components/control-error/control-error.component';
-
+import { ModalConfirmacaoComponent } from './modal/modal-confirmacao/modal-confirmacao.component';
 
 registerLocaleData(localePt, 'pt');
 
@@ -21,17 +22,20 @@ registerLocaleData(localePt, 'pt');
     AddValidOrInvalidClassDirective,
     MarkAsDirtyAllControlsDirective,
     ControlErrorComponent,
+    ModalConfirmacaoComponent
   ]
   ,
   imports: [
-    CommonModule
+    CommonModule,
+    NgbModule,
   ],
   exports: [
     ExemplosPipesComponent,
     CustoNumberPipe,
     AddValidOrInvalidClassDirective,
     MarkAsDirtyAllControlsDirective,
-    ControlErrorComponent
+    ControlErrorComponent,
+    ModalConfirmacaoComponent
   ],
   providers: [
     DropdownService,
@@ -41,7 +45,8 @@ registerLocaleData(localePt, 'pt');
       // useValue: 'pt-BR'
       useValue: 'pt'
     },
-  ]
+  ],
+  entryComponents: [ModalConfirmacaoComponent],
 })
 
 export class SharedModule { }
