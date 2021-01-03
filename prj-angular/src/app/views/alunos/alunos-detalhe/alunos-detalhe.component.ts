@@ -58,7 +58,8 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     this.formulario = this.formBuilder.group(
       {
         nome: [null, [Validators.required, Validators.maxLength(30)]],
-        email: [null, [Validators.required, Validators.email, Validators.maxLength(30)]],
+        email: [null, [Validators.required, Validators.email, Validators.maxLength(30), FormValidations.notEquals('confEmail')]],
+        confEmail: [null, [Validators.required, Validators.email, Validators.maxLength(30), FormValidations.notEquals('email')]],
         status: [null, Validators.required],
         sexo: [null, Validators.required],
         // valida se o check é true;
@@ -249,6 +250,8 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   get nome(): AbstractControl { return this.formulario.get('nome'); }
 
   get email(): AbstractControl { return this.formulario.get('email'); }
+
+  get confEmail(): AbstractControl { return this.formulario.get('confEmail'); }
 
   get sexo(): AbstractControl { return this.formulario.get('sexo'); }
 

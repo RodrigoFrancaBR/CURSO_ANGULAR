@@ -36,6 +36,11 @@ export class ControlErrorComponent {
 
   get errorMessage() {
 
+    // return Object.keys(this.control.errors)
+    //   .map((errorCode: string) => {
+    //     return FormMessage.getMessage(this.label, errorCode, this.control.errors[errorCode]);
+    //   });
+
     let msg: string = '';
 
     this.getErrorCodeList()
@@ -50,14 +55,11 @@ export class ControlErrorComponent {
     }
   }
 
-  // return Object.keys(this.control.errors)
-  //   .map((errorCode: string) => {
-  //     return FormMessage.getMessage(this.label, errorCode, this.control.errors[errorCode]);
-  //   });
+
 
   getErrorCodeList() {
     return Object.keys(this.control.errors).map((errorCode: string) => { return errorCode });
-  }  
+  }
 
   // ngDoCheck() {
   //   if (this._control.errors) {

@@ -1,6 +1,43 @@
-import { AbstractControl, FormArray, FormControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { distinctUntilChanged } from "rxjs/operators";
 
 export class FormValidations {
+
+    static notEquals(controlName: string) {
+        //let subscribe: boolean = false;
+
+        return (control: AbstractControl) => {
+
+            if (controlName == null) {
+                throw new Error('controlName não informado.');
+            }
+
+            if (control.root && (control.root as FormGroup).controls) {
+
+                const formulario: FormGroup = control.root as FormGroup;
+                const otherControl: AbstractControl = formulario.get(controlName);                
+
+                if (!otherControl) {
+                    throw new Error(`O ${controlName} é um controlName inválido.`);
+                }
+
+                if (otherControl.value && control.value) {
+                    // if (!subscribe) {
+                    //     subscribe = true;
+                    //     control.valueChanges
+                    //         .pipe(distinctUntilChanged())
+                    //         .subscribe(() => {
+                    //             control.updateValueAndValidity();
+                    //         });
+                    // }
+
+                    return otherControl.value !== control.value ? { notEquals: true } : null;
+                }
+            }
+
+            return null;
+        }
+    }
 
     static cepValidator(control: FormControl) {
 
