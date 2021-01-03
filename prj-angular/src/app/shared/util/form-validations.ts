@@ -1,7 +1,25 @@
+import { EmailService } from './../services/email.service';
 import { AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { distinctUntilChanged } from "rxjs/operators";
 
 export class FormValidations {
+
+    constructor(private emailService: EmailService) {
+        console.log(this.emailService.verificarEmail('email@email.com').subscribe());
+    }
+
+    // static emailJaExiste(email: string) {
+    //     if (email) {
+
+    //     }
+    //     const cep = control.value;
+    //     if (cep && cep !== '') {
+    //         const validacep = /^[0-9]{8}$/;
+    //         return validacep.test(cep) ? null : { cepInvalido: true };
+    //     }
+    //     return null;
+    // }
+
 
     static notEquals(controlName: string) {
         //let subscribe: boolean = false;
@@ -15,7 +33,7 @@ export class FormValidations {
             if (control.root && (control.root as FormGroup).controls) {
 
                 const formulario: FormGroup = control.root as FormGroup;
-                const otherControl: AbstractControl = formulario.get(controlName);                
+                const otherControl: AbstractControl = formulario.get(controlName);
 
                 if (!otherControl) {
                     throw new Error(`O ${controlName} é um controlName inválido.`);

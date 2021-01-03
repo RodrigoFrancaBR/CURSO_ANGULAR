@@ -1,3 +1,4 @@
+import { EmailService } from './../../../shared/services/email.service';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
@@ -15,6 +16,7 @@ import { DropdownService } from 'src/app/shared/services/dropdown.service';
 import { Estado } from 'src/app/shared/interfaces/estados.interface';
 import { ChaveValorDTO } from 'src/app/shared/interfaces/chave-valor-dto.interface';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal/modal-confirmacao/modal-confirmacao.component';
+import { EmailValidationsService } from 'src/app/shared/services/email-validations.service';
 
 
 @Component({
@@ -35,6 +37,8 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
 
 
   constructor(
+    private emailValidationsService: EmailValidationsService,
+    private emailService: EmailService,
     private dropdownService: DropdownService,
     private consultaCepService: ConsultaCepService,
     private router: Router,
@@ -45,6 +49,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
   ) { }
 
   ngOnInit() {
+    // this.emailService.verificarEmail('email@email.com').subscribe();
     this.iniciarFormulario();
     this.sexos = this.dropdownService.getSexo();
     this.estados = this.dropdownService.getEstadosBr();
@@ -58,7 +63,15 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     this.formulario = this.formBuilder.group(
       {
         nome: [null, [Validators.required, Validators.maxLength(30)]],
-        email: [null, [Validators.required, Validators.email, Validators.maxLength(30), FormValidations.notEquals('confEmail')]],
+        email:
+          [null,
+            [
+              Validators.required, Validators.email,
+              Validators.maxLength(30),
+              FormValidations.notEquals('confEmail')
+            ],
+            [this.emailValidationsService.emailExiste()]
+          ],
         confEmail: [null, [Validators.required, Validators.email, Validators.maxLength(30), FormValidations.notEquals('email')]],
         status: [null, Validators.required],
         sexo: [null, Validators.required],

@@ -11,6 +11,8 @@ import { ConsultaCepService } from './services/consulta-cep.service';
 import { DropdownService } from './services/dropdown.service';
 import { ControlErrorComponent } from './components/control-error/control-error.component';
 import { ModalConfirmacaoComponent } from './modal/modal-confirmacao/modal-confirmacao.component';
+import { EmailService } from './services/email.service';
+import { EmailValidationsService } from './services/email-validations.service';
 
 registerLocaleData(localePt, 'pt');
 
@@ -38,6 +40,8 @@ registerLocaleData(localePt, 'pt');
     ModalConfirmacaoComponent
   ],
   providers: [
+    EmailValidationsService,
+    EmailService,
     DropdownService,
     ConsultaCepService,
     {

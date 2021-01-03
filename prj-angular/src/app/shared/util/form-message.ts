@@ -12,8 +12,8 @@ export class FormMessage {
             'valorMenorQueUm': `${label} precisa ter um valor maior que 0.`,
             'pattern': `${label} é obrigatório.`,
             'cepInvalido': 'CEP inválido.',
-            'notEquals': `Valores informados devem ser iguais.`
-            // 'emailInvalido': 'Email já cadastrado!',
+            'notEquals': `Valores informados devem ser iguais.`,
+            'emailExiste': 'Email já cadastrado!',
             // 'equalsTo': 'Campos não são iguais',
         };
 
