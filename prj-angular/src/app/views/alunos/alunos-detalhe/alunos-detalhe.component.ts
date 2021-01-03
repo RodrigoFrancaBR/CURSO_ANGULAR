@@ -64,7 +64,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
         // valida se o check é true;
         condicao: [false, Validators.pattern('true')],
         endereco: this.formBuilder.group({
-          cep: [null, Validators.required],
+          cep: [null, [Validators.required, FormValidations.cepValidator]],
           numero: [null, [Validators.required, Validators.maxLength(5)]],
           complemento: [null, Validators.maxLength(30)],
           rua: [null, [Validators.required, Validators.maxLength(30)]],

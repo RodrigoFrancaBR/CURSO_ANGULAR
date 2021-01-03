@@ -1,5 +1,8 @@
-import { Component, DoCheck, Input } from '@angular/core';
+import { FormUtil } from 'src/app/util/form-util';
+import { Component, Input } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+
+import { FormMessage } from './../../util/form-message';
 
 /** 
   retorna um obj de chave valor aonde o codigo do erro é a chave e o boolean tue ou false é o valor
@@ -22,49 +25,60 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
   templateUrl: './control-error.component.html',
   styleUrls: ['./control-error.component.css']
 })
-export class ControlErrorComponent implements DoCheck {
-
-  private _control: AbstractControl;
-  
-  get control() { return this._control; }
-  
-  @Input() set control(control: AbstractControl) { this._control = control; };
-  
-  msg: string;
+export class ControlErrorComponent {
 
   constructor() { }
 
-  readonly getMessageByErrorCode = (errorCode: string, error: ValidationErrors) => {
-    const message = {
-      'maxlength': `Quantidade de caracteres deve ser menor ou igual a ${error.requiredLength} e não ${error.actualLength}`,
-      'required': `Campo de preenchimento obrigatório`,
-      'email': `Informe um email válido. Ex: email@email.com`,
-      'valorMenorQueUm': ' Digite um valor maior que 0.',
-      'pattern': 'Campo de preenchimento obrigatório'
+  @Input() control: AbstractControl;
+  @Input() label: string;
+
+  // get errorMessage é um atributo e tb um método get que retorna o valor do atributo.
+
+  get errorMessage() {
+
+    let msg: string = '';
+
+    this.getErrorCodeList()
+      .forEach((errorCode: string) => {
+        msg = FormMessage.getMessage(this.label, errorCode, this.control.errors[errorCode]);
+      });
+
+    if (msg) {
+      return msg;
+    } else {
+      throw new Error("ErrorCode não exite!");
     }
-    return message[errorCode];
   }
 
-  ngDoCheck() {
-    if (this._control.errors) {
-      // console.log('tem erro no controle');
-      Object.keys(this._control.errors)
-        .map((errorCode: string) => {
-          this.msg = this.getMessageByErrorCode(errorCode, this._control.errors[errorCode]);
-          if (this.msg) {
-            // console.log(this.msg);
-          } else {
-            // throw new Error.
-            // console.log('msg não encontrada');
-          }
-        });
-    } else {
-      this.msg = null;
-    }
-  }
+  // return Object.keys(this.control.errors)
+  //   .map((errorCode: string) => {
+  //     return FormMessage.getMessage(this.label, errorCode, this.control.errors[errorCode]);
+  //   });
+
+  getErrorCodeList() {
+    return Object.keys(this.control.errors).map((errorCode: string) => { return errorCode });
+  }  
+
+  // ngDoCheck() {
+  //   if (this._control.errors) {
+  //     // console.log('tem erro no controle');
+  //     Object.keys(this._control.errors)
+  //       .map((errorCode: string) => {
+  //         this.msg = this.getMessageByErrorCode(errorCode, this._control.errors[errorCode]);
+  //         if (this.msg) {
+  //           // console.log(this.msg);
+  //         } else {
+  //           // throw new Error.
+  //           // console.log('msg não encontrada');
+  //         }
+  //       });
+  //   } else {
+  //     this.msg = null;
+  //   }
+  // }
 
   mostrarErro(): boolean {
-    return this._control.invalid && this.isTouchedOrDirty() ? true : false
+    return this.control.invalid && this.isTouchedOrDirty() ? true : false
   }
 
   isTouchedOrDirty(): boolean {

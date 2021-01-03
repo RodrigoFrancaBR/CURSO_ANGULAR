@@ -1,37 +1,48 @@
-import { AbstractControl, FormArray, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, FormArray, FormControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 export class FormValidations {
 
+    static cepValidator(control: FormControl) {
+
+        const cep = control.value;
+        if (cep && cep !== '') {
+            const validacep = /^[0-9]{8}$/;
+            return validacep.test(cep) ? null : { cepInvalido: true };
+        }
+        return null;
+    }
+
     static requiredMinCheckbox(): ValidatorFn {
         return (formArray: FormArray): ValidationErrors | null => {
-
-            const isChecked = formArray.controls
-                .map((control) => {
-                    return control.value;
-                })
-                .some((element: boolean) => {
-                    return element;
-                });
-
-            return isChecked ? null : { required: true };
-
-            // return !formArray.controls.map(control => control.value).some((e: boolean) => e === true) ? { required: true } : null
-            // return control.value && control.value < 1 ? { valorMenorQueUm: true } : null;
+            return formArray.controls
+                .map(control => control.value)
+                .some((value: boolean) => value) ? null : { required: true };
         };
     }
 
-    // static requiredMinCheckbox(min = 1) {
+    // static requiredMinCheckbox(): ValidatorFn {
+    //     return (formArray: FormArray): ValidationErrors | null => {
+    //         const isChecked = formArray.controls
+    //             .map((control) => {
+    //                 return control.value;
+    //             })
+    //             .some((value: boolean) => {
+    //                 return value;
+    //             });
 
-    // const validator = (formArray: FormArray) => {            
-    //     formArray.controls
-    //         // retornar um array de true or false    
-    //         .map(c => c.value)
-    //         // current = true or false
-    //         .reduce((totalChecked: number, current: boolean) => {
-    //             current ? totalChecked + 1 : totalChecked, 0
-    //         })
-    //     return totalChecked >= min ? null : { required: true };
-    // };
-    // return validator;
+    //         return isChecked ? null : { required: true };
+    //     };
     // }
+
+    // com opção de escolher o min de check 
+    // static requiredMinCheckbox(min = 1) {
+    //     const validator = (formArray: FormArray) => {
+    //         const totalChecked = formArray.controls
+    //             .map(v => v.value)
+    //             .reduce((total, current) => current ? total + 1 : total, 0);
+    //         return totalChecked >= min ? null : { required: true };
+    //     };
+    //     return validator;
+    // }
+
 }
