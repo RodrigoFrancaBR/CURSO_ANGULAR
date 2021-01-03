@@ -1,10 +1,11 @@
-import { EmailService } from './../../../shared/services/email.service';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { EMPTY, empty, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { EmailService } from './../../../shared/services/email.service';
 import { CONSTANTES } from './../../../shared/const/constantes';
 import { FormValidations } from './../../../shared/util/form-validations';
 import { ICanDeactivate } from './../../../guards/ican-deactivate';
@@ -57,6 +58,17 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     this.openType = this.activatedRoute.snapshot.paramMap.get('openType')
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     this.verificarOpenType();
+
+    this.cepChanges();
+  }
+
+  cepChanges() {
+    this.cep.statusChanges
+      .pipe(
+        distinctUntilChanged(),
+        tap(status => console.log(status)),
+        switchMap(status => status === 'VALID' ? this.consultaCepService.consultaCEP(this.cep.value) :  EMPTY))
+      .subscribe(response => response ? this.populaDadosForm(response) : {});
   }
 
   iniciarFormulario() {
@@ -65,13 +77,8 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
         nome: [null, [Validators.required, Validators.maxLength(30)]],
         email:
           [null,
-            [
-              Validators.required, Validators.email,
-              Validators.maxLength(30),
-              FormValidations.notEquals('confEmail')
-            ],
-            [this.emailValidationsService.emailExiste()]
-          ],
+            [Validators.required, Validators.email, Validators.maxLength(30), FormValidations.notEquals('confEmail')],
+            [this.emailValidationsService.emailExiste()]],
         confEmail: [null, [Validators.required, Validators.email, Validators.maxLength(30), FormValidations.notEquals('email')]],
         status: [null, Validators.required],
         sexo: [null, Validators.required],
@@ -150,15 +157,6 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
     }
   }
 
-  formularioValido(): boolean {
-    if (this.formulario.invalid) {
-      FormUtil.marcaComoDirtySeTemErro(this.formulario);
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   openModal(body: string): Promise<any> {
     const ngbModalRef = this.modalService.open(
       ModalConfirmacaoComponent,
@@ -204,15 +202,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
       });
   }
 
-  consultaCEP() {
-    const cep = this.formulario.get('endereco.cep').value;
-
-    if (cep != null && cep !== '') {
-      this.consultaCepService.consultaCEP(cep)
-        .subscribe(dados => this.populaDadosForm(dados));
-    }
-  }
-
+ 
   populaDadosForm(dados) {
     // this.formulario.setValue({});
 
@@ -227,11 +217,7 @@ export class AlunosDetalheComponent implements OnInit, ICanDeactivate {
       }
     });
   }
-
-  compararEstados(obj1, obj2) {
-    return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
-  }
-
+ 
 
   ngOnDestroy() {
   }

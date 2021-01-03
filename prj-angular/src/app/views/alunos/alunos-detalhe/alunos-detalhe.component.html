@@ -29,7 +29,7 @@
     <div class="form-group col-md-3">
       <label for="inputCep">CEP</label>
       <input type="text" class="form-control" id="inputCep" placeholder="21345-60" formControlName="cep"
-        [addValidOrInvalidClass]="cep" (blur)="consultaCEP()">
+        [addValidOrInvalidClass]="cep">
       <app-control-error [control]="cep" [label]="'CEP'"></app-control-error>
     </div>
 
