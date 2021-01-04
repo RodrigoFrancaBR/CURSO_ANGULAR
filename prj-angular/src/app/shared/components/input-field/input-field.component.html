@@ -5,7 +5,7 @@
     </label>
 
     <input class="form-control" [id]="id" [type]="type" [readonly]="!!isReadOnly" [placeholder]="placeholder"
-        [attr.maxlength]="maxlength" [(ngModel)]="value" [addValidOrInvalidClass]="control">
+        [attr.maxlength]="maxlength" [(ngModel)]="value">
 
     <app-control-error [control]="control" [label]="label"></app-control-error>
 

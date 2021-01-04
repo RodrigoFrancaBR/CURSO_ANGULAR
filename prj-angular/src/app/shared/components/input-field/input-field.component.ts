@@ -46,6 +46,7 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   set value(v: any) {
     if (v !== this.innerValue) {
+      console.log(this.control.touched);
       // this.control.valueChanges
       //   .pipe(
       //     distinctUntilChanged(),
@@ -78,6 +79,10 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     this.isReadOnly = isDisabled;
+  }
+
+  ngDoCheck() {
+    console.log(this.control.touched);
   }
 
 }
