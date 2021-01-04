@@ -4,8 +4,15 @@
         <strong>{{label}}</strong>
     </label>
 
-    <input class="form-control" [id]="id" [type]="type" [readonly]="!!isReadOnly" [placeholder]="placeholder"
-        [attr.maxlength]="maxlength" [(ngModel)]="value">
+    <input class="form-control"
+     [id]="id" 
+     [type]="type" 
+     [readonly]="!!isReadOnly" 
+     [placeholder]="placeholder"
+     [attr.maxlength]="maxlength"
+     [(ngModel)]="value"
+     [addValidOrInvalidClass]="control"
+     (blur)="onTouchedCb(null)">
 
     <app-control-error [control]="control" [label]="label"></app-control-error>
 
