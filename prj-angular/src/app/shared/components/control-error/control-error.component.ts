@@ -55,8 +55,6 @@ export class ControlErrorComponent {
     }
   }
 
-
-
   getErrorCodeList() {
     return Object.keys(this.control.errors).map((errorCode: string) => { return errorCode });
   }

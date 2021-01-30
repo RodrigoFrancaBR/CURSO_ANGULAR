@@ -2,6 +2,23 @@
 
   <div class=" form-row">
 
+    <app-input-field class="col-md-12" [id]="'inputNome'" [label]="'Nome'" [type]="'text'" [isReadOnly]="false"
+      [placeholder]="'Nome'" [maxlength]="'31'" [control]="nome" formControlName="nome">
+    </app-input-field>
+    <!-- <app-control-error> responsável por aplicar a msg de erro que está dentro do <app-input-field>-->
+    <!--[app-control-error [control]="nome_do_control"] não é mais necessária nessa camada, está dentro do <app-input-field> -->
+
+    <!-- 
+      OLD
+  <div class="form-group col-md-12">
+    <label for="inputNome">Nome</label>
+    <input type="text" class="form-control" id="inputNome" placeholder="Nome" formControlName="nome" maxlength="31"
+      [addValidOrInvalidClass]="nome">
+    <app-control-error [control]="nome" [label]="'Nome'"></app-control-error>
+  </div> -->
+
+  </div>
+  <!-- 
     <div class="form-group col-md-12">
       <label for="inputNome">Nome</label>
       <input type="text" class="form-control" id="inputNome" placeholder="Nome" formControlName="nome" maxlength="31"
@@ -126,7 +143,7 @@
         [addValidOrInvalidClass]="this.formulario.get('condicao')">
       <app-control-error [control]="condicao" [label]="'Aceito as condições'"></app-control-error>
     </div>
-  </div>
+  </div> -->
 
   <button type="submit" class="btn btn-sm btn-success" [markAsDirtyAllControls]="formulario">{{buttonSubmit}}</button>
 

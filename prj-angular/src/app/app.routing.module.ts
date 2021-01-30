@@ -14,19 +14,19 @@ const appRoutes: Routes = [
         component: LoginComponent,
     },
 
-    // rota de funcionalidade
+    // rota de funcionalidade 
     {
         path: 'unidades',
-        loadChildren: 'src/app/views/unidades/unidades.module#UnidadesModule',
-        // canActivate: [AuthGuard]
-        canActivate: [CursoGuard],
+        loadChildren: 'src/app/views/unidades/unidades.module#UnidadesModule',        
+        // CursoGuard vai dizer se permite ativar essa rota ou não.
+        canActivate: [CursoGuard], // esse é o AuthGuard
+        // CursoGuard vai dizer se permite carregar o módulo ou não.
         canLoad: [CursoGuard]
     },
 
     {
         path: 'turmas',
         loadChildren: 'src/app/views/turmas/turmas.module#TurmasModule',
-        // canActivate: [AuthGuard],
         canActivate: [CursoGuard],
         // canActivateChild:[TurmaGuard]
         canLoad: [CursoGuard]
@@ -34,16 +34,14 @@ const appRoutes: Routes = [
 
     {
         path: 'alunos',
-        loadChildren: 'src/app/views/alunos/alunos.module#AlunosModule',
-        // canActivate: [AuthGuard],
-        // canActivate: [CursoGuard],
-        // canLoad: [CursoGuard]
+        loadChildren: 'src/app/views/alunos/alunos.module#AlunosModule',        
+        canActivate: [CursoGuard],
+        canLoad: [CursoGuard]
     },
 
     // {
     //     path: '',
     //     component: HomeComponent,
-    //     // canActivate: [AuthGuard]
     //     canActivate: [CursoGuard]
     // },
 
@@ -64,13 +62,13 @@ const appRoutes: Routes = [
      * isso irá redirecionar para a tela pageNotFound devido ao caminho: '**' curinga
      */
 
-    // {
-    //     path: '', redirectTo: 'home', pathMatch: 'full'
-    // },
-
     {
-        path: '', redirectTo: 'alunos', pathMatch: 'full'
+        path: '', redirectTo: 'home', pathMatch: 'full'
     },
+
+    // {
+    //     path: '', redirectTo: 'alunos', pathMatch: 'full'
+    // },
 
     /**
      * Caso 2 pathMatch: 'prefixo':

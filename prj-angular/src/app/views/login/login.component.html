@@ -1,19 +1,19 @@
 <form [formGroup]="formulario" (ngSubmit)="efetuarLogin()" autocomplete="off">
-    
+
+    <!--Substituir pelo <app-input-field>-->
     <div class="form-group">
         <label for="userName">Login</label>
-        <input id="userName" placeholder="nome de usuário" maxlength="11" 
-        class="form-control" 
-        formControlName="userName" [addValidOrInvalidClass]="userName" >
-        <form-mensagem [errors]="userName.errors" [mostraErro]="mostrarErro('userName')"></form-mensagem>
+        <input id="userName" placeholder="nome de usuário" maxlength="11" class="form-control"
+            formControlName="userName" [addValidOrInvalidClass]="userName">
+        <!-- <form-mensagem [errors]="userName.errors" [mostraErro]="mostrarErro('userName')"></form-mensagem> -->
     </div>
 
-
+    <!--Substituir pelo <app-input-field>-->
     <div class="form-group">
         <label for="password">Password</label>
         <input type="password" class="form-control" id="password" placeholder="password" formControlName="password"
             maxlength="11" [addValidOrInvalidClass]="password">
-        <form-mensagem [errors]="password.errors" [mostraErro]="mostrarErro('password')"></form-mensagem>
+        <!-- <form-mensagem [errors]="password.errors" [mostraErro]="mostrarErro('password')"></form-mensagem> -->
     </div>
     <button type="submit" class="btn btn-primary" [markAsDirtyAllControls]="formulario">Login</button>
 </form>

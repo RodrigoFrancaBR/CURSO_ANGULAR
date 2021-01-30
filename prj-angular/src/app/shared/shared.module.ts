@@ -13,6 +13,8 @@ import { ControlErrorComponent } from './components/control-error/control-error.
 import { ModalConfirmacaoComponent } from './modal/modal-confirmacao/modal-confirmacao.component';
 import { EmailService } from './services/email.service';
 import { EmailValidationsService } from './services/email-validations.service';
+import { InputFieldComponent } from './components/input-field/input-field.component';
+import { FormsModule } from '@angular/forms';
 
 registerLocaleData(localePt, 'pt');
 
@@ -24,14 +26,17 @@ registerLocaleData(localePt, 'pt');
     AddValidOrInvalidClassDirective,
     MarkAsDirtyAllControlsDirective,
     ControlErrorComponent,
-    ModalConfirmacaoComponent
+    ModalConfirmacaoComponent,
+    InputFieldComponent
   ]
   ,
   imports: [
+    FormsModule,
     CommonModule,
     NgbModule,
   ],
   exports: [
+    InputFieldComponent,
     ExemplosPipesComponent,
     CustoNumberPipe,
     AddValidOrInvalidClassDirective,
